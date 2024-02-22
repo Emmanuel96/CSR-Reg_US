@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dashboard</title>
+    <%- include('../../partials/head.ejs') %>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <style>
+            .hasImage:hover section {
+                background-color: rgba(5, 5, 5, 0.4);
+            }
+            
+            .hasImage:hover button:hover {
+                background: rgba(5, 5, 5, 0.45);
+            }
+            
+            #overlay p,
+            i {
+                opacity: 0;
+            }
+            
+            #overlay.draggedover {
+                background-color: rgba(255, 255, 255, 0.7);
+            }
+            
+            #overlay.draggedover p,
+            #overlay.draggedover i {
+                opacity: 1;
+            }
+        </style>
+</head>
+
+<body class="bg-white">
+    <%- include('../../partials/nav.ejs') %>
+        <%- include('../../partials/topNav.ejs') %>
+
+            <div class="mt-6 md:mt-0 md:ml-64">
+                <div class="md:py-8 mx-5 sm:mx-8 lg:mx-14 xl:mx-20">
+                    <div class="py-6 lg:py-10 bg-white lg:border">
+                        <div class="mx-5 lg:px-6">
+                            <div>
+                                <img class="w-32" src="/assets/images/CSR-A_Logo-RGB.jpg" alt="logo" />
+                            </div>
+                        </div>
+
+                        <div class="pt-5 mx-5 lg:px-6 pb-5 text-justify text-sm lg:text-base">
+                            <p class="mt-5 text-xl font-bold text-left">THANK YOU FOR YOUR APPLICATION</p>
+
+                            <p class="pt-4">Your application will be reviewed by 3 members of our independent Accreditation assessment panel. You will be notified of the results of your application within 2-3 weeks of assessment. Accredited applicants will then receive
+                                an Accreditation pack containing a digital Accreditation Mark toolkit, guidance for using your Mark, a certificate of Accreditation and literature advising future action and how to communicate your Accreditation. Accredited
+                                organisations can take advantage of an annual consultation, to advise on continuous improvement. Organisations that have not reached the minimum level required for Accreditation will receive gap analysis and an invitation
+                                to re-apply for a small administration fee.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script defer src="https://unpkg.com/alpinejs@3.10.2/dist/cdn.min.js"></script>
+
+            <script src="/javascripts/philanthropy/philanthropy_supporting_documents.js"></script>
+</body>
+
+</html>

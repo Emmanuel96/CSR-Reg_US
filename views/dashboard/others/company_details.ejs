@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dashboard</title>
+    <%- include('../../partials/head.ejs') %>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+
+  <body class="bg-white">
+    <%- include('../../partials/nav.ejs') %> <%-
+    include('../../partials/topNav.ejs') %>
+
+    <div class="mt-6 md:mt-0 md:ml-64">
+      <div class="md:py-8 mx-5 sm:mx-8 lg:mx-14 xl:mx-20">
+        <div class="py-6 lg:py-10 bg-white lg:border">
+          <div class="mx-5 lg:px-6">
+            <div>
+              <img
+                class="w-32"
+                src="/assets/images/CSR-A_Logo-RGB.jpg"
+                alt="logo"
+              />
+            </div>
+
+            <div class="pt-8 text-[#00A19A] font-bold">
+              <h1 class="pb-2 sm:text-2xl lg:text-3xl">
+                Welcome to the CSR Accreditation Application form
+              </h1>
+              <hr class="lg:border border-black" />
+            </div>
+
+            <div class="text-justify pt-8 lg:text-lg">
+              <p>
+                The application process should be approached as a blank canvas
+                exercise in which you include any information you feel relevant.
+                There are questions under each pillar to inspire and support
+                your application but these are not designed to be limiting in
+                any way. The main body of the application should be succinct and
+                summarise key points for each of the sub categories. You may
+                bullet point where appropriate and refer to more detail in the
+                supporting evidence.
+              </p>
+              <br />
+              <p>
+                Some information will be suitable under more than one pillar -
+                cross reference wherever applicable. Reference existing internal
+                and external reports, audit findings, newsletters and web
+                material wherever possible. Collate evidence for each pillar
+                under a corresponding appendix so that your final submission has
+                four appendices (Appendix 1 Environment, Appendix 2 Workplace
+                etc). Consultation and review of a draft application can be
+                arranged on request and for a fee - see
+                <a
+                  class="text-blue-600 hover:underline"
+                  href="https://csr-accreditation.co.uk/csr-accreditation-applications-fees/"
+                  target="_blank"
+                  >https://csr-accreditation.co.uk/csr-accreditation-applications-fees/</a
+                >
+                fees/ for latest products and fees.
+              </p>
+
+              <p class="mt-5">
+                Please make sure that you have familiarised yourself with the
+                Independent Assessment Guidance Notes & Criteria on the
+                following page. The Independent Assessment Panel refer to these
+                guidance notes when assessing your application.
+              </p>
+
+              <p class="mt-5">
+                PLEASE COMPLETE THIS APPLICATION FORM IN FULL BEFORE SUBMISSION.
+                YOU ARE ABLE TO COMPLETE THE FORM IN MULTIPLE SESSIONS OVER A
+                PERIOD OF TIME AS OUR SYSTEM WILL SAVE YOUR PROGRESS. PLEASE
+                ALSO MAKE SURE YOU HAVE INCLUDED ALL YOUR EVIDENCE FOR EACH
+                PILLAR BEFORE YOU SUBMIT.
+              </p>
+
+              <p class="mt-5">
+                You will be able to see your progress in the lefthand navigation
+                as you complete the form
+              </p>
+            </div>
+
+            <div class="text-justify pt-8 lg:text-lg">
+              <p>
+                PLEASE ALSO MAKE SURE YOU HAVE DOWNLOADED AND FAMILIARISED
+                YOURSELF WITH OUR ‘GUIDANCE FOR ACCREDITATION’ DOCUMENT. YOU
+                WILL HAVE BEEN SUPPLIED WITH A LINK TO DOWNLOAD THIS DOCUMENT.
+                IF FOR ANY REASON YOU DID NOT DOWNLOAD THE GUIDANCE IT CAN BE
+                DOWNLOADED
+                <a
+                  href="https://csr-accreditation.co.uk/wp-content/uploads/2024/02/CSR-A_2a-Guidance-For-Accreditation-03-23-AW.pdf"
+                  class="text-blue-600 hover:underline"
+                  target="_blank"
+                  >HERE</a
+                >
+              </p>
+            </div>
+
+            <div class="text-justify pt-5 pb-4 lg:text-lg">
+              <p>
+                You will receive an email that confirms we have received your
+                application submission.
+              </p>
+            </div>
+            <div class="text-justify pt-5 pb-4 lg:text-lg">
+              <p>Please complete your details below.</p>
+            </div>
+          </div>
+
+          <form>
+            <div class="lg:grid lg:grid-cols-2">
+              <div class="lg:col-span-1 lg:px-6">
+                <div class="mx-5 mt-4">
+                  <label class="text-sm">Contact Person</label>
+                  <br />
+                  <input
+                    id="contact_person"
+                    class="peer border invalid:border-2 invalid:border-[#ff0000] invalid:outline-[#ff0000] h-11 w-full lg:h-10 border-[#00A19A] rounded-md py-1 px-3 placeholder:text-xs"
+                    type="text"
+                    placeholder="Type your name"
+                  />
+                  <p
+                    class="mt-2 invisible peer-invalid:visible text-[#ff0000] text-sm"
+                  >
+                    Please provide a valid text.
+                  </p>
+                </div>
+
+                <div class="mt-3 mx-5">
+                  <label class="text-sm">Organisation Name</label>
+                  <br />
+                  <input
+                    id="organisation_name"
+                    class="peer border invalid:border-2 invalid:border-[#ff0000] invalid:outline-[#ff0000] h-11 w-full lg:h-10 border-[#00A19A] rounded-md py-1 px-3 placeholder:text-xs"
+                    type="text"
+                    placeholder="Type your organisation's name"
+                  />
+                  <p
+                    class="mt-2 invisible peer-invalid:visible text-[#ff0000] text-sm"
+                  >
+                    Please provide a valid text.
+                  </p>
+                </div>
+
+                <div class="mt-3 mx-5">
+                  <label class="text-sm">Organisation Address</label>
+                  <br />
+                  <input
+                    id="organisation_address"
+                    class="peer border invalid:border-2 invalid:border-[#ff0000] invalid:outline-[#ff0000] h-11 w-full lg:h-10 border-[#00A19A] rounded-md py-1 px-3 placeholder:text-xs"
+                    type="text"
+                    placeholder="Type your organisation's address"
+                  />
+                  <p
+                    class="mt-2 invisible peer-invalid:visible text-[#ff0000] text-sm"
+                  >
+                    Please provide a valid address.
+                  </p>
+                </div>
+                <div class="mt-3 lg:mt-4 mx-5">
+                  <label class="text-sm">Postal Code</label>
+                  <br />
+                  <input
+                    id="postal_code"
+                    class="peer border invalid:border-2 invalid:border-[#ff0000] invalid:outline-[#ff0000] h-11 w-full lg:h-10 border-[#00A19A] rounded-md py-1 px-3 placeholder:text-xs"
+                    type="text"
+                    placeholder="Type your postal code"
+                  />
+                  <p
+                    class="mt-2 invisible peer-invalid:visible text-[#ff0000] text-sm"
+                  >
+                    Please provide a valid text.
+                  </p>
+                </div>
+              </div>
+
+              <div class="lg:col-span-1 lg:px-6">
+                <div class="mt-3 mx-5">
+                  <label class="text-sm">Industry Sector</label>
+                  <br />
+                  <select
+                    id="industry_sector"
+                    class="peer border invalid:border-2 invalid:border-[#ff0000] invalid:outline-[#ff0000] h-11 w-full lg:h-10 border-[#00A19A] rounded-md py-1 px-3 placeholder:text-xs"
+                  >
+                    <option selected value="">Not selected</option>
+                    <option value="Manufacturing">Manufacturing</option>
+                    <option value="Consumer">Consumer</option>
+                    <option value="Professional / business services">
+                      Professional / business services
+                    </option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="NFP / charity / third sector">
+                      NFP / charity / third sector
+                    </option>
+                    <option value="IT / Technology">IT / Technology</option>
+                    <option value="Construction">Construction</option>
+                    <option value="Public sector">Public sector</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <p
+                    class="mt-2 invisible peer-invalid:visible text-[#ff0000] text-sm"
+                  >
+                    Please provide a valid text.
+                  </p>
+                </div>
+
+                <div class="mt-3 mx-5">
+                  <label class="text-sm">Email Address</label>
+                  <br />
+                  <input
+                    disabled
+                    id="email_address"
+                    class="peer border invalid:border-2 invalid:border-[#ff0000] invalid:outline-[#ff0000] h-11 w-full lg:h-10 border-[#00A19A] rounded-md py-1 px-3 placeholder:text-xs"
+                    type="email"
+                    placeholder="Type your email"
+                  />
+                  <p
+                    class="mt-2 invisible peer-invalid:visible text-[#ff0000] text-sm"
+                  >
+                    Please provide a valid email address.
+                  </p>
+                </div>
+
+                <div class="my-3 mx-5">
+                  <label class="text-sm">Contact Number</label>
+                  <br />
+                  <input
+                    id="contact_number"
+                    class="peer border invalid:border-2 invalid:border-[#ff0000] invalid:outline-[#ff0000] h-11 w-full lg:h-10 border-[#00A19A] rounded-md py-1 px-3 placeholder:text-xs"
+                    type="tel"
+                    placeholder="Type your contact number"
+                  />
+                  <p
+                    class="mt-2 invisible peer-invalid:visible text-[#ff0000] text-sm"
+                  >
+                    Please provide your contact
+                  </p>
+                </div>
+
+                <div class="mt-3 mx-5">
+                  <label class="text-sm">Nationality of Organisation</label>
+                  <br />
+                  <input
+                    id="organisation_nationality"
+                    class="peer border invalid:border-2 invalid:border-[#ff0000] invalid:outline-[#ff0000] h-11 w-full lg:h-10 border-[#00A19A] rounded-md py-1 px-3 placeholder:text-xs"
+                    type="text"
+                    placeholder="Type your organisation's nationality"
+                  />
+                  <p
+                    class="mt-2 invisible peer-invalid:visible text-[#ff0000] text-sm"
+                  >
+                    Please provide a valid text.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-red-600 mx-5 lg:px-6 text-sm pt-8 pb-5 text-justify">
+              *Please note that your organisation name should be entered in
+              exactly the format that you want it to appear on your
+              Accreditation Mark, certificate and guidelines document.
+            </p>
+
+            <div class="mx-5 lg:px-6 pt-8 pb-5 text-justify text-sm">
+              <p>
+                YOU ARE REQUIRED TO ENTER YOUR ORGANISATION'S SIZE BY NUMBER OF
+                EMPLOYEES FOR ORGANISATION OR BY TURNOVER IF YOU ARE THIRD
+                SECTOR. FOR A FULL LIST OF CURRENT APPLICATION FEES PLEASE VISIT
+                OUR WEBSITE -
+              </p>
+              <br />
+              <p>
+                ORGANISATION SIZE - For fees please visit:
+                <a
+                  class="text-blue-600 hover:underline"
+                  href="https://csr-accreditation.co.uk/csr-accreditation-applications-fees/"
+                  target="_blank"
+                  >https://csr-accreditation.co.uk/csr-accreditation-applications-fees/</a
+                >
+              </p>
+            </div>
+
+            <div
+              class="mx-5 lg:px-6 py-5 lg:grid lg:grid-cols-2 text-sm lg:text-xs text-[#464343]"
+            >
+              <div class="lg:col-span-1">
+                <div
+                  class="pb-5 flex justify-between lg:justify-start space-x-4"
+                >
+                  <label><b>Sole Trader/Micro (1 - 3 employees)</b></label>
+                  <input
+                    class="lg:mr-3"
+                    type="radio"
+                    value="soleTrader"
+                    name="orgSize"
+                  />
+                </div>
+
+                <div
+                  class="pb-5 flex justify-between lg:justify-start space-x-4"
+                >
+                  <label><b>Small (4 to 20 employees)</b></label>
+                  <input
+                    class="lg:mr-3"
+                    type="radio"
+                    value="small"
+                    name="orgSize"
+                  />
+                </div>
+
+                <div
+                  class="pb-5 flex justify-between lg:justify-start space-x-4"
+                >
+                  <label><b>Small to Medium (21 to 50 employees)</b></label>
+                  <input
+                    class="lg:mr-3"
+                    type="radio"
+                    value="smallToMedium"
+                    name="orgSize"
+                  />
+                </div>
+
+                <div
+                  class="pb-5 flex justify-between lg:justify-start space-x-4"
+                >
+                  <label><b>Medium (51 to 100 employees)</b></label>
+                  <input
+                    class="lg:mr-3"
+                    type="radio"
+                    value="medium"
+                    name="orgSize"
+                  />
+                </div>
+
+                <div
+                  class="pb-5 flex justify-between lg:justify-start space-x-4"
+                >
+                  <label><b>Medium to Large (101 to 250 employees)</b></label>
+                  <input
+                    class="lg:mr-3"
+                    type="radio"
+                    value="mediumToLarge"
+                    name="orgSize"
+                  />
+                </div>
+              </div>
+
+              <div class="col-span-1">
+                <div
+                  class="pb-5 lg:pl-3 flex justify-between lg:justify-start space-x-4"
+                >
+                  <label><b>Large (251 to 500 employees)</b></label>
+                  <input class="" type="radio" value="large" name="orgSize" />
+                </div>
+
+                <div
+                  class="pb-5 lg:pl-3 flex justify-between lg:justify-start space-x-4"
+                >
+                  <label><b>Large/Corporate (501 - 1000 employees)</b></label>
+                  <input
+                    class=""
+                    type="radio"
+                    value="large_501"
+                    name="orgSize"
+                  />
+                </div>
+
+                <div
+                  class="pb-5 lg:pl-3 flex justify-between lg:justify-start space-x-4"
+                >
+                  <label><b>Large/Corporate (1001 - 5000 employees)</b></label>
+                  <input
+                    class=""
+                    type="radio"
+                    value="large_1001"
+                    name="orgSize"
+                  />
+                </div>
+
+                <div
+                  class="pb-5 lg:pl-3 flex justify-between lg:justify-start space-x-4"
+                >
+                  <label
+                    ><b>Large/Corporate (5001 - 10,000 employees)</b></label
+                  >
+                  <input
+                    class=""
+                    type="radio"
+                    value="large_5001"
+                    name="orgSize"
+                  />
+                </div>
+
+                <div
+                  class="pb-5 lg:pl-3 flex justify-between lg:justify-start space-x-4"
+                >
+                  <label><b>Large/Corporate (10,000 plus)</b></label>
+                  <input
+                    class=""
+                    type="radio"
+                    value="large_10000"
+                    name="orgSize"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="mx-5 lg:px-6 pt-1 text-justify text-base">
+              <p>
+                Organisations that have published a recent independent social
+                responsibility report or have included a social impact section
+                as part of their report and accounts qualify for our 'fast
+                track' application process. Fast track applicants can submit
+                their existing documentation in place of our online application
+                form. Please contact CSR-A if you wish to fast track your
+                application.
+              </p>
+
+              <p class="text-red-700 pt-5 pb-2 font-bold text-sm">
+                THIRD SECTOR ORGANISATION ONLY *
+              </p>
+
+              <div class="text-base text-[#464343] py-5">
+                <div class="flex space-x-3">
+                  <h1>Are you a third sector organisation?</h1>
+
+                  <select
+                    id="thirdparty_org"
+                    class="border-2 px-2 rounded-lg border-[#464343]"
+                  >
+                    <option value="null">None selected</option>
+                    <option value="YES">YES</option>
+                    <option value="NO">NO</option>
+                  </select>
+                </div>
+              </div>
+              <div class="text-base text-[#464343] py-5">
+                <div class="flex space-x-3">
+                  <h1>Are you applying for re-accreditation?</h1>
+
+                  <select
+                    id="reapplying"
+                    class="border-2 px-2 rounded-lg border-[#464343]"
+                  >
+                    <option value="YES">YES</option>
+                    <option value="NO">NO</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="text-right text-sm mt-3 text-white pr-5 lg:pr-10">
+              <button
+                id="submit_btn"
+                onclick="updateCompanyDetails()"
+                class="py-2 px-3 hover:bg-[#03857e] w-32 rounded-md shadow-lg bg-[#00A19A] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:animate-none animate-bounce duration-300"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+          <p class="mt-5 font-bold pl-5 text-red-700">
+            PLEASE MAKE SURE YOU CLICK THE SUBMIT BUTTON EVERY TIME YOU ADD OR
+            AMEND YOUR INFORMATION. IF YOU DO NOT CLICK THE SUBMIT BUTTON YOUR
+            CHANGES WILL BE LOST WHEN YOU LEAVE THIS PAGE.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- jsPDF library -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+      integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+      integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.10.2/dist/cdn.min.js"
+    ></script>
+    <script src="/javascripts/others/company_details.js"></script>
+  </body>
+</html>

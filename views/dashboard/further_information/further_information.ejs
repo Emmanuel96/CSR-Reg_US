@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dashboard</title>
+    <%- include('../../partials/head.ejs') %>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <style>
+            .hasImage:hover section {
+                background-color: rgba(5, 5, 5, 0.4);
+            }
+            
+            .hasImage:hover button:hover {
+                background: rgba(5, 5, 5, 0.45);
+            }
+            
+            #overlay p,
+            i {
+                opacity: 0;
+            }
+            
+            #overlay.draggedover {
+                background-color: rgba(255, 255, 255, 0.7);
+            }
+            
+            #overlay.draggedover p,
+            #overlay.draggedover i {
+                opacity: 1;
+            }
+        </style>
+</head>
+
+<body class="bg-white">
+    <%- include('../../partials/nav.ejs') %>
+        <%- include('../../partials/topNav.ejs') %>
+
+            <div class="mt-6 md:mt-0 md:ml-64">
+                <div class="md:py-8 mx-5 sm:mx-8 lg:mx-14 xl:mx-20">
+                    <div class="py-6 lg:py-10 bg-white lg:border">
+                        <div class="mx-5 lg:px-6">
+                            <div>
+                                <img class="w-32" src="/assets/images/CSR-A_Logo-RGB.jpg" alt="logo" />
+                            </div>
+                        </div>
+
+                        <form class="pt-5 mx-5 lg:px-6 pb-5 text-justify text-sm lg:text-base">
+                            <p class="font-bold">OTHER</p>
+
+                            <p class="pt-4">Please include all and any information on CSR activity that is outside of the experience described by the Four Pillar activity lists. </p>
+
+                            <textarea id="phil_other_information" class="mt-4 p-8 max-h-96 text-justify resize-y h-40 w-full border border-[#464343]" placeholder="Text...">
+            </textarea>
+
+                            <p class="mt-5 font-bold">FUTURE PLANNING & ADVISORIES</p>
+
+                            <p class="pt-4">Please include any future planning and advisories in regard to your social responsibility policy, any commitments you have to the UN Sustainable Development Goals (UN-SDGs) and any external ESG scoring mechanisms which your
+                                organisation has used</p>
+
+                            <textarea id="phil_future_planning" class="mt-4 p-8 max-h-96 text-justify resize-y h-40 w-full border border-[#464343]" placeholder="Text...">
+            </textarea>
+                        </form>
+
+                        <div class="text-right text-sm mt-14 text-white pr-5 lg:pr-10">
+                            <button id="finish_btn" onclick="updateFurtherInfo()" class="py-2 px-3 w-32 hover:bg-[#03857e] rounded-md shadow-lg bg-[#00A19A] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:animate-none animate-bounce duration-300">
+              Save
+            </button>
+                        </div>
+                        <p class="mt-5 font-bold pl-5 text-red-700">PLEASE MAKE SURE YOU CLICK THE SUBMIT BUTTON EVERY TIME YOU ADD OR AMEND YOUR INFORMATION. IF YOU DO NOT CLICK THE SUBMIT BUTTON YOUR CHANGES WILL BE LOST WHEN YOU LEAVE THIS PAGE.</p>
+                    </div>
+                </div>
+            </div>
+            <script defer src="https://unpkg.com/alpinejs@3.10.2/dist/cdn.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+            <script src="/javascripts/others/further_information.js"></script>
+
+</html>
