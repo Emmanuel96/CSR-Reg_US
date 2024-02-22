@@ -14,54 +14,22 @@ function getCompanyDetails() {
         docData.organisation_name;
       document.getElementById("organisation_address").value =
         docData.organisation_address;
-      document.getElementById("industry_sector").value =
-        docData.industry_sector;
+      document.getElementById("telephone_number").value =
+        docData.telephone_number;
       document.getElementById("organisation_nationality").value =
         docData.organisation_nationality;
       document.getElementById("postal_code").value = docData.postal_code;
       document.getElementById("email_address").value = docData.email_address;
-      document.getElementById("contact_number").value = docData.contact_number;
-      document.getElementById("thirdparty_org").value = docData.thirdparty_org;
-
-      let orgSizeRadios = document.getElementsByName("orgSize");
-
-      for (let radio of orgSizeRadios) {
-        if (radio.value === docData.organisation_size) {
-          radio.checked = true;
-        }
-      }
-      // if (docData.company_details_completed) {
-      //   document.getElementById("submit_btn").disabled = true;
-      // }
+      document.getElementById("mobile_number").value = docData.mobile_number;
+      document.getElementById("soleTraderMicro").value = docData.soleTraderMicro;
+      document.getElementById("charity").value = docData.charity;
     });
 }
 getCompanyDetails();
 
-// function getSelectedOption(select) {
-//   var opt;
-//   for ( var i = 0, len = select.options.length; i < len; i++ ) {
-//       opt = select.options[i];
-//       if ( opt.selected === true ) {
-//           break;
-//       }
-//   }
-//   return opt;
-// }
-
-// console.log(
-//   getSelectedOption(document.getElementsByName('thirdparty_org'))
-// )
 
 function updateCompanyDetails() {
   event.preventDefault();
-
-  let orgSizeRadios = document.getElementsByName("orgSize");
-  let orgSizeVal = "";
-  for (let radio of orgSizeRadios) {
-    if (radio.checked) {
-      orgSizeVal = radio.value;
-    }
-  }
 
   let contact_person = document.getElementById("contact_person").value;
   let organisation_name = document.getElementById("organisation_name").value;
@@ -71,14 +39,13 @@ function updateCompanyDetails() {
   let organisation_nationality = document.getElementById(
     "organisation_nationality"
   ).value;
-  let industry_sector = document.getElementById("industry_sector").value;
+  let telephone_number = document.getElementById("telephone_number").value;
   let postal_code = document.getElementById("postal_code").value;
   let email_address = document.getElementById("email_address").value;
-  let contact_number = document.getElementById("contact_number").value;
-  let thirdparty_org = document.getElementById("thirdparty_org").value;
-  let reaccreditation = document.getElementById("reapplying").value;
+  let mobile_number = document.getElementById("mobile_number").value;
+  let soleTraderMicro = document.getElementById("soleTraderMicro").value;
+  let charity = document.getElementById("charity").value;
 
-  let organisation_size = orgSizeVal;
   let company_details_completed = true;
 
   if (
@@ -86,20 +53,20 @@ function updateCompanyDetails() {
     !organisation_name ||
     !organisation_address ||
     !organisation_nationality ||
-    !industry_sector ||
+    !telephone_number ||
     !postal_code ||
     !email_address ||
-    !contact_number ||
-    !organisation_size ||
-    !reaccreditation
+    !mobile_number ||
+    !charity ||
+    !soleTraderMicro
   ) {
     return Swal.fire({
       title: "Please complete all input fields",
       confirmButtonColor: "#00a19a",
     });
-  } else if (thirdparty_org === "null") {
+  } else if (soleTraderMicro === "null") {
     return Swal.fire({
-      title: "Please chose an option from 'Third Sector Organisation'",
+      title: "Please chose an option from 'Are You a Sole Trader/Micro (1 – 3 employees)'",
       confirmButtonColor: "#00a19a",
     });
   } else {
@@ -112,13 +79,13 @@ function updateCompanyDetails() {
       organisation_name,
       organisation_address,
       organisation_nationality,
-      industry_sector,
+      telephone_number,
       postal_code,
       email_address,
-      contact_number,
+      mobile_number,
       organisation_size,
-      thirdparty_org,
-      reaccreditation,
+      soleTraderMicro,
+      charity,
       company_details_completed,
     };
 

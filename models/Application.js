@@ -23,7 +23,7 @@ const ApplicationSchema = new mongoose.Schema({
         type: String
     },
 
-    industry_sector: {
+    telephone_number: {
         type: String
     },
 
@@ -40,31 +40,15 @@ const ApplicationSchema = new mongoose.Schema({
         unique: true
     },
 
-    contact_number: {
+    mobile_number: {
         type: String,
     },
 
-    organisation_size: {
-        type: String,
-        enumValues: [
-            'soleTrader',
-            'small',
-            'smallToMedium',
-            'medium',
-            'mediumToLarge',
-            'large',
-            'large_501',
-            'large_1001',
-            'large_5001',
-            'large_10000'
-        ]
-    },
-
-    thirdparty_org: {
+   soleTraderMicro: {
         type: String
     },
 
-    reaccreditation: {
+    charity: {
         type: String
     },
 
