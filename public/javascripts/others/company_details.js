@@ -7,6 +7,7 @@ function getCompanyDetails() {
     .get(`/api/application/${ID}`)
     .then((result) => {
       docData = result.data;
+      console.log(docData.mobile_number, docData.telephone_number)
     })
     .then(() => {
       document.getElementById("contact_person").value = docData.contact_person;
@@ -83,11 +84,11 @@ function updateCompanyDetails() {
       postal_code,
       email_address,
       mobile_number,
-      organisation_size,
       soleTraderMicro,
       charity,
       company_details_completed,
     };
+    console.log(data)
 
     fetch(`/company_details/${ID}`, {
       method: "PUT",
@@ -99,13 +100,6 @@ function updateCompanyDetails() {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          // fetch(`/api/application/completed`, {
-          //   method: "POST",
-          //   headers: {
-          //     "Content-Type": "application/json",
-          //   },
-          // });
-
           document.getElementById("submit_btn").innerText = "Submit";
 
           document.getElementById("submit_btn").disabled = false;

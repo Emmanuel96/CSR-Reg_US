@@ -90,95 +90,23 @@ const ApplicationSchema = new mongoose.Schema({
 
     env_waste_completed: Boolean,
 
-    wrk_training: {
+    workplace: {
         type: String
     },
 
-    wrk_training_completed: Boolean,
+    workplace_completed: Boolean,
 
-    wrk_labour_practices: {
+    community: {
         type: String
     },
 
-    wrk_labour_practices_completed: Boolean,
+    community_completed: Boolean,
 
-    wrk_ethical_practices: {
+    philanthropy: {
         type: String
     },
 
-    wrk_ethical_practices_completed: Boolean,
-
-    wrk_governance: {
-        type: String
-    },
-
-    wrk_governance_completed: Boolean,
-
-    wrk_policies: {
-        type: String
-    },
-
-    wrk_policies_completed: Boolean,
-
-    com_engagement: {
-        type: String
-    },
-
-    com_engagement_completed: Boolean,
-
-    com_local_issues: {
-        type: String
-    },
-
-    com_local_issues_completed: Boolean,
-
-    com_wealth_creation: {
-        type: String
-    },
-
-    com_wealth_creation_completed: Boolean,
-
-    com_projects_and_groups: {
-        type: String
-    },
-
-    com_projects_and_groups_completed: Boolean,
-
-    com_education: {
-        type: String
-    },
-
-    com_education_completed: Boolean,
-
-    phil_charitable_involvement: {
-        type: String
-    },
-
-    phil_charitable_involvement_completed: Boolean,
-
-    phil_volunteering: {
-        type: String
-    },
-
-    phil_volunteering_completed: Boolean,
-
-    phil_pro_bono: {
-        type: String
-    },
-
-    phil_pro_bono_completed: Boolean,
-
-    phil_fund_raising: {
-        type: String
-    },
-
-    phil_fund_raising_completed: Boolean,
-
-    phil_financial_and_kind_gifts: {
-        type: String
-    },
-
-    phil_financial_and_kind_gifts_completed: Boolean,
+    philanthropy_completed: Boolean,
 
     phil_other_information: {
         type: String

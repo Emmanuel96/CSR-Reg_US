@@ -38,8 +38,8 @@ exports.get_environment_supporting_documents = (req, res) => {
   res.render("dashboard/environment/environment_supporting_documents");
 };
 
-exports.get_assessment_and_tips = (req, res) => {
-  res.render("dashboard/others/assessment_and_tips");
+exports.get_notes = (req, res) => {
+  res.render("dashboard/others/notes");
 };
 
 exports.get_workplace = (req, res) => {
@@ -84,13 +84,12 @@ exports.put_company_details = async function (req, res, next) {
     organisation_name: body.organisation_name,
     organisation_address: body.organisation_address,
     organisation_nationality: body.organisation_nationality,
-    industry_sector: body.industry_sector,
     postal_code: body.postal_code,
+    telephone_number: body.telephone_number,
+    mobile_number: body.mobile_number,
     email_address: body.email_address,
-    contact_number: body.contact_number,
-    organisation_size: body.organisation_size,
-    thirdparty_org: body.thirdparty_org,
-    reaccreditation: body.reaccreditation,
+    soleTraderMicro: body.soleTraderMicro,
+    charity: body.charity,
     company_details_completed: true,
   };
 
@@ -310,7 +309,7 @@ exports.put_environment_waste = async function (req, res, next) {
     });
 };
 
-exports.put_workplace_training = async function (req, res, next) {
+exports.put_workplace = async function (req, res, next) {
   var body = req.body;
 
   const wrk_training = {
@@ -338,119 +337,7 @@ exports.put_workplace_training = async function (req, res, next) {
     });
 };
 
-exports.put_workplace_labour_practices = async function (req, res, next) {
-  var body = req.body;
-
-  const wrk_labour_practices = {
-    wrk_labour_practices: body.wrk_labour_practices,
-    wrk_labour_practices_completed: true,
-  };
-
-  Application.findOneAndUpdate({ owner: req.params.id }, wrk_labour_practices, {
-    new: true,
-    runValidators: true,
-    context: "query",
-  })
-    .then(() => {
-      res.status(200).json({
-        success: true,
-        message: "Successfully updated wrk_labour_practices",
-      });
-    })
-    .catch((error) => {
-      res.status(400).json({
-        success: false,
-        message: "Failed to update wrk_labour_practices",
-        error: error,
-      });
-    });
-};
-
-exports.put_workplace_ethical_practises = async function (req, res, next) {
-  var body = req.body;
-
-  const wrk_ethical_practices = {
-    wrk_ethical_practices: body.wrk_ethical_practices,
-    wrk_ethical_practices_completed: true,
-  };
-
-  Application.findOneAndUpdate(
-    { owner: req.params.id },
-    wrk_ethical_practices,
-    { new: true, runValidators: true, context: "query" }
-  )
-    .then(() => {
-      res.status(200).json({
-        success: true,
-        message: "Successfully updated wrk_ethical_practices",
-      });
-    })
-    .catch((error) => {
-      res.status(400).json({
-        success: false,
-        message: "Failed to update wrk_ethical_practices",
-        error: error,
-      });
-    });
-};
-
-exports.put_workplace_governance = async function (req, res, next) {
-  var body = req.body;
-
-  const wrk_governance = {
-    wrk_governance: body.wrk_governance,
-    wrk_governance_completed: true,
-  };
-
-  Application.findOneAndUpdate({ owner: req.params.id }, wrk_governance, {
-    new: true,
-    runValidators: true,
-    context: "query",
-  })
-    .then(() => {
-      res.status(200).json({
-        success: true,
-        message: "Successfully updated wrk_governance",
-      });
-    })
-    .catch((error) => {
-      res.status(400).json({
-        success: false,
-        message: "Failed to update wrk_governance",
-        error: error,
-      });
-    });
-};
-
-exports.put_workplace_policies = async function (req, res, next) {
-  var body = req.body;
-
-  const wrk_policies = {
-    wrk_policies: body.wrk_policies,
-    wrk_policies_completed: true,
-  };
-
-  Application.findOneAndUpdate({ owner: req.params.id }, wrk_policies, {
-    new: true,
-    runValidators: true,
-    context: "query",
-  })
-    .then(() => {
-      res.status(200).json({
-        success: true,
-        message: "Successfully updated wrk_policies",
-      });
-    })
-    .catch((error) => {
-      res.status(400).json({
-        success: false,
-        message: "Failed to update wrk_policies",
-        error: error,
-      });
-    });
-};
-
-exports.put_community_engagement = async function (req, res, next) {
+exports.put_community = async function (req, res, next) {
   var body = req.body;
 
   const com_engagement = {
@@ -478,119 +365,7 @@ exports.put_community_engagement = async function (req, res, next) {
     });
 };
 
-exports.put_community_local_issues = async function (req, res, next) {
-  var body = req.body;
-
-  const com_local_issues = {
-    com_local_issues: body.com_local_issues,
-    com_local_issues_completed: true,
-  };
-
-  Application.findOneAndUpdate({ owner: req.params.id }, com_local_issues, {
-    new: true,
-    runValidators: true,
-    context: "query",
-  })
-    .then(() => {
-      res.status(200).json({
-        success: true,
-        message: "Successfully updated com_local_issues",
-      });
-    })
-    .catch((error) => {
-      res.status(400).json({
-        success: false,
-        message: "Failed to update com_local_issues",
-        error: error,
-      });
-    });
-};
-
-exports.put_community_wealth_creation = async function (req, res, next) {
-  var body = req.body;
-
-  const com_wealth_creation = {
-    com_wealth_creation: body.com_wealth_creation,
-    com_wealth_creation_completed: true,
-  };
-
-  Application.findOneAndUpdate({ owner: req.params.id }, com_wealth_creation, {
-    new: true,
-    runValidators: true,
-    context: "query",
-  })
-    .then(() => {
-      res.status(200).json({
-        success: true,
-        message: "Successfully updated com_wealth_creation",
-      });
-    })
-    .catch((error) => {
-      res.status(400).json({
-        success: false,
-        message: "Failed to update com_wealth_creation",
-        error: error,
-      });
-    });
-};
-
-exports.put_community_projects_and_groups = async function (req, res, next) {
-  var body = req.body;
-
-  const com_projects_and_groups = {
-    com_projects_and_groups: body.com_projects_and_groups,
-    com_projects_and_groups_completed: true,
-  };
-
-  Application.findOneAndUpdate(
-    { owner: req.params.id },
-    com_projects_and_groups,
-    { new: true, runValidators: true, context: "query" }
-  )
-    .then(() => {
-      res.status(200).json({
-        success: true,
-        message: "Successfully updated com_projects_and_groups",
-      });
-    })
-    .catch((error) => {
-      res.status(400).json({
-        success: false,
-        message: "Failed to update com_projects_and_groups",
-        error: error,
-      });
-    });
-};
-
-exports.put_community_education = async function (req, res, next) {
-  var body = req.body;
-
-  const com_education = {
-    com_education: body.com_education,
-    com_education_completed: true,
-  };
-
-  Application.findOneAndUpdate({ owner: req.params.id }, com_education, {
-    new: true,
-    runValidators: true,
-    context: "query",
-  })
-    .then(() => {
-      res.status(200).json({
-        success: true,
-        message: "Successfully updated com_education",
-      });
-    })
-    .catch((error) => {
-      res.status(400).json({
-        success: false,
-        message: "Failed to update com_education",
-        error: error,
-      });
-    });
-};
-
-exports.put_philanthropy_charitable_involvement = async function (
+exports.put_philanthropy = async function (
   req,
   res,
   next
@@ -622,121 +397,7 @@ exports.put_philanthropy_charitable_involvement = async function (
     });
 };
 
-exports.put_philanthropy_volunteering = async function (req, res, next) {
-  var body = req.body;
 
-  const phil_volunteering = {
-    phil_volunteering: body.phil_volunteering,
-    phil_volunteering_completed: true,
-  };
-
-  Application.findOneAndUpdate({ owner: req.params.id }, phil_volunteering, {
-    new: true,
-    runValidators: true,
-    context: "query",
-  })
-    .then(() => {
-      res.status(200).json({
-        success: true,
-        message: "Successfully updated phil_volunteering",
-      });
-    })
-    .catch((error) => {
-      res.status(400).json({
-        success: false,
-        message: "Failed to update phil_volunteering",
-        error: error,
-      });
-    });
-};
-
-exports.put_philanthropy_pro_bono = async function (req, res, next) {
-  var body = req.body;
-
-  const phil_pro_bono = {
-    phil_pro_bono: body.phil_pro_bono,
-    phil_pro_bono_completed: true,
-  };
-
-  Application.findOneAndUpdate({ owner: req.params.id }, phil_pro_bono, {
-    new: true,
-    runValidators: true,
-    context: "query",
-  })
-    .then(() => {
-      res.status(200).json({
-        success: true,
-        message: "Successfully updated phil_pro_bono",
-      });
-    })
-    .catch((error) => {
-      res.status(400).json({
-        success: false,
-        message: "Failed to update phil_pro_bono",
-        error: error,
-      });
-    });
-};
-
-exports.put_philanthropy_fund_raising = async function (req, res, next) {
-  var body = req.body;
-
-  const phil_fund_raising = {
-    phil_fund_raising: body.phil_fund_raising,
-    phil_fund_raising_completed: true,
-  };
-
-  Application.findOneAndUpdate({ owner: req.params.id }, phil_fund_raising, {
-    new: true,
-    runValidators: true,
-    context: "query",
-  })
-    .then(() => {
-      res.status(200).json({
-        success: true,
-        message: "Successfully updated phil_fund_raising",
-      });
-    })
-    .catch((error) => {
-      res.status(400).json({
-        success: false,
-        message: "Failed to update phil_fund_raising",
-        error: error,
-      });
-    });
-};
-
-exports.put_philanthropy_financial_and_kind_gifts = async function (
-  req,
-  res,
-  next
-) {
-  var body = req.body;
-
-  const phil_financial_and_kind_gifts = {
-    phil_financial_and_kind_gifts: body.phil_financial_and_kind_gifts,
-    phil_financial_and_kind_gifts_completed: true,
-  };
-
-  Application.findOneAndUpdate(
-    { owner: req.params.id },
-    phil_financial_and_kind_gifts,
-    { new: true, runValidators: true, context: "query" }
-  )
-    .then(() => {
-      res.status(200).json({
-        success: true,
-        message: "Successfully updated phil_financial_and_kind_gifts",
-      });
-    })
-    .catch((error) => {
-      res.status(400).json({
-        success: false,
-        message: "Failed to update phil_financial_and_kind_gifts",
-        error: error,
-      });
-    });
-};
 
 exports.put_assessment_and_tips = async function (req, res, next) {
   const assessments_and_tips = {
@@ -816,35 +477,6 @@ exports.put_application_finished = (req, res) => {
     });
 };
 
-// exports.update_further_information = async function(req, res, next) {
-//     var body = req.body;
-
-//     const further_info = {
-//         phil_other_information: body.phil_other_information,
-//         phil_future_planning: body.phil_future_planning,
-//     };
-
-//     Application.findOneAndUpdate({ owner: req.params.id }, further_info, {
-//             new: true,
-//             runValidators: true,
-//             context: "query",
-//         })
-//         .then(() => {
-//             res.status(200).json({
-//                 success: true,
-//                 message: "Successfully updated further_information",
-//             });
-//         })
-//         .catch((error) => {
-//             res.status(400).json({
-//                 success: false,
-//                 message: "Failed to update further_information",
-//                 error: error,
-//             });
-//         });
-// };
-
-// Get application document controller
 
 exports.get_application_document = function (req, res, next) {
   Application.findOne({ owner: req.params.id })

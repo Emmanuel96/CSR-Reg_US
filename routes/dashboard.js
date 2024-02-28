@@ -9,7 +9,7 @@ const DashboardController = require('../controllers/DashboardController');
 
 router.get('/company_details', checkAuthenticated, DashboardController.get_company_details);
 
-router.get('/assessment_and_tips', checkAuthenticated, DashboardController.get_assessment_and_tips);
+router.get('/notes', checkAuthenticated, DashboardController.get_notes);
 
 router.get('/application_introduction', checkAuthenticated, DashboardController.get_application_introduction);
 
@@ -40,6 +40,8 @@ router.get('/philanthropy_supporting_documents', checkAuthenticated, DashboardCo
 router.get('/further_information', checkAuthenticated, DashboardController.further_info);
 
 router.get('/submit', checkAuthenticated, DashboardController.submit)
+
+
 //PUT ROUTES
 
 router.put('/company_details/:id', DashboardController.put_company_details)
@@ -56,35 +58,11 @@ router.put('/environment_supply_chain_management/:id', DashboardController.put_e
 
 router.put('/environment_waste/:id', DashboardController.put_environment_waste)
 
-router.put('/workplace_training/:id', DashboardController.put_workplace_training)
+router.put('/workplace/:id', DashboardController.put_workplace)
 
-router.put('/workplace_labour_practices/:id', DashboardController.put_workplace_labour_practices)
+router.put('/community/:id', DashboardController.put_community)
 
-router.put('/workplace_ethical_practises/:id', DashboardController.put_workplace_ethical_practises)
-
-router.put('/workplace_governance/:id', DashboardController.put_workplace_governance)
-
-router.put('/workplace_policies/:id', DashboardController.put_workplace_policies)
-
-router.put('/community_engagement/:id', DashboardController.put_community_engagement)
-
-router.put('/community_local_issues/:id', DashboardController.put_community_local_issues)
-
-router.put('/community_wealth_creation/:id', DashboardController.put_community_wealth_creation)
-
-router.put('/community_projects_and_groups/:id', DashboardController.put_community_projects_and_groups)
-
-router.put('/community_education/:id', DashboardController.put_community_education)
-
-router.put('/philanthropy_charitable_involvement/:id', DashboardController.put_philanthropy_charitable_involvement)
-
-router.put('/philanthropy_volunteering/:id', DashboardController.put_philanthropy_volunteering)
-
-router.put('/philanthropy_pro_bono/:id', DashboardController.put_philanthropy_pro_bono)
-
-router.put('/philanthropy_fund_raising/:id', DashboardController.put_philanthropy_fund_raising)
-
-router.put('/philanthropy_financial_and_kind_gifts/:id', DashboardController.put_philanthropy_financial_and_kind_gifts)
+router.put('/philanthropy/:id', DashboardController.put_philanthropy)
 
 router.put('/philanthropy_supporting_info/:id', DashboardController.update_phil_supporting_info)
 
