@@ -50,7 +50,7 @@ function updateWorkPlaceTraining(){
           title: "Successfully Saved Workplace Training",
           confirmButtonColor: '#00a19a'
         }).then(function(){
-          window.location.href = "/workplace_labour_practices"
+          window.location.href = "/workplace_supporting_documents"
         });
       }else{
         document.getElementById('submit_btn').innerText = "Submit"
