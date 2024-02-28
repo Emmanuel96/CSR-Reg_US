@@ -50,7 +50,7 @@ function updateCommunityEngagement(){
           title: "Successfully Saved Community Engagement",
           confirmButtonColor: '#00a19a'
         }).then(function(){
-          window.location.href = "/community_local_issues"
+          window.location.href = "/community_supporting_documents"
         });
       }else{
         document.getElementById('submit_btn').innerText = "Submit"

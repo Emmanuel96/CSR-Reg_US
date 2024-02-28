@@ -938,11 +938,11 @@ video {
 .pt-4 {
   padding-top: 1rem;
 }
-.pt-3 {
-  padding-top: 0.75rem;
-}
 .pl-5 {
   padding-left: 1.25rem;
+}
+.pt-3 {
+  padding-top: 0.75rem;
 }
 .pt-2 {
   padding-top: 0.5rem;

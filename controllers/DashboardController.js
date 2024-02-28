@@ -42,72 +42,24 @@ exports.get_assessment_and_tips = (req, res) => {
   res.render("dashboard/others/assessment_and_tips");
 };
 
-exports.get_workplace_training = (req, res) => {
-  res.render("dashboard/workplace/workplace_training");
-};
-
-exports.get_workplace_labour_practices = (req, res) => {
-  res.render("dashboard/workplace/workplace_labour_practices");
-};
-
-exports.get_workplace_ethical_practises = (req, res) => {
-  res.render("dashboard/workplace/workplace_ethical_practises");
-};
-
-exports.get_workplace_governance = (req, res) => {
-  res.render("dashboard/workplace/workplace_governance");
-};
-
-exports.get_workplace_policies = (req, res) => {
-  res.render("dashboard/workplace/workplace_policies");
+exports.get_workplace = (req, res) => {
+  res.render("dashboard/workplace/workplace");
 };
 
 exports.get_workplace_supporting_documents = (req, res) => {
   res.render("dashboard/workplace/workplace_supporting_documents");
 };
 
-exports.get_community_engagement = (req, res) => {
-  res.render("dashboard/community/community_engagement");
-};
-
-exports.get_community_local_issues = (req, res) => {
-  res.render("dashboard/community/community_local_issues");
-};
-
-exports.get_community_wealth_creation = (req, res) => {
-  res.render("dashboard/community/community_wealth_creation");
-};
-
-exports.get_community_projects_and_groups = (req, res) => {
-  res.render("dashboard/community/community_projects_and_groups");
-};
-
-exports.get_community_education = (req, res) => {
-  res.render("dashboard/community/community_education");
+exports.get_community = (req, res) => {
+  res.render("dashboard/community/community");
 };
 
 exports.get_community_supporting_documents = (req, res) => {
   res.render("dashboard/community/community_supporting_documents");
 };
 
-exports.get_philanthropy_charitable_involvement = (req, res) => {
-  res.render("dashboard/philanthropy/philanthropy_charitable_involvement");
-};
-
-exports.get_philanthropy_volunteering = (req, res) => {
-  res.render("dashboard/philanthropy/philanthropy_volunteering");
-};
-
-exports.get_philanthropy_pro_bono = (req, res) => {
-  res.render("dashboard/philanthropy/philanthropy_pro_bono");
-};
-
-exports.get_philanthropy_fund_raising = (req, res) => {
-  res.render("dashboard/philanthropy/philanthropy_fund_raising");
-};
-
-exports.get_philanthropy_financial_and_kind_gifts = (req, res) => {
-  res.render("dashboard/philanthropy/philanthropy_financial_and_kind_gifts");
+exports.get_philanthropy = (req, res) => {
+  res.render("dashboard/philanthropy/philanthropy");
 };
 
 exports.get_philanthropy_supporting_documents = (req, res) => {

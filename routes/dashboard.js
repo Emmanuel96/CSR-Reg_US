@@ -25,39 +25,15 @@ router.get('/environment_waste', checkAuthenticated, DashboardController.get_env
 
 router.get('/environment_supporting_documents', checkAuthenticated, DashboardController.get_environment_supporting_documents);
 
-router.get('/workplace_training', checkAuthenticated, DashboardController.get_workplace_training);
-
-router.get('/workplace_labour_practices', checkAuthenticated, DashboardController.get_workplace_labour_practices);
-
-router.get('/workplace_ethical_practises', checkAuthenticated, DashboardController.get_workplace_ethical_practises);
-
-router.get('/workplace_governance', checkAuthenticated, DashboardController.get_workplace_governance);
-
-router.get('/workplace_policies', checkAuthenticated, DashboardController.get_workplace_policies);
+router.get('/workplace', checkAuthenticated, DashboardController.get_workplace);
 
 router.get('/workplace_supporting_documents', checkAuthenticated, DashboardController.get_workplace_supporting_documents);
 
-router.get('/community_engagement', checkAuthenticated, DashboardController.get_community_engagement);
-
-router.get('/community_local_issues', checkAuthenticated, DashboardController.get_community_local_issues);
-
-router.get('/community_wealth_creation', checkAuthenticated, DashboardController.get_community_wealth_creation);
-
-router.get('/community_projects_and_groups', checkAuthenticated, DashboardController.get_community_projects_and_groups);
-
-router.get('/community_education', checkAuthenticated, DashboardController.get_community_education);
+router.get('/community', checkAuthenticated, DashboardController.get_community);
 
 router.get('/community_supporting_documents', checkAuthenticated, DashboardController.get_community_supporting_documents);
 
-router.get('/philanthropy_charitable_involvement', checkAuthenticated, DashboardController.get_philanthropy_charitable_involvement);
-
-router.get('/philanthropy_volunteering', checkAuthenticated, DashboardController.get_philanthropy_volunteering);
-
-router.get('/philanthropy_pro_bono', checkAuthenticated, DashboardController.get_philanthropy_pro_bono);
-
-router.get('/philanthropy_fund_raising', checkAuthenticated, DashboardController.get_philanthropy_fund_raising);
-
-router.get('/philanthropy_financial_and_kind_gifts', checkAuthenticated, DashboardController.get_philanthropy_financial_and_kind_gifts);
+router.get('/philanthropy', checkAuthenticated, DashboardController.get_philanthropy);
 
 router.get('/philanthropy_supporting_documents', checkAuthenticated, DashboardController.get_philanthropy_supporting_documents);
 

@@ -17,7 +17,7 @@ const navLinks = document.querySelectorAll('[data-url]').forEach(data => {
   }
 })
 const navLink = document.querySelectorAll('[data-url]')
-console.log(navLink);
+// console.log(navLink);
 // const navLinks = document.querySelectorAll('nav a.block')
 // // const navLinks = document.getElementsByClassName("px-2")
 // for (var i = 0; i < navLinks.length; i++) {
