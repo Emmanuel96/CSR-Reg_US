@@ -313,8 +313,8 @@ exports.put_workplace = async function (req, res, next) {
   var body = req.body;
 
   const wrk_training = {
-    wrk_training: body.wrk_training,
-    wrk_training_completed: true,
+    workplace: body.wrk_training,
+    workplace_completed: true,
   };
 
   Application.findOneAndUpdate({ owner: req.params.id }, wrk_training, {
@@ -325,13 +325,13 @@ exports.put_workplace = async function (req, res, next) {
     .then(() => {
       res.status(200).json({
         success: true,
-        message: "Successfully updated wrk_training",
+        message: "Successfully updated workplace",
       });
     })
     .catch((error) => {
       res.status(400).json({
         success: false,
-        message: "Failed to update wrk_training",
+        message: "Failed to update workplace",
         error: error,
       });
     });
@@ -341,8 +341,8 @@ exports.put_community = async function (req, res, next) {
   var body = req.body;
 
   const com_engagement = {
-    com_engagement: body.com_engagement,
-    com_engagement_completed: true,
+    community: body.com_engagement,
+    community_completed: true,
   };
 
   Application.findOneAndUpdate({ owner: req.params.id }, com_engagement, {
@@ -353,13 +353,13 @@ exports.put_community = async function (req, res, next) {
     .then(() => {
       res.status(200).json({
         success: true,
-        message: "Successfully updated com_engagement",
+        message: "Successfully updated community",
       });
     })
     .catch((error) => {
       res.status(400).json({
         success: false,
-        message: "Failed to update com_engagement",
+        message: "Failed to update community",
         error: error,
       });
     });
@@ -373,8 +373,8 @@ exports.put_philanthropy = async function (
   var body = req.body;
 
   const phil_charitable_involvement = {
-    phil_charitable_involvement: body.phil_charitable_involvement,
-    phil_charitable_involvement_completed: true,
+    philanthropy: body.philanthropy,
+    philanthropy_completed: true,
   };
 
   Application.findOneAndUpdate(
@@ -399,9 +399,9 @@ exports.put_philanthropy = async function (
 
 
 
-exports.put_assessment_and_tips = async function (req, res, next) {
+exports.notes = async function (req, res, next) {
   const assessments_and_tips = {
-    assessments_and_tips_completed: true,
+    notes: true,
   };
 
   Application.findOneAndUpdate({ owner: req.params.id }, assessments_and_tips, {

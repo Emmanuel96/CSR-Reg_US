@@ -5,7 +5,8 @@ function getPhilCharitable(){
   axios.get(`/api/application/${ID}`).then(result => {
     docData = result.data
   }).then(() => {
-    document.getElementById('charitable_inv').value = docData.phil_charitable_involvement
+    console.log(docData)
+    document.getElementById('charitable_inv').value = docData.philanthropy
   })
 }
 getPhilCharitable()
@@ -13,10 +14,10 @@ getPhilCharitable()
 function updatePhilCharitableInv(){
   event.preventDefault(); 
 
-  var phil_charitable_involvement = document.getElementById('charitable_inv').value;
-  var phil_charitable_involvement_completed = true
+  var philanthropy = document.getElementById('charitable_inv').value;
+  var philanthropy_completed = true
 
-  if(!phil_charitable_involvement){
+  if(!philanthropy_completed){
     return Swal.fire({
       title: "Please complete text field",
       confirmButtonColor: '#00a19a'
@@ -28,11 +29,11 @@ function updatePhilCharitableInv(){
   document.getElementById('submit_btn').disabled = true
 
   var data = {
-    phil_charitable_involvement,
-    phil_charitable_involvement_completed
+    philanthropy,
+    philanthropy_completed
   }
 
-  fetch(`/philanthropy_charitable_involvement/${ID}`, {
+  fetch(`/philanthropy/${ID}`, {
       method: "PUT", 
       headers: {
           'Content-Type': 'application/json'
@@ -47,10 +48,10 @@ function updatePhilCharitableInv(){
         document.getElementById('submit_btn').disabled = false
 
         Swal.fire({
-          title: "Successfully Saved Philanthropy Charitable Involvement",
+          title: "Successfully Saved Philanthropy",
           confirmButtonColor: '#00a19a'
         }).then(function(){
-          window.location.href = "/philanthropy_volunteering"
+          window.location.href = "/philanthropy_supporting_documents"
         });
       }else{
         document.getElementById('submit_btn').innerText = "Submit"

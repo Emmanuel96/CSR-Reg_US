@@ -118,7 +118,7 @@ const ApplicationSchema = new mongoose.Schema({
         type: String
     },
 
-    assessments_and_tips_completed: Boolean,
+    notes: Boolean,
 
     finished: Boolean,
 

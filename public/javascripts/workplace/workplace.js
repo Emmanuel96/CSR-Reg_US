@@ -5,7 +5,7 @@ function getWrkTraining(){
   axios.get(`/api/application/${ID}`).then(result => {
     docData = result.data
   }).then(() => {
-    document.getElementById('wrk_training').value = docData.wrk_training
+    document.getElementById('wrk_training').value = docData.workplace
   })
 }
 getWrkTraining()
@@ -13,10 +13,10 @@ getWrkTraining()
 function updateWorkPlaceTraining(){
   event.preventDefault(); 
 
-  var wrk_training = document.getElementById('wrk_training').value;
-  var wrk_training_completed = true
+  var workplace = document.getElementById('wrk_training').value;
+  var workplace_completed = true
 
-  if(!wrk_training){
+  if(!workplace_completed){
     return Swal.fire({
       title: "Please complete text field",
       confirmButtonColor: '#00a19a'
@@ -28,11 +28,11 @@ function updateWorkPlaceTraining(){
   document.getElementById('submit_btn').disabled = true
   
   var data = {
-    wrk_training,
-    wrk_training_completed
+    workplace,
+    workplace_completed
   }
 
-  fetch(`/workplace_training/${ID}`, {
+  fetch(`/workplace/${ID}`, {
       method: "PUT", 
       headers: {
           'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ function updateWorkPlaceTraining(){
         document.getElementById('submit_btn').disabled = false
 
         Swal.fire({
-          title: "Successfully Saved Workplace Training",
+          title: "Successfully Saved Workplace",
           confirmButtonColor: '#00a19a'
         }).then(function(){
           window.location.href = "/workplace_supporting_documents"

@@ -5,7 +5,7 @@ function getComEngagement(){
   axios.get(`/api/application/${ID}`).then(result => {
     docData = result.data
   }).then(() => {
-    document.getElementById('com_engagement_textarea').value = docData.com_engagement
+    document.getElementById('com_engagement_textarea').value = docData.community
   })
 }
 getComEngagement()
@@ -13,10 +13,10 @@ getComEngagement()
 function updateCommunityEngagement(){
   event.preventDefault(); 
 
-  var com_engagement = document.getElementById('com_engagement_textarea').value;
-  var com_engagement_completed = true
+  var community = document.getElementById('com_engagement_textarea').value;
+  var community_completed = true
 
-  if(!com_engagement){
+  if(!community_completed){
     return Swal.fire({
       title: "Please complete text field",
       confirmButtonColor: '#00a19a'
@@ -28,11 +28,11 @@ function updateCommunityEngagement(){
   document.getElementById('submit_btn').disabled = true
   
   var data = {
-    com_engagement,
-    com_engagement_completed
+    community,
+    community_completed
   }
 
-  fetch(`/community_engagement/${ID}`, {
+  fetch(`/community/${ID}`, {
       method: "PUT", 
       headers: {
           'Content-Type': 'application/json'

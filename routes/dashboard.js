@@ -66,7 +66,7 @@ router.put('/philanthropy/:id', DashboardController.put_philanthropy)
 
 router.put('/philanthropy_supporting_info/:id', DashboardController.update_phil_supporting_info)
 
-router.put('/assessment_and_tips/:id', DashboardController.put_assessment_and_tips)
+router.put('/notes/:id', DashboardController.notes)
 
 router.put('/application_finished/:id', DashboardController.put_application_finished)
 

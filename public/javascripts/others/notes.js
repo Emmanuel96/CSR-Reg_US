@@ -6,7 +6,7 @@ function updateAssessments(){
 
   document.getElementById('nxt_btn').disabled = true
 
-  fetch(`/assessment_and_tips/${ID}`, {
+  fetch(`/notes/${ID}`, {
     method: "PUT", 
     headers: {
       'Content-Type': 'application/json'
