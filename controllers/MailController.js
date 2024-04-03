@@ -1,8 +1,8 @@
 const sgMail = require("@sendgrid/mail");
-const Application = require("../models/Application");
+const SmallApplication = require("../models/SmallApplication");
 
 exports.notify_completion = (req, res, next) => {
-  Application.findOne({ owner: req.user._id.toString() })
+  SmallApplication.findOne({ owner: req.user._id.toString() })
     .then((doc) => {
       const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
 
@@ -300,7 +300,7 @@ exports.notify_completion = (req, res, next) => {
 };
 
 exports.notify_update = (req, res, next) => {
-  Application.findOne({ owner: req.user._id.toString() })
+  SmallApplication.findOne({ owner: req.user._id.toString() })
     .then((doc) => {
       const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
 

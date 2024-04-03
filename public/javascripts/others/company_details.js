@@ -108,7 +108,7 @@ function updateCompanyDetails() {
             title: "Successfully submitted Organisation Details",
             confirmButtonColor: "#00a19a",
           }).then(function () {
-            window.location.href = "/assessment_and_tips";
+            window.location.href = "/notes";
           });
         } else {
           document.getElementById("submit_btn").innerText = "Submit";

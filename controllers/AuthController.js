@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
-const Application = require("../models/Application");
+const SmallApplication = require("../models/SmallApplication");
 const crypto = require("crypto");
 const { promisify } = require("util");
 
@@ -109,7 +109,7 @@ exports.post_complete_registration = async (req, res) => {
             newUser
               .save()
               .then((savedUser) => {
-                //Application variables
+                //SmallApplication variables
                 let owner = savedUser._id;
                 let contact_person = null;
                 let organisation_name = orgName;
@@ -147,7 +147,7 @@ exports.post_complete_registration = async (req, res) => {
                 let finished = false;
                 let scoredByAssessors = false;
 
-                const newApplication = new Application({
+                const newApplication = new SmallApplication({
                   owner,
                   contact_person,
                   organisation_name,

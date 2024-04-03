@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ApplicationSchema = new mongoose.Schema({
+const SmallApplicationSchema = new mongoose.Schema({
     owner: {
         type: String,
         ref: 'User'
@@ -129,10 +129,10 @@ const ApplicationSchema = new mongoose.Schema({
     }
 });
 
-ApplicationSchema.set('toJSON', {
+SmallApplicationSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         delete returnedObject.__v
     }
 })
 
-module.exports = mongoose.model('Application', ApplicationSchema);
+module.exports = mongoose.model('SmallApplication', SmallApplicationSchema);

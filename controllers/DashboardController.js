@@ -1,4 +1,4 @@
-const Application = require("../models/Application");
+const SmallApplication = require("../models/SmallApplication");
 const mongoose = require("mongoose");
 const generatePdf = require("../utils/generatepdf");
 
@@ -93,7 +93,7 @@ exports.put_company_details = async function (req, res, next) {
     company_details_completed: true,
   };
 
-  Application.findOneAndUpdate({ owner: req.params.id }, company_details, {
+  SmallApplication.findOneAndUpdate({ owner: req.params.id }, company_details, {
     new: true,
     runValidators: true,
     context: "query",
@@ -122,7 +122,7 @@ exports.put_application_introduction = async function (req, res) {
     introduction_completed: true,
   };
 
-  Application.findOneAndUpdate({ owner: req.params.id }, introduction, {
+  SmallApplication.findOneAndUpdate({ owner: req.params.id }, introduction, {
     new: true,
     runValidators: true,
     context: "query",
@@ -147,11 +147,11 @@ exports.delete_user = async function (req, res) {
   const { id } = req.params;
   console.log(id);
   try {
-    const app = Application.find({ organisation_name: id });
+    const app = SmallApplication.find({ organisation_name: id });
     if (!app) {
       res.status(404).send("invalid user");
     }
-    const delete_app = Application.findOneAndDelete({
+    const delete_app = SmallApplication.findOneAndDelete({
       organisation_name: id,
     });
 
@@ -173,7 +173,7 @@ exports.put_environment_energy = async function (req, res, next) {
     env_energy_completed: true,
   };
 
-  Application.findOneAndUpdate({ owner: req.params.id }, env_energy, {
+  SmallApplication.findOneAndUpdate({ owner: req.params.id }, env_energy, {
     new: true,
     runValidators: true,
     context: "query",
@@ -201,7 +201,7 @@ exports.put_environment_natural_resource = async function (req, res, next) {
     env_natural_resource_completed: true,
   };
 
-  Application.findOneAndUpdate({ owner: req.params.id }, env_natural_resource, {
+  SmallApplication.findOneAndUpdate({ owner: req.params.id }, env_natural_resource, {
     new: true,
     runValidators: true,
     context: "query",
@@ -229,7 +229,7 @@ exports.put_environment_travel = async function (req, res, next) {
     env_travel_completed: true,
   };
 
-  Application.findOneAndUpdate({ owner: req.params.id }, env_travel, {
+  SmallApplication.findOneAndUpdate({ owner: req.params.id }, env_travel, {
     new: true,
     runValidators: true,
     context: "query",
@@ -261,7 +261,7 @@ exports.put_environment_supply_chain_management = async function (
     env_supply_chain_management_completed: true,
   };
 
-  Application.findOneAndUpdate(
+  SmallApplication.findOneAndUpdate(
     { owner: req.params.id },
     env_supply_chain_management,
     { new: true, runValidators: true, context: "query" }
@@ -289,7 +289,7 @@ exports.put_environment_waste = async function (req, res, next) {
     env_waste_completed: true,
   };
 
-  Application.findOneAndUpdate({ owner: req.params.id }, env_waste, {
+  SmallApplication.findOneAndUpdate({ owner: req.params.id }, env_waste, {
     new: true,
     runValidators: true,
     context: "query",
@@ -317,7 +317,7 @@ exports.put_workplace = async function (req, res, next) {
     workplace_completed: true,
   };
 
-  Application.findOneAndUpdate({ owner: req.params.id }, wrk_training, {
+  SmallApplication.findOneAndUpdate({ owner: req.params.id }, wrk_training, {
     new: true,
     runValidators: true,
     context: "query",
@@ -345,7 +345,7 @@ exports.put_community = async function (req, res, next) {
     community_completed: true,
   };
 
-  Application.findOneAndUpdate({ owner: req.params.id }, com_engagement, {
+  SmallApplication.findOneAndUpdate({ owner: req.params.id }, com_engagement, {
     new: true,
     runValidators: true,
     context: "query",
@@ -377,7 +377,7 @@ exports.put_philanthropy = async function (
     philanthropy_completed: true,
   };
 
-  Application.findOneAndUpdate(
+  SmallApplication.findOneAndUpdate(
     { owner: req.params.id },
     phil_charitable_involvement,
     { new: true, runValidators: true, context: "query" }
@@ -404,7 +404,7 @@ exports.notes = async function (req, res, next) {
     notes: true,
   };
 
-  Application.findOneAndUpdate({ owner: req.params.id }, assessments_and_tips, {
+  SmallApplication.findOneAndUpdate({ owner: req.params.id }, assessments_and_tips, {
     new: true,
     runValidators: true,
     context: "query",
@@ -428,7 +428,7 @@ exports.update_phil_supporting_info = (req, res) => {
   let { phil_other_information, phil_future_planning, further_info_completed } =
     req.body;
 
-  Application.findOneAndUpdate(
+  SmallApplication.findOneAndUpdate(
     { owner: req.params.id },
     { phil_other_information, phil_future_planning, further_info_completed },
     { new: true, runValidators: true, context: "query" }
@@ -451,7 +451,7 @@ exports.update_phil_supporting_info = (req, res) => {
 exports.put_application_finished = (req, res) => {
   let date = new Date();
   // submission_date
-  Application.findOneAndUpdate(
+  SmallApplication.findOneAndUpdate(
     { owner: req.params.id },
     { finished: true },
     { new: true, runValidators: true, context: "query" }
@@ -479,7 +479,7 @@ exports.put_application_finished = (req, res) => {
 
 
 exports.get_application_document = function (req, res, next) {
-  Application.findOne({ owner: req.params.id })
+  SmallApplication.findOne({ owner: req.params.id })
     .then((data) => {
       res.status(200).json(data);
     })
