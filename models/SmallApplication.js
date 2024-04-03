@@ -126,6 +126,11 @@ const SmallApplicationSchema = new mongoose.Schema({
 
     submission_date: {
         type: String
+    },
+
+    deleted: {
+        type: Boolean,
+        default: false
     }
 });
 
