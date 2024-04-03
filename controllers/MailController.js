@@ -10,7 +10,7 @@ exports.notify_completion = (req, res, next) => {
 
       let company = doc.organisation_name;
 
-    let mailList = process.env.MAILIST
+    let mailList = process.env.MAILIST.split(',')
   
     const adminNotificationMessage = {
       to: mailList,
@@ -308,14 +308,7 @@ exports.notify_update = (req, res, next) => {
 
       let company = doc.organisation_name;
 
-    let mailList = [
-      'kole.audu@gmail.com',
-      'csraccreditation@gmail.com',
-      'jennifer@csr-accreditation.co.uk',
-      'rich@csr-accreditation.co.uk',
-      'paul@csr-accreditation.co.uk',
-      'phillipa@csr-accreditation.co.uk'
-    ]
+    let mailList = process.env.split(',')
   
     const adminNotificationMessage = {
       to: mailList,

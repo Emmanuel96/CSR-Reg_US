@@ -115,12 +115,12 @@ exports.post_complete_registration = async (req, res) => {
                 let organisation_name = orgName;
                 let organisation_address = null;
                 let organisation_nationality = null;
-                let industry_sector = null;
+                let telephone_number = null;
+                let soleTraderMicro = null;
+                let charity = null;
+                let mobile_number = null;
                 let postal_code = null;
                 let email_address = req.body.email.toLowerCase();
-                let contact_number = null;
-                let organisation_size = null;
-                let thirdparty_org = null;
                 let company_details_completed = false;
                 let introduction = null;
                 let introduction_completed = false;
@@ -134,39 +134,16 @@ exports.post_complete_registration = async (req, res) => {
                 let env_supply_chain_management_completed = false;
                 let env_waste = null;
                 let env_waste_completed = false;
-                let wrk_training = null;
-                let wrk_training_completed = false;
-                let wrk_labour_practices = null;
-                let wrk_labour_practices_completed = false;
-                let wrk_ethical_practices = null;
-                let wrk_ethical_practices_completed = false;
-                let wrk_governance = null;
-                let wrk_governance_completed = false;
-                let wrk_policies = null;
-                let wrk_policies_completed = false;
-                let com_engagement = null;
-                let com_engagement_completed = false;
-                let com_local_issues = null;
-                let com_local_issues_completed = false;
-                let com_wealth_creation = null;
-                let com_wealth_creation_completed = false;
-                let com_projects_and_groups = null;
-                let com_projects_and_groups_completed = false;
-                let com_education = null;
-                let com_education_completed = false;
-                let phil_charitable_involvement = null;
-                let phil_charitable_involvement_completed = false;
-                let phil_volunteering = null;
-                let phil_volunteering_completed = false;
-                let phil_pro_bono = null;
-                let phil_pro_bono_completed = false;
-                let phil_fund_raising = null;
-                let phil_fund_raising_completed = false;
-                let phil_financial_and_kind_gifts = null;
-                let phil_financial_and_kind_gifts_completed = false;
+                let workplace = null;
+                let workplace_completed = false;
+                let community = null;
+                let community_completed = false;
+                let philanthropy = null;
+                let philanthropy_completed = false;
                 let phil_other_information = null;
                 let phil_future_planning = null;
-                let assessments_and_tips_completed = false;
+                let further_info_completed = false;
+                let notes = false
                 let finished = false;
                 let scoredByAssessors = false;
 
@@ -176,12 +153,12 @@ exports.post_complete_registration = async (req, res) => {
                   organisation_name,
                   organisation_address,
                   organisation_nationality,
-                  industry_sector,
                   postal_code,
                   email_address,
-                  contact_number,
-                  organisation_size,
-                  thirdparty_org,
+                  telephone_number,
+                  mobile_number,
+                  charity,
+                  soleTraderMicro,
                   company_details_completed,
                   introduction,
                   introduction_completed,
@@ -195,41 +172,18 @@ exports.post_complete_registration = async (req, res) => {
                   env_supply_chain_management_completed,
                   env_waste,
                   env_waste_completed,
-                  wrk_training,
-                  wrk_training_completed,
-                  wrk_labour_practices,
-                  wrk_labour_practices_completed,
-                  wrk_ethical_practices,
-                  wrk_ethical_practices_completed,
-                  wrk_governance,
-                  wrk_governance_completed,
-                  wrk_policies,
-                  wrk_policies_completed,
-                  com_engagement,
-                  com_engagement_completed,
-                  com_local_issues,
-                  com_local_issues_completed,
-                  com_wealth_creation,
-                  com_wealth_creation_completed,
-                  com_projects_and_groups,
-                  com_projects_and_groups_completed,
-                  com_education,
-                  com_education_completed,
-                  phil_charitable_involvement,
-                  phil_charitable_involvement_completed,
-                  phil_volunteering,
-                  phil_volunteering_completed,
-                  phil_pro_bono,
-                  phil_pro_bono_completed,
-                  phil_fund_raising,
-                  phil_fund_raising_completed,
-                  phil_financial_and_kind_gifts,
-                  phil_financial_and_kind_gifts_completed,
+                  workplace,
+                  workplace_completed,
+                  community,
+                  community_completed,
+                  philanthropy,
+                  philanthropy_completed,
                   phil_other_information,
                   phil_future_planning,
-                  assessments_and_tips_completed,
+                  further_info_completed,
                   finished,
                   scoredByAssessors,
+                  notes,
                 });
 
                 sendMail(
@@ -409,14 +363,7 @@ exports.post_complete_registration = async (req, res) => {
                   });
               })
               .then(async () => {
-                let mailList = [
-                  "kole.audu@gmail.com",
-                  "csraccreditation@gmail.com",
-                  "jennifer@csr-accreditation.co.uk",
-                  "rich@csr-accreditation.co.uk",
-                  "paul@csr-accreditation.co.uk",
-                  "phillipa@csr-accreditation.co.uk",
-                ];
+                let mailList = process.env.MAILIST.split(',')
                 await sendMail(
                   `I'm excited to inform you that ${firstName} ${lastName} from ${orgName} has just registered on our application website.`,
                   "CSRA New Registration",
