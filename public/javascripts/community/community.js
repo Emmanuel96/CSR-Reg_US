@@ -47,7 +47,7 @@ function updateCommunityEngagement(){
         document.getElementById('submit_btn').disabled = false
 
         Swal.fire({
-          title: "Successfully Saved Community Engagement",
+          title: "Successfully Saved Community",
           confirmButtonColor: '#00a19a'
         }).then(function(){
           window.location.href = "/community_supporting_documents"

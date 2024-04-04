@@ -313,7 +313,7 @@ exports.put_workplace = async function (req, res, next) {
   var body = req.body;
 
   const wrk_training = {
-    workplace: body.wrk_training,
+    workplace: body.workplace,
     workplace_completed: true,
   };
 
@@ -341,7 +341,7 @@ exports.put_community = async function (req, res, next) {
   var body = req.body;
 
   const com_engagement = {
-    community: body.com_engagement,
+    community: body.community,
     community_completed: true,
   };
 
@@ -400,11 +400,8 @@ exports.put_philanthropy = async function (
 
 
 exports.notes = async function (req, res, next) {
-  const assessments_and_tips = {
-    notes: true,
-  };
 
-  SmallApplication.findOneAndUpdate({ owner: req.params.id }, assessments_and_tips, {
+  SmallApplication.findOneAndUpdate({ owner: req.params.id }, {notes: true}, {
     new: true,
     runValidators: true,
     context: "query",

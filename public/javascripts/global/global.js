@@ -52,7 +52,7 @@ axios.get(`/api/application/${userID}`).then(result => {
 function applicationStatus() {
   let company_details_completed = req_data.company_details_completed
   let introduction_completed = req_data.introduction_completed
-  let assessments_and_tips_completed = req_data.assessments_and_tips_completed
+  let notes = req_data.notes
 
   let env_energy_completed = req_data.env_energy_completed
   let env_natural_resource_completed = req_data.env_natural_resource_completed
@@ -124,16 +124,16 @@ function applicationStatus() {
     philanthropy_tick.classList.remove("hidden")
   }
 
-  var assessment_tick = document.getElementById("assessment_tick")
+  var assessment_tick = document.getElementById("notes")
 
   //checks if asessment page is completed and adds tick
-  if(assessments_and_tips_completed){
+  if(notes){
     assessment_tick.classList.remove("hidden");
   }
 
   let finished_text = document.getElementById('finish_tick_text')
   //checks if all sections are true then adds tick to the finish button
-  if(company_details_completed && introduction_completed && assessments_and_tips_completed && environment_completed && workplace_completed && community_completed && philanthropy_completed){
+  if(company_details_completed && introduction_completed && notes && environment_completed && workplace_completed && community_completed && philanthropy_completed){
     finish_tick.classList.remove("hidden");
     finished_text.classList.add('bg-gray-200')
   }
