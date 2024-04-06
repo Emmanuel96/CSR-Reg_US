@@ -123,3 +123,31 @@ function updateCompanyDetails() {
       });
   }
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Get the select elements for charity and sole trader
+  const charitySelect = document.getElementById("charity");
+  const soleTraderSelect = document.getElementById("soleTraderMicro");
+
+  // Add event listener to the charity select
+  charitySelect.addEventListener("change", function() {
+    if (charitySelect.value === "YES") {
+      soleTraderSelect.value = "NO";
+    } else {
+      soleTraderSelect.value = "YES";
+    }
+  });
+
+  // Add event listener to the sole trader select
+  soleTraderSelect.addEventListener("change", function() {
+    // If sole trader is selected as YES
+    if (soleTraderSelect.value === "YES") {
+      // Set the value of charity select to NO
+      charitySelect.value = "NO";
+    } else {
+      // If sole trader is selected as NO
+      // Set the value of charity select to YES
+      charitySelect.value = "YES";
+    }
+  });
+});
