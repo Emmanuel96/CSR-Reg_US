@@ -69,15 +69,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const textarea = document.getElementById("introduction_textarea");
     const wordCountDisplay = document.getElementById("word_count");
 
-    // Function to update word count display
     function updateWordCount() {
         const wordCount = textarea.value.trim().split(/\s+/).length;
         wordCountDisplay.textContent = `${wordCount}/500 words`;
     }
 
-    // Add event listener to textarea for input events
     textarea.addEventListener("input", updateWordCount);
 
-    // Initial update of word count
     updateWordCount();
 });
