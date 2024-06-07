@@ -121,6 +121,7 @@ exports.post_complete_registration = async (req, res) => {
                 let mobile_number = null;
                 let postal_code = null;
                 let email_address = req.body.email.toLowerCase();
+                let country = req.body.country;
                 let company_details_completed = false;
                 let introduction = null;
                 let introduction_completed = false;
@@ -154,6 +155,7 @@ exports.post_complete_registration = async (req, res) => {
                   organisation_address,
                   organisation_nationality,
                   postal_code,
+                  country,
                   email_address,
                   telephone_number,
                   mobile_number,

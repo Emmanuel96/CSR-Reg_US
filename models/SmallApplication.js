@@ -23,6 +23,10 @@ const SmallApplicationSchema = new mongoose.Schema({
         type: String
     },
 
+    country: {
+        type: String,
+    },
+
     telephone_number: {
         type: String
     },
@@ -44,7 +48,7 @@ const SmallApplicationSchema = new mongoose.Schema({
         type: String,
     },
 
-   soleTraderMicro: {
+    soleTraderMicro: {
         type: String
     },
 

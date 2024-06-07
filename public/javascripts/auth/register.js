@@ -6,8 +6,9 @@ function registerSubmit(event){
   var orgName = $('#input_org_name').val()
   var email = $('#input_email').val()
   var password = $('#input_password').val()
+  var country = $('#input_country').val()
 
-  if(!email || !password || !lastName || !firstName || !orgName){
+  if(!email || !password || !lastName || !firstName || !orgName || !country){
     Swal.fire({
       title: "Please complete all fields",
       confirmButtonColor: '#00a19a'
@@ -26,7 +27,7 @@ function registerSubmit(event){
     document.getElementById('signin_btn').innerText = "Signing up..."
     document.getElementById('signin_btn').disabled = true
 
-    var data = {email, password, firstName, lastName, orgName}
+    var data = {email, password, firstName, lastName, orgName, country}
 
     fetch('/register', {
         method: "POST", 
