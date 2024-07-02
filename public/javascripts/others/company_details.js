@@ -2,6 +2,17 @@ let ID = sessionStorage.getItem("csra_user");
 
 let docData = "";
 
+const formfields = ['contact_person', 'organisation_name', 'organisation_address', 'organisation_nationality', 'postal_code', 'email_address', 'telephone_number', 'mobile_number', 'soleTraderMicro', 'charity']
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  formfields.forEach(field => {
+    document.getElementById(field).addEventListener('input', (e) => {
+      localStorage.setItem(field, e.target.value);
+    });
+  });
+})
+
 function getCompanyDetails() {
   axios
     .get(`/api/application/${ID}`)
@@ -10,20 +21,16 @@ function getCompanyDetails() {
       console.log(docData.mobile_number, docData.telephone_number)
     })
     .then(() => {
-      document.getElementById("contact_person").value = docData.contact_person;
-      document.getElementById("organisation_name").value =
-        docData.organisation_name;
-      document.getElementById("organisation_address").value =
-        docData.organisation_address;
-      document.getElementById("telephone_number").value =
-        docData.telephone_number;
-      document.getElementById("organisation_nationality").value =
-        docData.organisation_nationality;
-      document.getElementById("postal_code").value = docData.postal_code;
-      document.getElementById("email_address").value = docData.email_address;
-      document.getElementById("mobile_number").value = docData.mobile_number;
-      document.getElementById("soleTraderMicro").value = docData.soleTraderMicro;
-      document.getElementById("charity").value = docData.charity;
+      document.getElementById('contact_person').value = localStorage.getItem('contact_person') ? localStorage.getItem('contact_person') : docData.contact_person
+      document.getElementById('organisation_name').value = localStorage.getItem('organisation_name') ? localStorage.getItem('organisation_name') : docData.organisation_name
+      document.getElementById('organisation_address').value = localStorage.getItem('organisation_address') ? localStorage.getItem('organisation_address') : docData.organisation_address
+      document.getElementById('telephone_number').value = localStorage.getItem('telephone_number') ? localStorage.getItem('telephone_number') : docData.telephone_number
+      document.getElementById('organisation_nationality').value = localStorage.getItem('organisation_nationality') ? localStorage.getItem('organisation_nationality') : docData.organisation_nationality
+      document.getElementById('postal_code').value = localStorage.getItem('postal_code') ? localStorage.getItem('postal_code') : docData.postal_code
+      document.getElementById('email_address').value = localStorage.getItem('email_address') ? localStorage.getItem('email_address') : docData.email_address
+      document.getElementById('mobile_number').value = localStorage.getItem('mobile_number') ? localStorage.getItem('mobile_number') : docData.mobile_number
+      document.getElementById('soleTraderMicro').value = localStorage.getItem('soleTraderMicro') ? localStorage.getItem('soleTraderMicro') : docData.soleTraderMicro
+      document.getElementById('charity').value = localStorage.getItem('charity') ? localStorage.getItem('charity') : docData.charity
     });
 }
 getCompanyDetails();
@@ -100,6 +107,11 @@ function updateCompanyDetails() {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
+          
+          formfields.forEach(field => {
+            localStorage.removeItem(field)
+          })
+
           document.getElementById("submit_btn").innerText = "Submit";
 
           document.getElementById("submit_btn").disabled = false;

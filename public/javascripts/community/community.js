@@ -1,11 +1,22 @@
 const ID = sessionStorage.getItem("csra_user");
 var docData = ""
 
+
+const formfields = ['com_engagement_textarea']
+
+document.addEventListener('DOMContentLoaded', () => {
+  formfields.forEach(field => {
+    document.getElementById(field).addEventListener('input', (e) => {
+      localStorage.setItem(field, e.target.value);
+    });
+  });
+})
+
 function getComEngagement(){
   axios.get(`/api/application/${ID}`).then(result => {
     docData = result.data
   }).then(() => {
-    document.getElementById('com_engagement_textarea').value = docData.community
+    document.getElementById('com_engagement_textarea').value = localStorage.getItem('com_engagement_textarea') ? localStorage.getItem('com_engagement_textarea') : docData.community
   })
 }
 getComEngagement()
@@ -42,6 +53,10 @@ function updateCommunityEngagement(){
   .then(response => response.json())
   .then(data => {
       if(data.success){
+        formfields.forEach(field => {
+          localStorage.removeItem(field)
+        })
+
         document.getElementById('submit_btn').innerText = "Submit"
 
         document.getElementById('submit_btn').disabled = false

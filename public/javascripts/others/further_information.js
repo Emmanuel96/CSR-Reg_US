@@ -1,6 +1,16 @@
 const ID = sessionStorage.getItem("csra_user");
 var docData = "";
 
+const formfields = ['phil_other_information', 'phil_future_planning']
+
+document.addEventListener('DOMContentLoaded', () => {
+  formfields.forEach(field => {
+    document.getElementById(field).addEventListener('input', (e) => {
+      localStorage.setItem(field, e.target.value);
+    });
+  });
+})
+
 function getFurtherInfo() {
     console.log("get further information")
     axios
@@ -9,21 +19,11 @@ function getFurtherInfo() {
             docData = result.data;
         })
         .then(() => {
-            document.getElementById("phil_other_information").value =
-                docData.phil_other_information;
-            document.getElementById("phil_future_planning").value =
-                docData.phil_future_planning;
+          document.getElementById('phil_other_information').value = localStorage.getItem('phil_other_information') ? localStorage.getItem('phil_other_information') : docData.phil_other_information
+          document.getElementById('phil_future_planning').value = localStorage.getItem('phil_future_planning') ? localStorage.getItem('phil_future_planning') : docData.phil_future_planning
         });
 }
 getFurtherInfo();
-
-axios.get(`/api/application/${ID}`).then(result => {
-  appData = result.data
-}).then(() => {
-  document.getElementById('phil_other_information').value = appData.phil_other_information
-
-  document.getElementById('phil_future_planning').value = appData.phil_future_planning
-})
 
 function updateFurtherInfo(){
   event.preventDefault(); 
@@ -47,7 +47,10 @@ function updateFurtherInfo(){
     })
   }
   else {
-    if (appData.finished){
+    if (docData.finished){
+      formfields.forEach(field => {
+          localStorage.removeItem(field)
+        })
     Swal.fire({
       title: "Thank You For completing your Application!",
       confirmButtonColor: '#00a19a'
@@ -55,6 +58,9 @@ function updateFurtherInfo(){
     axios.put(`/further_information/${ID}`, data)
   }
   else{
+    formfields.forEach(field => {
+          localStorage.removeItem(field)
+        })
     Swal.fire({
       title: "You have successfully updated your application!",
       confirmButtonColor: "#00a19a",

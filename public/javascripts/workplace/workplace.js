@@ -1,11 +1,21 @@
 const ID = sessionStorage.getItem("csra_user");
 var docData = ""
 
+const formfields = ['wrk_training']
+
+document.addEventListener('DOMContentLoaded', () => {
+  formfields.forEach(field => {
+    document.getElementById(field).addEventListener('input', (e) => {
+      localStorage.setItem(field, e.target.value);
+    });
+  });
+})
+
 function getWrkTraining(){
   axios.get(`/api/application/${ID}`).then(result => {
     docData = result.data
   }).then(() => {
-    document.getElementById('wrk_training').value = docData.workplace
+    document.getElementById('wrk_training').value = localStorage.getItem('wrk_training') ? localStorage.getItem('wrk_training') : docData.workplace
   })
 }
 getWrkTraining()
@@ -42,6 +52,10 @@ function updateWorkPlaceTraining(){
   .then(response => response.json())
   .then(data => {
       if(data.success){
+        formfields.forEach(field => {
+          localStorage.removeItem(field)
+        })
+        
         document.getElementById('submit_btn').innerText = "Submit"
 
         document.getElementById('submit_btn').disabled = false

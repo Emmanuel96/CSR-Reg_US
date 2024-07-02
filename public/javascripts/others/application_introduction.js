@@ -1,28 +1,38 @@
 const ID = sessionStorage.getItem("csra_user");
 let docData = ""
 
-function getAppIntro(){
+const formfields = ['introduction_textarea']
+
+document.addEventListener('DOMContentLoaded', () => {
+  formfields.forEach(field => {
+    document.getElementById(field).addEventListener('input', (e) => {
+      localStorage.setItem(field, e.target.value);
+    });
+  });
+})
+
+function getAppIntro() {
   axios.get(`/api/application/${ID}`).then(result => {
     docData = result.data
   }).then(() => {
-    document.getElementById('introduction_textarea').value = docData.introduction
+    document.getElementById('introduction_textarea').value = localStorage.getItem('introduction_textarea') ? localStorage.getItem('introduction_textarea') : docData.introduction
   })
 }
 getAppIntro()
 
-function updateApplicationIntroduction(){
-  event.preventDefault(); 
+function updateApplicationIntroduction() {
+  event.preventDefault();
 
   var introduction = document.getElementById('introduction_textarea').value;
   var introduction_completed = true
 
-  if(!introduction){
+  if (!introduction) {
     return Swal.fire({
       title: "Please complete text field",
       confirmButtonColor: '#00a19a'
     })
   }
-  
+
   document.getElementById('submit_btn').innerText = "Submitting"
 
   document.getElementById('submit_btn').disabled = true
@@ -33,15 +43,20 @@ function updateApplicationIntroduction(){
   }
 
   fetch(`/application_introduction/${ID}`, {
-      method: "PUT", 
-      headers: {
-          'Content-Type': 'application/json'
-      }, 
-      body: JSON.stringify(data)
+    method: "PUT",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
   })
-  .then(response => response.json())
-  .then(data => {
-      if(data.success){
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        
+        formfields.forEach(field => {
+          localStorage.removeItem(field)
+        })
+
         document.getElementById('submit_btn').innerText = "Submit"
 
         document.getElementById('submit_btn').disabled = false
@@ -52,29 +67,29 @@ function updateApplicationIntroduction(){
         }).then(() => {
           window.location.href = "/environment_energy";
         })
-      }else{
+      } else {
         document.getElementById('submit_btn').innerText = "Submit"
 
         document.getElementById('submit_btn').disabled = false
-        
+
         Swal.fire({
           title: "Failed to submit. Please try again",
           confirmButtonColor: '#00a19a'
-        })              
+        })
       }
-  })
+    })
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    const textarea = document.getElementById("introduction_textarea");
-    const wordCountDisplay = document.getElementById("word_count");
+document.addEventListener("DOMContentLoaded", function () {
+  const textarea = document.getElementById("introduction_textarea");
+  const wordCountDisplay = document.getElementById("word_count");
 
-    function updateWordCount() {
-        const wordCount = textarea.value.trim().split(/\s+/).length;
-        wordCountDisplay.textContent = `${wordCount}/500 words`;
-    }
+  function updateWordCount() {
+    const wordCount = textarea.value.trim().split(/\s+/).length;
+    wordCountDisplay.textContent = `${wordCount}/500 words`;
+  }
 
-    textarea.addEventListener("input", updateWordCount);
+  textarea.addEventListener("input", updateWordCount);
 
-    updateWordCount();
+  updateWordCount();
 });

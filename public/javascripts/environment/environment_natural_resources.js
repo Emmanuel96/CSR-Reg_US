@@ -1,11 +1,21 @@
 const ID = sessionStorage.getItem("csra_user");
 var docData = ""
 
+const formfields = ['env_natural_resource']
+
+document.addEventListener('DOMContentLoaded', () => {
+  formfields.forEach(field => {
+    document.getElementById(field).addEventListener('input', (e) => {
+      localStorage.setItem(field, e.target.value);
+    });
+  });
+})
+
 function getEnvNatural(){
   axios.get(`/api/application/${ID}`).then(result => {
     docData = result.data
   }).then(() => {
-    document.getElementById('env_natural_resource').value = docData.env_natural_resource
+    document.getElementById('env_natural_resource').value = localStorage.getItem('env_natural_resource') ? localStorage.getItem('env_natural_resource') : docData.env_natural_resource
   })
 }
 getEnvNatural()
@@ -42,6 +52,10 @@ function updateEnvironmentNaturalResource(){
   .then(response => response.json())
   .then(data => {
       if(data.success){
+        formfields.forEach(field => {
+          localStorage.removeItem(field)
+        })
+        
         document.getElementById('submit_btn').innerText = "Submit"
 
         document.getElementById('submit_btn').disabled = false

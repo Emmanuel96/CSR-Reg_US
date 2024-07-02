@@ -1,11 +1,21 @@
 const ID = sessionStorage.getItem("csra_user");
 var docData = ""
 
+const formfields = ['env_travel']
+
+document.addEventListener('DOMContentLoaded', () => {
+  formfields.forEach(field => {
+    document.getElementById(field).addEventListener('input', (e) => {
+      localStorage.setItem(field, e.target.value);
+    });
+  });
+})
+
 function getEnvTravel(){
   axios.get(`/api/application/${ID}`).then(result => {
     docData = result.data
   }).then(() => {
-    document.getElementById('env_travel').value = docData.env_travel
+    document.getElementById('env_travel').value = localStorage.getItem('env_travel') ? localStorage.getItem('env_travel') : docData.env_travel
   })
 }
 getEnvTravel()
@@ -42,6 +52,9 @@ function updateEnvironmentTravel(){
   .then(response => response.json())
   .then(data => {
       if(data.success){
+        formfields.forEach(field => {
+          localStorage.removeItem(field)
+        })
         document.getElementById('submit_btn').innerText = "Submit"
 
         document.getElementById('submit_btn').disabled = false

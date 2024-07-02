@@ -1,12 +1,22 @@
 const ID = sessionStorage.getItem("csra_user");
 var docData = ""
 
+const formfields = ['charitable_inv']
+
+document.addEventListener('DOMContentLoaded', () => {
+  formfields.forEach(field => {
+    document.getElementById(field).addEventListener('input', (e) => {
+      localStorage.setItem(field, e.target.value);
+    });
+  });
+})
+
 function getPhilCharitable(){
   axios.get(`/api/application/${ID}`).then(result => {
     docData = result.data
   }).then(() => {
     console.log(docData)
-    document.getElementById('charitable_inv').value = docData.philanthropy
+    document.getElementById('charitable_inv').value = localStorage.getItem('charitable_inv') ? localStorage.getItem('charitable_inv') : docData.philanthropy
   })
 }
 getPhilCharitable()
@@ -43,6 +53,10 @@ function updatePhilCharitableInv(){
   .then(response => response.json())
   .then(data => {
       if(data.success){
+        formfields.forEach(field => {
+          localStorage.removeItem(field)
+        })
+        
         document.getElementById('submit_btn').innerText = "Submit"
 
         document.getElementById('submit_btn').disabled = false

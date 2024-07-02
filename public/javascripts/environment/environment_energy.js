@@ -1,6 +1,16 @@
 const ID = sessionStorage.getItem("csra_user");
 var docData = "";
 
+const formfields = ['env_energy_textarea']
+
+document.addEventListener('DOMContentLoaded', () => {
+  formfields.forEach(field => {
+    document.getElementById(field).addEventListener('input', (e) => {
+      localStorage.setItem(field, e.target.value);
+    });
+  });
+})
+
 function getEnvEnergy() {
   axios
     .get(`/api/application/${ID}`)
@@ -8,7 +18,7 @@ function getEnvEnergy() {
       docData = result.data;
     })
     .then(() => {
-      document.getElementById("env_energy_textarea").value = docData.env_energy;
+      document.getElementById('env_energy_textarea').value = localStorage.getItem('env_energy_textarea') ? localStorage.getItem('env_energy_textarea') : docData.env_energy
     });
 }
 getEnvEnergy();
@@ -45,6 +55,10 @@ function updateEnvironmentEnergy() {
     .then((response) => response.json())
     .then((data) => {
       if (data.success) {
+        formfields.forEach(field => {
+          localStorage.removeItem(field)
+        })
+
         document.getElementById("submit_btn").innerText = "Submit";
 
         document.getElementById("submit_btn").disabled = false;

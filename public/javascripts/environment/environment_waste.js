@@ -1,6 +1,16 @@
 const ID = sessionStorage.getItem("csra_user");
 var docData = "";
 
+const formfields = ['env_waste']
+
+document.addEventListener('DOMContentLoaded', () => {
+  formfields.forEach(field => {
+    document.getElementById(field).addEventListener('input', (e) => {
+      localStorage.setItem(field, e.target.value);
+    });
+  });
+})
+
 function getEnvWaste() {
   axios
     .get(`/api/application/${ID}`)
@@ -8,7 +18,7 @@ function getEnvWaste() {
       docData = result.data;
     })
     .then(() => {
-      document.getElementById("env_waste").value = docData.env_waste;
+      document.getElementById('env_waste').value = localStorage.getItem('env_waste') ? localStorage.getItem('env_waste') : docData.env_waste
     });
 }
 getEnvWaste();
@@ -45,6 +55,9 @@ function updateEnvironmentWaste() {
     .then((response) => response.json())
     .then((data) => {
       if (data.success) {
+        formfields.forEach(field => {
+          localStorage.removeItem(field)
+        })
         document.getElementById("submit_btn").innerText = "Submit";
 
         document.getElementById("submit_btn").disabled = false;
