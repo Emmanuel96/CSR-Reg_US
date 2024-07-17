@@ -6,13 +6,10 @@ const url =
     : process.env.DATABASE_URL;
 
 
-
+mongoose.set('strictQuery', true)
 console.log("Connecting to mongodb...");
 mongoose
-  .connect(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(url)
   .then(() => {
     console.log("MongoDB Connected Successfully");
   })
