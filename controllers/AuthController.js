@@ -6,6 +6,7 @@ const { promisify } = require("util");
 
 const { sendMail } = require("../mail/mail");
 const sgMail = require("@sendgrid/mail");
+const { application } = require("express");
 
 require("dotenv").config();
 
@@ -63,6 +64,127 @@ exports.get_reset_password = (req, res, next) => {
   });
 };
 
+exports.findUserByEmail = async (req, res) => {
+  const email = req.query.email;
+
+  if (!email) {
+    return res.status(400).json({ error: "Email is required" });
+  }
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    return res.status(404).json({ error: "User not found" });
+  }
+
+  if (user.smallBusinessApplication) {
+    return res.status(200).json({
+      application: false
+    });
+  }
+
+  return res.status(200).json({
+    application: true
+  })
+}
+
+exports.createSmallBusinessApplication = async (req, res) => {
+  const email = req.query.email;
+
+  if (!email) {
+    return res.status(400).json({ error: "Email is required" });
+  }
+
+  const user = await User.findOne({ email })
+
+  let owner = user._id;
+  let contact_person = null;
+  let organisation_name = user.orgName;
+  let organisation_address = null;
+  let organisation_nationality = null;
+  let telephone_number = null;
+  let soleTraderMicro = null;
+  let charity = null;
+  let mobile_number = null;
+  let postal_code = null;
+  let email_address = user.email.toLowerCase();
+  let country = null;
+  let company_details_completed = false;
+  let introduction = null;
+  let introduction_completed = false;
+  let env_energy = null;
+  let env_energy_completed = false;
+  let env_natural_resource = null;
+  let env_natural_resource_completed = false;
+  let env_travel = null;
+  let env_travel_completed = false;
+  let env_supply_chain_management = null;
+  let env_supply_chain_management_completed = false;
+  let env_waste = null;
+  let env_waste_completed = false;
+  let workplace = null;
+  let workplace_completed = false;
+  let community = null;
+  let community_completed = false;
+  let philanthropy = null;
+  let philanthropy_completed = false;
+  let phil_other_information = null;
+  let phil_future_planning = null;
+  let further_info_completed = false;
+  let notes = false
+  let finished = false;
+  let scoredByAssessors = false;
+
+  const application = new SmallApplication({
+    owner,
+    contact_person,
+    organisation_name,
+    organisation_address,
+    organisation_nationality,
+    postal_code,
+    country,
+    email_address,
+    telephone_number,
+    mobile_number,
+    charity,
+    soleTraderMicro,
+    company_details_completed,
+    introduction,
+    introduction_completed,
+    env_energy,
+    env_energy_completed,
+    env_natural_resource,
+    env_natural_resource_completed,
+    env_travel,
+    env_travel_completed,
+    env_supply_chain_management,
+    env_supply_chain_management_completed,
+    env_waste,
+    env_waste_completed,
+    workplace,
+    workplace_completed,
+    community,
+    community_completed,
+    philanthropy,
+    philanthropy_completed,
+    phil_other_information,
+    phil_future_planning,
+    further_info_completed,
+    finished,
+    scoredByAssessors,
+    notes,
+  })
+
+  application.save().then(newApplication => {
+    user.smallBusinessApplication = newApplication._id
+    user.save()
+  })
+
+  return res.status(201).json({
+    created: true
+  })
+}
+
 //Post controllers
 
 exports.post_complete_registration = async (req, res) => {
@@ -80,116 +202,116 @@ exports.post_complete_registration = async (req, res) => {
       })
     })
   } else {
-    res.status(404).json({response: "This user does not exist", success: false})
+    res.status(404).json({ response: "This user does not exist", success: false })
   }
 }
 
 
-  exports.post_register = async function (req, res, next) {
-    var firstName = req.body.firstName;
-    var lastName = req.body.lastName;
-    var email = req.body.email.toLowerCase();
-    var password = req.body.password;
-    var orgName = req.body.orgName
+exports.post_register = async function (req, res, next) {
+  var firstName = req.body.firstName;
+  var lastName = req.body.lastName;
+  var email = req.body.email.toLowerCase();
+  var password = req.body.password;
+  var orgName = req.body.orgName
 
-    const newUser = new User({
-      firstName,
-      lastName,
-      orgName,
-      email,
-      password,
-    });
+  const newUser = new User({
+    firstName,
+    lastName,
+    orgName,
+    email,
+    password,
+  });
 
-    User.findOne({ email: email }).then((user) => {
-      if (!user) {
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err;
-            newUser.password = hash;
-            newUser
-              .save()
-              .then((savedUser) => {
-                //SmallApplication variables
-                let owner = savedUser._id;
-                let contact_person = null;
-                let organisation_name = orgName;
-                let organisation_address = null;
-                let organisation_nationality = null;
-                let telephone_number = null;
-                let soleTraderMicro = null;
-                let charity = null;
-                let mobile_number = null;
-                let postal_code = null;
-                let email_address = req.body.email.toLowerCase();
-                let country = req.body.country;
-                let company_details_completed = false;
-                let introduction = null;
-                let introduction_completed = false;
-                let env_energy = null;
-                let env_energy_completed = false;
-                let env_natural_resource = null;
-                let env_natural_resource_completed = false;
-                let env_travel = null;
-                let env_travel_completed = false;
-                let env_supply_chain_management = null;
-                let env_supply_chain_management_completed = false;
-                let env_waste = null;
-                let env_waste_completed = false;
-                let workplace = null;
-                let workplace_completed = false;
-                let community = null;
-                let community_completed = false;
-                let philanthropy = null;
-                let philanthropy_completed = false;
-                let phil_other_information = null;
-                let phil_future_planning = null;
-                let further_info_completed = false;
-                let notes = false
-                let finished = false;
-                let scoredByAssessors = false;
+  User.findOne({ email: email }).then((user) => {
+    if (!user) {
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+          if (err) throw err;
+          newUser.password = hash;
+          newUser
+            .save()
+            .then((savedUser) => {
+              //SmallApplication variables
+              let owner = savedUser._id;
+              let contact_person = null;
+              let organisation_name = orgName;
+              let organisation_address = null;
+              let organisation_nationality = null;
+              let telephone_number = null;
+              let soleTraderMicro = null;
+              let charity = null;
+              let mobile_number = null;
+              let postal_code = null;
+              let email_address = req.body.email.toLowerCase();
+              let country = req.body.country;
+              let company_details_completed = false;
+              let introduction = null;
+              let introduction_completed = false;
+              let env_energy = null;
+              let env_energy_completed = false;
+              let env_natural_resource = null;
+              let env_natural_resource_completed = false;
+              let env_travel = null;
+              let env_travel_completed = false;
+              let env_supply_chain_management = null;
+              let env_supply_chain_management_completed = false;
+              let env_waste = null;
+              let env_waste_completed = false;
+              let workplace = null;
+              let workplace_completed = false;
+              let community = null;
+              let community_completed = false;
+              let philanthropy = null;
+              let philanthropy_completed = false;
+              let phil_other_information = null;
+              let phil_future_planning = null;
+              let further_info_completed = false;
+              let notes = false
+              let finished = false;
+              let scoredByAssessors = false;
 
-                const newApplication = new SmallApplication({
-                  owner,
-                  contact_person,
-                  organisation_name,
-                  organisation_address,
-                  organisation_nationality,
-                  postal_code,
-                  country,
-                  email_address,
-                  telephone_number,
-                  mobile_number,
-                  charity,
-                  soleTraderMicro,
-                  company_details_completed,
-                  introduction,
-                  introduction_completed,
-                  env_energy,
-                  env_energy_completed,
-                  env_natural_resource,
-                  env_natural_resource_completed,
-                  env_travel,
-                  env_travel_completed,
-                  env_supply_chain_management,
-                  env_supply_chain_management_completed,
-                  env_waste,
-                  env_waste_completed,
-                  workplace,
-                  workplace_completed,
-                  community,
-                  community_completed,
-                  philanthropy,
-                  philanthropy_completed,
-                  phil_other_information,
-                  phil_future_planning,
-                  further_info_completed,
-                  finished,
-                  scoredByAssessors,
-                  notes,
-                });
+              const newApplication = new SmallApplication({
+                owner,
+                contact_person,
+                organisation_name,
+                organisation_address,
+                organisation_nationality,
+                postal_code,
+                country,
+                email_address,
+                telephone_number,
+                mobile_number,
+                charity,
+                soleTraderMicro,
+                company_details_completed,
+                introduction,
+                introduction_completed,
+                env_energy,
+                env_energy_completed,
+                env_natural_resource,
+                env_natural_resource_completed,
+                env_travel,
+                env_travel_completed,
+                env_supply_chain_management,
+                env_supply_chain_management_completed,
+                env_waste,
+                env_waste_completed,
+                workplace,
+                workplace_completed,
+                community,
+                community_completed,
+                philanthropy,
+                philanthropy_completed,
+                phil_other_information,
+                phil_future_planning,
+                further_info_completed,
+                finished,
+                scoredByAssessors,
+                notes,
+              });
 
-                sendMail(
-                  `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+              sendMail(
+                `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
     <title>
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -351,144 +473,144 @@ exports.post_complete_registration = async (req, res) => {
       </tbody>
     </table>
   </body></html>`,
-                  "CRSA Registration",
-                  email
-                );
-                newApplication
-                  .save()
-                  .then((savedApplication) => {
-                    newUser.application = savedApplication._id;
-                    newUser.save();
-                  })
-                  .catch((err) => {
-                    console.log("Failed to save!", err);
-                  });
-              })
-              .then(async () => {
-                let mailList = process.env.MAILIST.split(',')
-                await sendMail(
-                  `I'm excited to inform you that ${firstName} ${lastName} from ${orgName} has just registered on our application website.`,
-                  "CSRA New Registration",
-                  mailList
-                );
-                res.status(200).json({
-                  message: "Successfully registered",
-                  success: true,
-                });
-              })
-              .catch((error) => {
-                console.log("Error: ", error);
-                return res
-                  .status(404)
-                  .send("There was an error with your registration");
-              });
-          });
-        });
-      } else {
-        return res.status(200).json({
-          success: false,
-          message: "There's a user registered with this email already",
-        });
-      }
-    });
-  };
-
-  exports.post_forgot_password = async (req, res, next) => {
-    const token = (await promisify(crypto.randomBytes)(20)).toString("hex");
-
-    User.findOne({ email: req.body.email }).then(async (user) => {
-      if (!user) {
-        return res.status(404).json({
-          success: false,
-          message: "No user with this email exists",
-        });
-      }
-
-      user.resetPasswordToken = token;
-      user.resetPasswordExpires = Date.now() + 3600000;
-      user.save();
-
-      const msg = `Hi ${user.firstName} <br> You are receiving this mail because you (or someone else) have requested to reset the password to your account. <br> Please click on the following link, or paste this into your browser to complete the process: <br> <br> http://${req.headers.host}/reset_password/${token} <br> <br> If you did not request this, please ignore this email and your password will remain unchanged.
-        `;
-      const subject = "Your Password Reset Link";
-      const footer = "./Footer.jpg";
-      try {
-        await sendMail(msg, subject, user.email);
-        res.status(200).json({
-          success: true,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    });
-  };
-
-  exports.post_reset_password = (req, res, next) => {
-    let usersArray = [];
-
-    User.find({}).then((users) => {
-      usersArray = users;
-
-      const thisUser = usersArray.find(
-        (user) =>
-          user.resetPasswordExpires > Date.now() &&
-          crypto.timingSafeEqual(
-            Buffer.from(user.resetPasswordToken),
-            Buffer.from(req.params.token)
-          )
-      );
-
-      if (!thisUser) return res.status(404).end();
-
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(req.body.password, salt, (err, hash) => {
-          if (err) throw err;
-
-          req.body.password = hash;
-
-          let filter = { email: thisUser.email };
-          let update = {
-            password: req.body.password,
-            resetPasswordToken: null,
-            resetPasswordExpires: null,
-          };
-
-          User.findOneAndUpdate(filter, update)
-            .then((feedback) => {
-              console.log(feedback);
-
-              console.log("Successfull password reset!");
-
-              const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
-
-              sgMail.setApiKey(SENDGRID_API_KEY);
-
-              const newPasswordConfirmation = {
-                to: thisUser.email,
-                from: "emmanuel@csr-accreditation.co.uk",
-                subject: "Password Reset Successful!",
-                html: `This is a confirmation that the password for your account "${thisUser.email}" has just been changed.
-            `,
-              };
-
-              sgMail
-                .send(newPasswordConfirmation)
-                .then(() => {
-                  res.status(200).json({
-                    success: true,
-                    message: "Your password was successfully updated",
-                  });
+                "CRSA Registration",
+                email
+              );
+              newApplication
+                .save()
+                .then((savedApplication) => {
+                  newUser.smallBusinessApplication = savedApplication._id;
+                  newUser.save();
                 })
-                .catch((err) => console.log("Failed to send confirmation", err));
+                .catch((err) => {
+                  console.log("Failed to save!", err);
+                });
             })
-            .catch((err) => {
-              res.status(400).json({
-                success: false,
-                message: "Failed to update",
+            .then(async () => {
+              let mailList = process.env.MAILIST.split(',')
+              await sendMail(
+                `I'm excited to inform you that ${firstName} ${lastName} from ${orgName} has just registered on our application website.`,
+                "CSRA New Registration",
+                mailList
+              );
+              res.status(200).json({
+                message: "Successfully registered",
+                success: true,
               });
-              console.log("Failed to update: ", err);
+            })
+            .catch((error) => {
+              console.log("Error: ", error);
+              return res
+                .status(404)
+                .send("There was an error with your registration");
             });
         });
       });
+    } else {
+      return res.status(200).json({
+        success: false,
+        message: "There's a user registered with this email already",
+      });
+    }
+  });
+};
+
+exports.post_forgot_password = async (req, res, next) => {
+  const token = (await promisify(crypto.randomBytes)(20)).toString("hex");
+
+  User.findOne({ email: req.body.email }).then(async (user) => {
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "No user with this email exists",
+      });
+    }
+
+    user.resetPasswordToken = token;
+    user.resetPasswordExpires = Date.now() + 3600000;
+    user.save();
+
+    const msg = `Hi ${user.firstName} <br> You are receiving this mail because you (or someone else) have requested to reset the password to your account. <br> Please click on the following link, or paste this into your browser to complete the process: <br> <br> http://${req.headers.host}/reset_password/${token} <br> <br> If you did not request this, please ignore this email and your password will remain unchanged.
+        `;
+    const subject = "Your Password Reset Link";
+    const footer = "./Footer.jpg";
+    try {
+      await sendMail(msg, subject, user.email);
+      res.status(200).json({
+        success: true,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  });
+};
+
+exports.post_reset_password = (req, res, next) => {
+  let usersArray = [];
+
+  User.find({}).then((users) => {
+    usersArray = users;
+
+    const thisUser = usersArray.find(
+      (user) =>
+        user.resetPasswordExpires > Date.now() &&
+        crypto.timingSafeEqual(
+          Buffer.from(user.resetPasswordToken),
+          Buffer.from(req.params.token)
+        )
+    );
+
+    if (!thisUser) return res.status(404).end();
+
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(req.body.password, salt, (err, hash) => {
+        if (err) throw err;
+
+        req.body.password = hash;
+
+        let filter = { email: thisUser.email };
+        let update = {
+          password: req.body.password,
+          resetPasswordToken: null,
+          resetPasswordExpires: null,
+        };
+
+        User.findOneAndUpdate(filter, update)
+          .then((feedback) => {
+            console.log(feedback);
+
+            console.log("Successfull password reset!");
+
+            const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+
+            sgMail.setApiKey(SENDGRID_API_KEY);
+
+            const newPasswordConfirmation = {
+              to: thisUser.email,
+              from: "emmanuel@csr-accreditation.co.uk",
+              subject: "Password Reset Successful!",
+              html: `This is a confirmation that the password for your account "${thisUser.email}" has just been changed.
+            `,
+            };
+
+            sgMail
+              .send(newPasswordConfirmation)
+              .then(() => {
+                res.status(200).json({
+                  success: true,
+                  message: "Your password was successfully updated",
+                });
+              })
+              .catch((err) => console.log("Failed to send confirmation", err));
+          })
+          .catch((err) => {
+            res.status(400).json({
+              success: false,
+              message: "Failed to update",
+            });
+            console.log("Failed to update: ", err);
+          });
+      });
     });
-  };
+  });
+};

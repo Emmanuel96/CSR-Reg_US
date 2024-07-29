@@ -22,7 +22,8 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  application: {
+
+  smallBusinessApplication: {
     type: String,
     ref: 'Application'
   },

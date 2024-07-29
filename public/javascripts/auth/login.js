@@ -1,47 +1,93 @@
-function loginSubmit(event) {
+async function loginSubmit(event) {
   event.preventDefault();
 
-  var email = $("#input_email").val();
-  var password = $("#input_password").val();
+  const email = $("#input_email").val();
+  const password = $("#input_password").val();
 
-  if (!email || !password || email.length < 0 || password.length < 0) {
+  if (!email || !password) {
     return Swal.fire({
       title: "Please enter email and password",
       confirmButtonColor: "#00a19a",
     });
   }
 
-  document.getElementById("sign_in").innerText = "Signing in..."
-  document.getElementById("sign_in").disabled = true
+  const signInButton = document.getElementById("sign_in");
+  signInButton.innerText = "Signing in...";
+  signInButton.disabled = true;
 
-  var data = { email, password };
+  const data = { email, password };
 
-  const request = fetch("/login", {
-    method: "POST",
-    headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-  
-  request
-    .then(data => data.json())
-    .then((response) => {
-      document.getElementById("sign_in").innerText = "Signing in..."
-      var id = response.userID
-      sessionStorage.setItem("csra_user", id)
-      localStorage.setItem("csra_user", id)
-      window.location.href = "/company_details"
-    }).catch(() => {
-      document.getElementById("sign_in").innerText = "Sign In"
-      document.getElementById("sign_in").disabled = false
-      Swal.fire({
-        title: "Email or password is incorrect",
+  try {
+    const findEmailResponse = await fetch(`/user/find/?email=${email}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+
+    const findEmailResult = await findEmailResponse.json();
+
+    if (findEmailResult.application === true) {
+      const result = await Swal.fire({
+        title: "You do not have a Small Business Application?",
+        text: "Do you want to create one now?",
+        icon: "question",
+        confirmButtonText: "Yes",
         confirmButtonColor: "#00a19a",
+        cancelButtonText: "No",
+        cancelButtonColor: "black",
+        showCancelButton: true,
       });
-    })
+
+      if (result.isConfirmed) {
+        const createAppResponse = await fetch(`/createApplication/?email=${email}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        });
+
+        const createAppResult = await createAppResponse.json();
+
+        if (createAppResult.created) {
+          Swal.fire({
+            title: "Successful",
+            icon: "success",
+            confirmButtonColor: "#00a19a",
+          });
+        }
+      }
+    }
+
+    const loginResponse = await fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const loginResult = await loginResponse.json();
+
+    signInButton.innerText = "Signing in...";
+    const id = loginResult.userID;
+    sessionStorage.setItem("csra_user", id);
+    localStorage.setItem("csra_user", id);
+    window.location.href = "/company_details";
+  } catch (error) {
+    console.error(error);
+    signInButton.innerText = "Sign In";
+    signInButton.disabled = false;
+    Swal.fire({
+      title: "Email or password is incorrect",
+      confirmButtonColor: "#00a19a",
+    });
+  }
 }
+
 
 var login_form = $("#login_form");
 $("#login_form").on("submit", loginSubmit);

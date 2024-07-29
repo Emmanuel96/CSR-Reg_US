@@ -17,6 +17,10 @@ router.post('/login',
     })
   });
 
+router.get('/user/find', AuthController.findUserByEmail)
+
+router.get('/createApplication', AuthController.createSmallBusinessApplication)
+
 router.post('/register', AuthController.post_register);
 
 router.post('/api/auth/forgot_password', AuthController.post_forgot_password);
