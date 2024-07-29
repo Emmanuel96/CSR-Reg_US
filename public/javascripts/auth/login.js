@@ -57,6 +57,9 @@ async function loginSubmit(event) {
             icon: "success",
             confirmButtonColor: "#00a19a",
           });
+          setTimeout(() => {
+            console.log("3 seconds passed. You can add your code here.");
+          }, 3000)
         }
       }
     }
