@@ -22,11 +22,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-
-  smallBusinessApplication: {
+  smallBusinessApplication: [{
     type: String,
-    ref: 'Application'
-  },
+    ref: 'SmallApplication'
+  }],
   resetPasswordToken: {
     type: String
   },

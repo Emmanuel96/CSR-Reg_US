@@ -7,39 +7,39 @@ const DashboardController = require('../controllers/DashboardController');
 
 // router.get('/application/:id', DashboardController.get_application_document)
 
-router.get('/company_details', checkAuthenticated, DashboardController.get_company_details);
+router.get('/company_details/:id', checkAuthenticated, DashboardController.get_company_details);
 
-router.get('/notes', checkAuthenticated, DashboardController.get_notes);
+router.get('/notes/:id', checkAuthenticated, DashboardController.get_notes);
 
-router.get('/application_introduction', checkAuthenticated, DashboardController.get_application_introduction);
+router.get('/application_introduction/:id', checkAuthenticated, DashboardController.get_application_introduction);
 
-router.get('/environment_energy', checkAuthenticated, DashboardController.get_environment_energy);
+router.get('/environment_energy/:id', checkAuthenticated, DashboardController.get_environment_energy);
 
-router.get('/environment_natural_resource', checkAuthenticated, DashboardController.get_environment_natural_resource);
+router.get('/environment_natural_resource/:id', checkAuthenticated, DashboardController.get_environment_natural_resource);
 
-router.get('/environment_travel', checkAuthenticated, DashboardController.get_environment_travel);
+router.get('/environment_travel/:id', checkAuthenticated, DashboardController.get_environment_travel);
 
-router.get('/environment_supply_chain_management', checkAuthenticated, DashboardController.get_environment_supply_chain_management);
+router.get('/environment_supply_chain_management/:id', checkAuthenticated, DashboardController.get_environment_supply_chain_management);
 
-router.get('/environment_waste', checkAuthenticated, DashboardController.get_environment_waste);
+router.get('/environment_waste/:id', checkAuthenticated, DashboardController.get_environment_waste);
 
-router.get('/environment_supporting_documents', checkAuthenticated, DashboardController.get_environment_supporting_documents);
+router.get('/environment_supporting_documents/:id', checkAuthenticated, DashboardController.get_environment_supporting_documents);
 
-router.get('/workplace', checkAuthenticated, DashboardController.get_workplace);
+router.get('/workplace/:id', checkAuthenticated, DashboardController.get_workplace);
 
-router.get('/workplace_supporting_documents', checkAuthenticated, DashboardController.get_workplace_supporting_documents);
+router.get('/workplace_supporting_documents/:id', checkAuthenticated, DashboardController.get_workplace_supporting_documents);
 
-router.get('/community', checkAuthenticated, DashboardController.get_community);
+router.get('/community/:id', checkAuthenticated, DashboardController.get_community);
 
-router.get('/community_supporting_documents', checkAuthenticated, DashboardController.get_community_supporting_documents);
+router.get('/community_supporting_documents/:id', checkAuthenticated, DashboardController.get_community_supporting_documents);
 
-router.get('/philanthropy', checkAuthenticated, DashboardController.get_philanthropy);
+router.get('/philanthropy/:id', checkAuthenticated, DashboardController.get_philanthropy);
 
-router.get('/philanthropy_supporting_documents', checkAuthenticated, DashboardController.get_philanthropy_supporting_documents);
+router.get('/philanthropy_supporting_documents/:id', checkAuthenticated, DashboardController.get_philanthropy_supporting_documents);
 
-router.get('/further_information', checkAuthenticated, DashboardController.further_info);
+router.get('/further_information/:id', checkAuthenticated, DashboardController.further_info);
 
-router.get('/submit', checkAuthenticated, DashboardController.submit)
+router.get('/submit/:id', checkAuthenticated, DashboardController.submit)
 
 
 //PUT ROUTES
@@ -75,5 +75,9 @@ router.put('/further_information/:id', DashboardController.update_phil_supportin
 // Get application document route
 
 router.get('/api/application/:id', DashboardController.get_application_document)
+
+router.get('/view-application', DashboardController.get_user_applications)
+
+router.get('/api/view-applications/:id', DashboardController.get_user_applications_data);
 
 module.exports = router;

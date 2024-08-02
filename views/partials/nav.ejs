@@ -14,7 +14,8 @@
     class="flex flex-col md:px-8 w-full text-gray-700 md:pt-4 dark-mode:text-gray-200 dark-mode:bg-gray-800 flex-shrink-0"
     x-data="{ open: false }">
     <div class="flex-shrink-0 px-3 py-4 flex flex-row items-center justify-between">
-      <a href="#" class="text-lg md:text-xl font-extrabold text-[#302f2f] uppercase rounded-lg">CSR ACCREDITATION</a>
+      <a id="homeLink" href="" class="text-lg md:text-xl font-extrabold text-[#302f2f] uppercase rounded-lg">CSR
+        ACCREDITATION</a>
       <button class="rounded-lg md:hidden" @click="open = !open">
         <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
           <path x-show="!open" fill-rule="evenodd"
@@ -28,14 +29,16 @@
     </div>
     <nav :class="{'block': open, 'hidden': !open}" class="flex-grow md:block md:pt-2 px-4 md:px-0 pb-4 md:mb-5">
       <a class="clear-left block px-4 py-2 md:mb-4 hover:shadow-lg mt-2 text-sm font-semibold text-gray-900 rounded-lg hover:text-gray-900 hover:bg-gray-200"
-        href="./company_details" data-url="/company_details">ORGANISATION DETAILS
+        id="companyDetailsLink"
+        href="" data-url="/company_details">ORGANISATION DETAILS
         <span id="company_details_tick" class="float-right hidden mt-1">
           <img class="w-3" src="/assets/images/completed.png" alt="completed tick" />
         </span>
       </a>
 
       <a class="clear-left block md:mb-4 hover:shadow-lg px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg hover:text-gray-900 hover:bg-gray-200"
-        href="./notes" data-url="/notes">NOTES
+      id="noteLink"
+        href="" data-url="/notes">NOTES
         <span id="notes" class="hidden float-right">
           <img class="w-3 pt-1" src="/assets/images/completed.png" alt="completed tick" />
         </span>

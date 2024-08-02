@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>View Applications</title>
+    <%- include('../../partials/head.ejs') %>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+    <%- include('../../partials/topNav.ejs') %>
+        <div id="scored" class="mx-auto w-full px-10">
+            <div class="mx-auto max-w-[85rem]">
+                <section class="mt-10">
+                    <h3 class="text-center text-2xl text-[#00A19A] font-bold mb-10">Company Applications</h3>
+                    <div id="container" class="grid grid-cols-4 gap-8">
+                        <!-- Content dynamically populated here -->
+                    </div>
+                    <!-- Placeholder for empty state -->
+                    <div id="empty_state" class="text-center text-2xl text-[#00A19A] font-bold my-5">
+                    </div>
+
+                </section>
+                <div class="text-center my-5">
+                    <button id="createApplicationButton"
+                        class=" text-3xl rounded-md p-5 text-white bg-[#00A19A] py-2 px-5 hover:bg-[#068882] hover:shadow-md">
+                        Create Application
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script src="/javascripts/others/view_application.js"></script>
+</body>
+
+</html>

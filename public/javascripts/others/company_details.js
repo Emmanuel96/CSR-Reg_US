@@ -1,4 +1,5 @@
 let ID = sessionStorage.getItem("csra_user");
+let applicationID = window.location.pathname.split('/').pop()
 
 let docData = "";
 
@@ -18,7 +19,6 @@ function getCompanyDetails() {
     .get(`/api/application/${ID}`)
     .then((result) => {
       docData = result.data;
-      console.log(docData.mobile_number, docData.telephone_number)
     })
     .then(() => {
       document.getElementById('contact_person').value = localStorage.getItem('contact_person') ? localStorage.getItem('contact_person') : docData.contact_person

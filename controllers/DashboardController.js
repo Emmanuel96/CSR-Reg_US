@@ -1,6 +1,7 @@
 const SmallApplication = require("../models/SmallApplication");
 const mongoose = require("mongoose");
 const generatePdf = require("../utils/generatepdf");
+const User = require("../models/User");
 
 //GET PAGES CONTROLLERS
 
@@ -12,6 +13,10 @@ exports.get_company_details = (req, res) => {
 
 exports.get_application_introduction = (req, res) => {
   res.render("dashboard/others/application_introduction");
+};
+
+exports.get_user_applications = (req, res) => {
+  res.render("dashboard/others/view_application");
 };
 
 exports.get_environment_energy = (req, res) => {
@@ -482,3 +487,25 @@ exports.get_application_document = function (req, res, next) {
     })
     .catch((err) => console.log("Error: ", err));
 };
+
+exports.get_user_applications_data = async function (req, res,) {
+  console.log(req.params.id)
+  console.log("i got here")
+
+  let isValidObjectString = mongoose.isValidObjectId(req.params.id)
+
+  if (!isValidObjectString) res.status(400).json({
+    message: "Not a valid mongo"
+  })
+  
+  try {
+    const user = await User.findById(new mongoose.Types.ObjectId(req.params.id)).populate('smallBusinessApplication');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    console.log(user.smallBusinessApplication)
+    return res.status(200).json(user.smallBusinessApplication);
+  } catch (error) {
+    throw new Error(error)
+  }
+}

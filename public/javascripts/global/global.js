@@ -1,40 +1,65 @@
+// Set the active class based on the URL stored in localStorage
 const activePage = window.location.pathname;
-// const ID = sessionStorage.getItem("csra_user");
-if (localStorage.getItem("active")){
-  console.log(localStorage.getItem("active"))
-  document.getElementById(localStorage.getItem("active")).classList.add("active")
-  localStorage.removeItem("active")
+const savedActive = localStorage.getItem("active");
+
+if (savedActive) {
+  console.log(savedActive);
+  const savedElement = document.getElementById(savedActive);
+  if (savedElement) {
+    savedElement.classList.add("active");
+  }
+  localStorage.removeItem("active");
 }
 
-const navLinks = document.querySelectorAll('[data-url]').forEach(data => {
-  // console.log(data.dataset.url)
-  // console.log(activePage);
-  let current = data.dataset.url
-  // console.log(current.localeCompare(activePage));
-  if(current.localeCompare(activePage) == 0){
-    data.classList.add("active")
-    // link.classList.add('active');
+// Add 'active' class to the link that matches the current path
+document.querySelectorAll('[data-url]').forEach(data => {
+  const current = data.dataset.url;
+  if (current === activePage) {
+    data.classList.add("active");
   }
-})
-const navLink = document.querySelectorAll('[data-url]')
-// console.log(navLink);
-// const navLinks = document.querySelectorAll('nav a.block')
-// // const navLinks = document.getElementsByClassName("px-2")
-// for (var i = 0; i < navLinks.length; i++) {
-//   navLinks[i].addEventListener("click", function(){
-//     // var current = document.getElementsByClassName("active");
-//     var current = document.getElementsByClassName("active");
-//   if (current.length > 0) { 
-//     current[0].className = current[0].className.includes(" active", "");
-//   }
-//   this.className += " active";
-//   })
-// }
-// console.log(navLinks)
+});
+
+// Function to navigate and store the active menu
 const gotoSubmenu = (url, mainmenu) => {
   localStorage.setItem('active', mainmenu);
-  window.location.href = url
-}
+  window.location.href = url;
+};
+
+// Update links with ApplicationId from localStorage
+// document.addEventListener('DOMContentLoaded', () => {
+//   const applicationId = localStorage.getItem("ApplicationId");
+
+//   if (applicationId) {
+//     const updateLink = (id, url) => {
+//       const element = document.getElementById(id);
+//       console.log(element.href, id)
+//       if (element) {
+//         // element.href = `${url}/${applicationId}`;
+//         element.href = element.href
+//         console.log(element.href)
+//       }
+//     };
+
+//     // Update all relevant links
+//     updateLink('companyDetailsLink', '/company_details');
+//     updateLink("homeLink", "./company_details");
+//     updateLink('noteLink', './notes');
+//     updateLink('applicationIntroductionLink', './application_introduction');
+//     updateLink('environmentEnergyLink', './environment_energy');
+//     updateLink('environmentNaturalResourceLink', './environment_natural_resource');
+//     updateLink('environmentTravelLink', './environment_travel');
+//     updateLink('environmentSupplyChainManagementLink', './environment_supply_chain_management');
+//     updateLink('environmentWasteLink', './environment_waste');
+//     updateLink('environmentSupportingDocumentsLink', './environment_supporting_documents');
+//     updateLink('workplaceLink', './workplace');
+//     updateLink('workplaceSupportingDocumentsLink', './workplace_supporting_documents');
+//     updateLink('communityLink', './community');
+//     updateLink('communitySupportingDocumentsLink', './community_supporting_documents');
+//     updateLink('philanthropyLink', './philanthropy');
+//     updateLink('philanthropySupportingDocumentsLink', './philanthropy_supporting_documents');
+//     updateLink('furtherInformationLink', './further_information');
+//   }
+// });
 
 
 
