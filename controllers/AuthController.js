@@ -489,7 +489,7 @@ exports.post_register = async function (req, res, next) {
             .then(async () => {
               let mailList = process.env.MAILIST.split(',')
               await sendMail(
-                `I'm excited to inform you that ${firstName} ${lastName} from ${orgName} has just registered on our application website.`,
+                `I'm excited to inform you that ${firstName} ${lastName} from ${orgName} has just signed up on our application website.`,
                 "CSRA New Registration",
                 mailList
               );
