@@ -1,4 +1,4 @@
-const ID = sessionStorage.getItem("csra_user");
+let applicationID = window.location.pathname.split('/').pop()
 
 function updateAssessments(){
   event.preventDefault(); 
@@ -6,7 +6,7 @@ function updateAssessments(){
 
   document.getElementById('nxt_btn').disabled = true
 
-  fetch(`/notes/${ID}`, {
+  fetch(`/notes/${applicationID}`, {
     method: "PUT", 
     headers: {
       'Content-Type': 'application/json'

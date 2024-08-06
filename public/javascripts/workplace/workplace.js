@@ -1,4 +1,4 @@
-const ID = sessionStorage.getItem("csra_user");
+let applicationID = window.location.pathname.split('/').pop()
 var docData = ""
 
 const formfields = ['wrk_training']
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 function getWrkTraining(){
-  axios.get(`/api/application/${ID}`).then(result => {
+  axios.get(`/api/application_info/${applicationID}`).then(result => {
     docData = result.data
   }).then(() => {
     document.getElementById('wrk_training').value = localStorage.getItem('wrk_training') ? localStorage.getItem('wrk_training') : docData.workplace
@@ -42,7 +42,7 @@ function updateWorkPlaceTraining(){
     workplace_completed
   }
 
-  fetch(`/workplace/${ID}`, {
+  fetch(`/workplace/${applicationID}`, {
       method: "PUT", 
       headers: {
           'Content-Type': 'application/json'

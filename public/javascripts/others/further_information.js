@@ -1,4 +1,4 @@
-const ID = sessionStorage.getItem("csra_user");
+let applicationID = window.location.pathname.split('/').pop()
 var docData = "";
 
 const formfields = ['phil_other_information', 'phil_future_planning']
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function getFurtherInfo() {
     console.log("get further information")
     axios
-        .get(`/api/application/${ID}`)
+        .get(`/api/application_info/${applicationID}`)
         .then((result) => {
             docData = result.data;
         })
@@ -55,7 +55,7 @@ function updateFurtherInfo(){
       title: "Thank You For completing your Application!",
       confirmButtonColor: '#00a19a'
     })
-    axios.put(`/further_information/${ID}`, data)
+    axios.put(`/further_information/${applicationID}`, data)
   }
   else{
     formfields.forEach(field => {

@@ -1,4 +1,4 @@
-const ID = sessionStorage.getItem("csra_user");
+let applicationID = window.location.pathname.split('/').pop()
 var docData = ""
 
 const formfields = ['charitable_inv']
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 function getPhilCharitable(){
-  axios.get(`/api/application/${ID}`).then(result => {
+  axios.get(`/api/application_info/${applicationID}`).then(result => {
     docData = result.data
   }).then(() => {
     console.log(docData)
@@ -43,7 +43,7 @@ function updatePhilCharitableInv(){
     philanthropy_completed
   }
 
-  fetch(`/philanthropy/${ID}`, {
+  fetch(`/philanthropy/${applicationID}`, {
       method: "PUT", 
       headers: {
           'Content-Type': 'application/json'

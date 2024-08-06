@@ -1,4 +1,3 @@
-let ID = sessionStorage.getItem("csra_user");
 let applicationID = window.location.pathname.split('/').pop()
 
 let docData = "";
@@ -16,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function getCompanyDetails() {
   axios
-    .get(`/api/application/${ID}`)
+    .get(`/api/application_info/${applicationID}`)
     .then((result) => {
       docData = result.data;
     })
@@ -97,7 +96,7 @@ function updateCompanyDetails() {
     };
     console.log(data)
 
-    fetch(`/company_details/${ID}`, {
+    fetch(`/company_details/${applicationID}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

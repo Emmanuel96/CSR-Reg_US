@@ -1,4 +1,4 @@
-const ID = sessionStorage.getItem("csra_user");
+let applicationID = window.location.pathname.split('/').pop()
 let docData = ""
 
 const formfields = ['introduction_textarea']
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 function getAppIntro() {
-  axios.get(`/api/application/${ID}`).then(result => {
+  axios.get(`/api/application_info/${applicationID}`).then(result => {
     docData = result.data
   }).then(() => {
     document.getElementById('introduction_textarea').value = localStorage.getItem('introduction_textarea') ? localStorage.getItem('introduction_textarea') : docData.introduction
@@ -42,7 +42,7 @@ function updateApplicationIntroduction() {
     introduction_completed
   }
 
-  fetch(`/application_introduction/${ID}`, {
+  fetch(`/application_introduction/${applicationID}`, {
     method: "PUT",
     headers: {
       'Content-Type': 'application/json'

@@ -1,4 +1,4 @@
-const ID = sessionStorage.getItem("csra_user");
+let applicationID = window.location.pathname.split('/').pop()
 var docData = ""
 
 const formfields = ['env_supply_chain']
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 function getEnvSupplyChain(){
-  axios.get(`/api/application/${ID}`).then(result => {
+  axios.get(`/api/application_info/${applicationID}`).then(result => {
     docData = result.data
   }).then(() => {
     document.getElementById('env_supply_chain').value = localStorage.getItem('env_supply_chain') ? localStorage.getItem('env_supply_chain') : docData.env_supply_chain_management
@@ -42,7 +42,7 @@ function updateEnvironmentSupplyChain(){
 
   document.getElementById('submit_btn').disabled = true
 
-  fetch(`/environment_supply_chain_management/${ID}`, {
+  fetch(`/environment_supply_chain_management/${applicationID}`, {
       method: "PUT", 
       headers: {
           'Content-Type': 'application/json'

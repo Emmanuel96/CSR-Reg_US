@@ -1,4 +1,4 @@
-const ID = sessionStorage.getItem("csra_user");
+let applicationID = window.location.pathname.split('/').pop()
 var docData = "";
 
 const formfields = ['env_energy_textarea']
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function getEnvEnergy() {
   axios
-    .get(`/api/application/${ID}`)
+    .get(`/api/application_info/${applicationID}`)
     .then((result) => {
       docData = result.data;
     })
@@ -45,7 +45,7 @@ function updateEnvironmentEnergy() {
     env_energy_completed,
   };
 
-  fetch(`/environment_energy/${ID}`, {
+  fetch(`/environment_energy/${applicationID}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

@@ -15,7 +15,7 @@ exports.get_application_introduction = (req, res) => {
   res.render("dashboard/others/application_introduction");
 };
 
-exports.get_user_applications = (req, res) => {
+exports.get_user_applications_page = (req, res) => {
   res.render("dashboard/others/view_application");
 };
 
@@ -83,6 +83,7 @@ exports.submit = (req, res) => {
 
 exports.put_company_details = async function (req, res, next) {
   var body = req.body;
+  console.log(body)
 
   const company_details = {
     contact_person: body.contact_person,
@@ -98,7 +99,7 @@ exports.put_company_details = async function (req, res, next) {
     company_details_completed: true,
   };
 
-  SmallApplication.findOneAndUpdate({ owner: req.params.id }, company_details, {
+  SmallApplication.findOneAndUpdate({ id: req.params.id }, company_details, {
     new: true,
     runValidators: true,
     context: "query",
@@ -127,7 +128,7 @@ exports.put_application_introduction = async function (req, res) {
     introduction_completed: true,
   };
 
-  SmallApplication.findOneAndUpdate({ owner: req.params.id }, introduction, {
+  SmallApplication.findOneAndUpdate({ id: req.params.id }, introduction, {
     new: true,
     runValidators: true,
     context: "query",
@@ -178,7 +179,7 @@ exports.put_environment_energy = async function (req, res, next) {
     env_energy_completed: true,
   };
 
-  SmallApplication.findOneAndUpdate({ owner: req.params.id }, env_energy, {
+  SmallApplication.findOneAndUpdate({ id: req.params.id }, env_energy, {
     new: true,
     runValidators: true,
     context: "query",
@@ -206,7 +207,7 @@ exports.put_environment_natural_resource = async function (req, res, next) {
     env_natural_resource_completed: true,
   };
 
-  SmallApplication.findOneAndUpdate({ owner: req.params.id }, env_natural_resource, {
+  SmallApplication.findOneAndUpdate({ id: req.params.id }, env_natural_resource, {
     new: true,
     runValidators: true,
     context: "query",
@@ -234,7 +235,7 @@ exports.put_environment_travel = async function (req, res, next) {
     env_travel_completed: true,
   };
 
-  SmallApplication.findOneAndUpdate({ owner: req.params.id }, env_travel, {
+  SmallApplication.findOneAndUpdate({ id: req.params.id }, env_travel, {
     new: true,
     runValidators: true,
     context: "query",
@@ -294,7 +295,7 @@ exports.put_environment_waste = async function (req, res, next) {
     env_waste_completed: true,
   };
 
-  SmallApplication.findOneAndUpdate({ owner: req.params.id }, env_waste, {
+  SmallApplication.findOneAndUpdate({ id: req.params.id }, env_waste, {
     new: true,
     runValidators: true,
     context: "query",
@@ -322,7 +323,7 @@ exports.put_workplace = async function (req, res, next) {
     workplace_completed: true,
   };
 
-  SmallApplication.findOneAndUpdate({ owner: req.params.id }, wrk_training, {
+  SmallApplication.findOneAndUpdate({ id: req.params.id }, wrk_training, {
     new: true,
     runValidators: true,
     context: "query",
@@ -350,7 +351,7 @@ exports.put_community = async function (req, res, next) {
     community_completed: true,
   };
 
-  SmallApplication.findOneAndUpdate({ owner: req.params.id }, com_engagement, {
+  SmallApplication.findOneAndUpdate({ id: req.params.id }, com_engagement, {
     new: true,
     runValidators: true,
     context: "query",
@@ -383,7 +384,7 @@ exports.put_philanthropy = async function (
   };
 
   SmallApplication.findOneAndUpdate(
-    { owner: req.params.id },
+    { id: req.params.id },
     phil_charitable_involvement,
     { new: true, runValidators: true, context: "query" }
   )
@@ -406,7 +407,7 @@ exports.put_philanthropy = async function (
 
 exports.notes = async function (req, res, next) {
 
-  SmallApplication.findOneAndUpdate({ owner: req.params.id }, {notes: true}, {
+  SmallApplication.findOneAndUpdate({ id: req.params.id }, {notes: true}, {
     new: true,
     runValidators: true,
     context: "query",
@@ -488,9 +489,7 @@ exports.get_application_document = function (req, res, next) {
     .catch((err) => console.log("Error: ", err));
 };
 
-exports.get_user_applications_data = async function (req, res,) {
-  console.log(req.params.id)
-  console.log("i got here")
+exports.get_user_applications = async function (req, res,) {
 
   let isValidObjectString = mongoose.isValidObjectId(req.params.id)
 
@@ -505,6 +504,24 @@ exports.get_user_applications_data = async function (req, res,) {
     }
     console.log(user.smallBusinessApplication)
     return res.status(200).json(user.smallBusinessApplication);
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+exports.get_applications_data = async function (req, res) {
+    let isValidObjectString = mongoose.isValidObjectId(req.params.id)
+
+  if (!isValidObjectString) res.status(400).json({
+    message: "Not a valid mongo"
+  })
+  try {
+    const application = await SmallApplication.findById(new mongoose.Types.ObjectId(req.params.id));
+    if (!application) {
+      return res.status(404).json({ message: 'Application not found' });
+    }
+    console.log(application)
+    return res.status(200).json(application);
   } catch (error) {
     throw new Error(error)
   }

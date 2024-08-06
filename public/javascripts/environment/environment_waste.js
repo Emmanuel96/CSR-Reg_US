@@ -1,4 +1,4 @@
-const ID = sessionStorage.getItem("csra_user");
+let applicationID = window.location.pathname.split('/').pop()
 var docData = "";
 
 const formfields = ['env_waste']
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function getEnvWaste() {
   axios
-    .get(`/api/application/${ID}`)
+    .get(`/api/application_info/${applicationID}`)
     .then((result) => {
       docData = result.data;
     })
@@ -45,7 +45,7 @@ function updateEnvironmentWaste() {
     env_waste_completed,
   };
 
-  fetch(`/environment_waste/${ID}`, {
+  fetch(`/environment_waste/${applicationID}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

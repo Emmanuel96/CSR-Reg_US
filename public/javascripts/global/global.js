@@ -1,6 +1,7 @@
 // Set the active class based on the URL stored in localStorage
 const activePage = window.location.pathname;
 const savedActive = localStorage.getItem("active");
+const applicationId = localStorage.getItem("ApplicationId");
 
 if (savedActive) {
   console.log(savedActive);
@@ -26,40 +27,39 @@ const gotoSubmenu = (url, mainmenu) => {
 };
 
 // Update links with ApplicationId from localStorage
-// document.addEventListener('DOMContentLoaded', () => {
-//   const applicationId = localStorage.getItem("ApplicationId");
+document.addEventListener('DOMContentLoaded', () => {
+  let i = 0
 
-//   if (applicationId) {
-//     const updateLink = (id, url) => {
-//       const element = document.getElementById(id);
-//       console.log(element.href, id)
-//       if (element) {
-//         // element.href = `${url}/${applicationId}`;
-//         element.href = element.href
-//         console.log(element.href)
-//       }
-//     };
+  if (applicationId) {
+    const updateLink = (id) => {
+      const element = document.getElementById(id);
+      if (element) {
+       
+        element.href = `${element.href}/${applicationId}`;
+        console.log(i++, element.href)
+      }
+    };
 
-//     // Update all relevant links
-//     updateLink('companyDetailsLink', '/company_details');
-//     updateLink("homeLink", "./company_details");
-//     updateLink('noteLink', './notes');
-//     updateLink('applicationIntroductionLink', './application_introduction');
-//     updateLink('environmentEnergyLink', './environment_energy');
-//     updateLink('environmentNaturalResourceLink', './environment_natural_resource');
-//     updateLink('environmentTravelLink', './environment_travel');
-//     updateLink('environmentSupplyChainManagementLink', './environment_supply_chain_management');
-//     updateLink('environmentWasteLink', './environment_waste');
-//     updateLink('environmentSupportingDocumentsLink', './environment_supporting_documents');
-//     updateLink('workplaceLink', './workplace');
-//     updateLink('workplaceSupportingDocumentsLink', './workplace_supporting_documents');
-//     updateLink('communityLink', './community');
-//     updateLink('communitySupportingDocumentsLink', './community_supporting_documents');
-//     updateLink('philanthropyLink', './philanthropy');
-//     updateLink('philanthropySupportingDocumentsLink', './philanthropy_supporting_documents');
-//     updateLink('furtherInformationLink', './further_information');
-//   }
-// });
+    // Update all relevant links
+    updateLink('companyDetailsLink');
+    updateLink("homeLink");
+    updateLink('noteLink');
+    updateLink('applicationIntroductionLink');
+    updateLink('environmentEnergyLink');
+    updateLink('environmentNaturalResourceLink');
+    updateLink('environmentTravelLink');
+    updateLink('environmentSupplyChainManagementLink');
+    updateLink('environmentWasteLink');
+    updateLink('environmentSupportingDocumentsLink');
+    updateLink('workplaceLink');
+    updateLink('workplaceSupportingDocumentsLink');
+    updateLink('communityLink');
+    updateLink('communitySupportingDocumentsLink');
+    updateLink('philanthropyLink');
+    updateLink('philanthropySupportingDocumentsLink');
+    updateLink('furtherInformationLink');
+  }
+});
 
 
 
@@ -69,7 +69,7 @@ const userID = sessionStorage.getItem("csra_user");
 let req_data = ""
 
 //gets the application data of thelogged in user and sets the req_data variable to the returned object value
-axios.get(`/api/application/${userID}`).then(result => {
+axios.get(`/api/application_info/${applicationId}`).then(result => {
   req_data = result.data
   console.log(req_data)
 }).then(() => applicationStatus())

@@ -14,7 +14,8 @@
     class="flex flex-col md:px-8 w-full text-gray-700 md:pt-4 dark-mode:text-gray-200 dark-mode:bg-gray-800 flex-shrink-0"
     x-data="{ open: false }">
     <div class="flex-shrink-0 px-3 py-4 flex flex-row items-center justify-between">
-      <a id="homeLink" href="" class="text-lg md:text-xl font-extrabold text-[#302f2f] uppercase rounded-lg">CSR
+      <a id="homeLink" href="/company_details"
+        class="text-lg md:text-xl font-extrabold text-[#302f2f] uppercase rounded-lg">CSR
         ACCREDITATION</a>
       <button class="rounded-lg md:hidden" @click="open = !open">
         <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
@@ -30,7 +31,8 @@
     <nav :class="{'block': open, 'hidden': !open}" class="flex-grow md:block md:pt-2 px-4 md:px-0 pb-4 md:mb-5">
       <a class="clear-left block px-4 py-2 md:mb-4 hover:shadow-lg mt-2 text-sm font-semibold text-gray-900 rounded-lg hover:text-gray-900 hover:bg-gray-200"
         id="companyDetailsLink"
-        href="" data-url="/company_details">ORGANISATION DETAILS
+        href="/company_details"
+        >ORGANISATION DETAILS
         <span id="company_details_tick" class="float-right hidden mt-1">
           <img class="w-3" src="/assets/images/completed.png" alt="completed tick" />
         </span>
@@ -38,14 +40,15 @@
 
       <a class="clear-left block md:mb-4 hover:shadow-lg px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg hover:text-gray-900 hover:bg-gray-200"
       id="noteLink"
-        href="" data-url="/notes">NOTES
+        href="/notes">NOTES
         <span id="notes" class="hidden float-right">
           <img class="w-3 pt-1" src="/assets/images/completed.png" alt="completed tick" />
         </span>
       </a>
 
       <a class="clear-left block px-4 py-2 mt-2 md:mb-4 hover:shadow-lg text-sm font-semibold text-gray-900 bg-transparent rounded-lg hover:text-gray-900 hover:bg-gray-200"
-        href="./application_introduction" data-url="/application_introduction">GENERAL INTRODUCTION
+      id="applicationIntroductionLink"
+        href="/application_introduction">GENERAL INTRODUCTION
         <span id="introduction_tick" class="float-right hidden">
           <img class="w-3 pt-1" src="/assets/images/completed.png" alt="completed tick" />
         </span>
@@ -74,20 +77,23 @@
           class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg">
           <div class="px-2 py-2 bg-white rounded-md shadow">
             <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 hover:bg-gray-200"
-              onclick="gotoSubmenu('./environment_energy', 'energy_pillar')" data-url="/environment_energy">ENERGY</a>
+            href="/environment_energy"
+              id="environmentEnergyLink">ENERGY</a>
             <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 hover:bg-gray-200"
-              onclick="gotoSubmenu('./environment_natural_resource', 'energy_pillar')"
-              data-url="/environment_natural_resource">NATURAL RESOURCES</a>
+            href="/environment_natural_resource"
+              id="environmentNaturalResourceLink">NATURAL RESOURCES</a>
             <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 hover:bg-gray-200"
-              onclick="gotoSubmenu('./environment_travel', 'energy_pillar')" data-url="/environment_travel">TRAVEL</a>
+            href="/environment_travel"
+             id="environmentTravelLink">TRAVEL</a>
             <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 hover:bg-gray-200"
-              onclick="gotoSubmenu('./environment_supply_chain_management', 'energy_pillar')"
-              data-url="/environment_supply_chain_management">SUPPLY CHAIN MANAGEMENT</a>
+            href="/environment_supply_chain_management"
+              id="environmentSupplyChainManagementLink">SUPPLY CHAIN MANAGEMENT</a>
             <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 hover:bg-gray-200"
-              onclick="gotoSubmenu('./environment_waste', 'energy_pillar')" data-url="/environment_waste">WASTE</a>
+            href="/environment_waste"
+              id="environmentWasteLink">WASTE</a>
             <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 hover:bg-gray-200"
-              onclick="gotoSubmenu('./environment_supporting_documents', 'energy_pillar')"
-              data-url="/environment_supporting_documents">SUPPORTING DOCUMENTATION</a>
+            href="/environment_supporting_documents"
+              id="environmentSupportingDocumentsLink">SUPPORTING DOCUMENTATION</a>
           </div>
         </div>
       </div>
@@ -115,11 +121,11 @@
           class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg">
           <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
             <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 hover:bg-gray-200"
-              onclick="gotoSubmenu('./workplace', 'workplace_pillar')"
-              data-url="/workplace">WORKPLACE</a>
+            href="/workplace"
+              id="workplaceLink">WORKPLACE</a>
             <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 hover:bg-gray-200"
-              onclick="gotoSubmenu('./workplace_supporting_documents', 'workplace_pillar')"
-              data-url="/workplace_supporting_documents">SUPPORTING DOCUMENTATION</a>
+            href="/workplace_supporting_documents"
+              id="workplaceSupportingDocumentsLink">SUPPORTING DOCUMENTATION</a>
           </div>
         </div>
       </div>
@@ -147,12 +153,12 @@
           class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg">
           <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
             <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 hover:bg-gray-200"
-              onclick="gotoSubmenu('./community', 'comm_pillar')"
-              data-url="/community">COMMUNITY
+            href="/community"
+              id="communityLink">COMMUNITY
             </a>
             <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 hover:bg-gray-200"
-              onclick="gotoSubmenu('./community_supporting_documents', 'comm_pillar')"
-              data-url="/community_supporting_documents">SUPPORTING DOCUMENTATION
+            href="/community_supporting_documents"
+              id="communitySupportingDocumentsLink">SUPPORTING DOCUMENTATION
             </a>
           </div>
         </div>
@@ -181,17 +187,18 @@
           class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg">
           <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
             <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 hover:bg-gray-200"
-              href="#" onclick="gotoSubmenu('./philanthropy', 'phil_pillar')"
-              data-url="/philanthropy">PHILANTHROPY</a>
+            href="/philanthropy"
+             id="philanthropyLink">PHILANTHROPY</a>
             <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:text-gray-900 hover:bg-gray-200"
-              onclick="gotoSubmenu('./philanthropy_supporting_documents', 'phil_pillar')"
-              data-url="/philanthropy_supporting_documents">SUPPORTING DOCUMENTATION</a>
+            href="/philanthropy_supporting_documents"
+              id="philanthropySupportingDocumentsLink">SUPPORTING DOCUMENTATION</a>
           </div>
         </div>
       </div>
 
       <a class="clear-left block md:mb-4 hover:shadow-lg px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg hover:text-gray-900 hover:bg-gray-200"
-        href="./further_information" data-url="/further_information">FURTHER INFORMATION
+      href="/further_information"
+        id="furtherInformationLink"> FURTHER INFORMATION
         <span id="assessment_tick" class="hidden float-right">
           <img class="w-3 pt-1" src="/assets/images/completed.png" alt="completed tick" />
         </span>

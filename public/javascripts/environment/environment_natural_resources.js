@@ -1,4 +1,4 @@
-const ID = sessionStorage.getItem("csra_user");
+let applicationID = window.location.pathname.split('/').pop()
 var docData = ""
 
 const formfields = ['env_natural_resource']
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 function getEnvNatural(){
-  axios.get(`/api/application/${ID}`).then(result => {
+  axios.get(`/api/application_info/${applicationID}`).then(result => {
     docData = result.data
   }).then(() => {
     document.getElementById('env_natural_resource').value = localStorage.getItem('env_natural_resource') ? localStorage.getItem('env_natural_resource') : docData.env_natural_resource
@@ -42,7 +42,7 @@ function updateEnvironmentNaturalResource(){
     env_natural_resource_completed
   }
 
-  fetch(`/environment_natural_resource/${ID}`, {
+  fetch(`/environment_natural_resource/${applicationID}`, {
       method: "PUT", 
       headers: {
           'Content-Type': 'application/json'

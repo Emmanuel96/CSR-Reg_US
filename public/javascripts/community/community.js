@@ -1,4 +1,4 @@
-const ID = sessionStorage.getItem("csra_user");
+let applicationID = window.location.pathname.split('/').pop()
 var docData = ""
 
 
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 function getComEngagement(){
-  axios.get(`/api/application/${ID}`).then(result => {
+  axios.get(`/api/application_info/${applicationID}`).then(result => {
     docData = result.data
   }).then(() => {
     document.getElementById('com_engagement_textarea').value = localStorage.getItem('com_engagement_textarea') ? localStorage.getItem('com_engagement_textarea') : docData.community
@@ -43,7 +43,7 @@ function updateCommunityEngagement(){
     community_completed
   }
 
-  fetch(`/community/${ID}`, {
+  fetch(`/community/${applicationID}`, {
       method: "PUT", 
       headers: {
           'Content-Type': 'application/json'

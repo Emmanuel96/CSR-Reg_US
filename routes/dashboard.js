@@ -76,8 +76,10 @@ router.put('/further_information/:id', DashboardController.update_phil_supportin
 
 router.get('/api/application/:id', DashboardController.get_application_document)
 
-router.get('/view-application', DashboardController.get_user_applications)
+router.get('/view-application', DashboardController.get_user_applications_page)
 
-router.get('/api/view-applications/:id', DashboardController.get_user_applications_data);
+router.get('/api/view-applications/:id', DashboardController.get_user_applications);
+
+router.get('/api/application_info/:id', DashboardController.get_applications_data)
 
 module.exports = router;
