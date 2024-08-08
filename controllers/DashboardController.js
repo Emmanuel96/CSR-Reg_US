@@ -99,7 +99,7 @@ exports.put_company_details = async function (req, res, next) {
     company_details_completed: true,
   };
 
-  SmallApplication.findOneAndUpdate({ id: req.params.id }, company_details, {
+  SmallApplication.findByIdAndUpdate(new mongoose.Types.ObjectId(req.params.id), company_details, {
     new: true,
     runValidators: true,
     context: "query",
@@ -112,6 +112,7 @@ exports.put_company_details = async function (req, res, next) {
       });
     })
     .catch((error) => {
+      console.log(error)
       res.status(400).json({
         success: false,
         message: "Failed to update company_details",
@@ -128,7 +129,7 @@ exports.put_application_introduction = async function (req, res) {
     introduction_completed: true,
   };
 
-  SmallApplication.findOneAndUpdate({ id: req.params.id }, introduction, {
+  SmallApplication.findByIdAndUpdate(new mongoose.Types.ObjectId(req.params.id), introduction, {
     new: true,
     runValidators: true,
     context: "query",
@@ -179,7 +180,7 @@ exports.put_environment_energy = async function (req, res, next) {
     env_energy_completed: true,
   };
 
-  SmallApplication.findOneAndUpdate({ id: req.params.id }, env_energy, {
+  SmallApplication.findByIdAndUpdate(new mongoose.Types.ObjectId(req.params.id), env_energy, {
     new: true,
     runValidators: true,
     context: "query",
@@ -207,7 +208,7 @@ exports.put_environment_natural_resource = async function (req, res, next) {
     env_natural_resource_completed: true,
   };
 
-  SmallApplication.findOneAndUpdate({ id: req.params.id }, env_natural_resource, {
+  SmallApplication.findByIdAndUpdate(new mongoose.Types.ObjectId(req.params.id), env_natural_resource, {
     new: true,
     runValidators: true,
     context: "query",
@@ -235,7 +236,7 @@ exports.put_environment_travel = async function (req, res, next) {
     env_travel_completed: true,
   };
 
-  SmallApplication.findOneAndUpdate({ id: req.params.id }, env_travel, {
+  SmallApplication.findByIdAndUpdate(new mongoose.Types.ObjectId(req.params.id), env_travel, {
     new: true,
     runValidators: true,
     context: "query",
@@ -257,8 +258,7 @@ exports.put_environment_travel = async function (req, res, next) {
 
 exports.put_environment_supply_chain_management = async function (
   req,
-  res,
-  next
+  res
 ) {
   var body = req.body;
 
@@ -267,8 +267,8 @@ exports.put_environment_supply_chain_management = async function (
     env_supply_chain_management_completed: true,
   };
 
-  SmallApplication.findOneAndUpdate(
-    { owner: req.params.id },
+  SmallApplication.findByIdAndUpdate(
+    new mongoose.Types.ObjectId(req.params.id),
     env_supply_chain_management,
     { new: true, runValidators: true, context: "query" }
   )
@@ -295,7 +295,7 @@ exports.put_environment_waste = async function (req, res, next) {
     env_waste_completed: true,
   };
 
-  SmallApplication.findOneAndUpdate({ id: req.params.id }, env_waste, {
+  SmallApplication.findByIdAndUpdate(new mongoose.Types.ObjectId(req.params.id), env_waste, {
     new: true,
     runValidators: true,
     context: "query",
@@ -323,7 +323,7 @@ exports.put_workplace = async function (req, res, next) {
     workplace_completed: true,
   };
 
-  SmallApplication.findOneAndUpdate({ id: req.params.id }, wrk_training, {
+  SmallApplication.findByIdAndUpdate(new mongoose.Types.ObjectId(req.params.id), wrk_training, {
     new: true,
     runValidators: true,
     context: "query",
@@ -351,7 +351,7 @@ exports.put_community = async function (req, res, next) {
     community_completed: true,
   };
 
-  SmallApplication.findOneAndUpdate({ id: req.params.id }, com_engagement, {
+  SmallApplication.findByIdAndUpdate(new mongoose.Types.ObjectId(req.params.id), com_engagement, {
     new: true,
     runValidators: true,
     context: "query",
@@ -373,8 +373,7 @@ exports.put_community = async function (req, res, next) {
 
 exports.put_philanthropy = async function (
   req,
-  res,
-  next
+  res
 ) {
   var body = req.body;
 
@@ -383,8 +382,8 @@ exports.put_philanthropy = async function (
     philanthropy_completed: true,
   };
 
-  SmallApplication.findOneAndUpdate(
-    { id: req.params.id },
+  SmallApplication.findByIdAndUpdate(
+    new mongoose.Types.ObjectId(req.params.id),
     phil_charitable_involvement,
     { new: true, runValidators: true, context: "query" }
   )
@@ -407,7 +406,7 @@ exports.put_philanthropy = async function (
 
 exports.notes = async function (req, res, next) {
 
-  SmallApplication.findOneAndUpdate({ id: req.params.id }, {notes: true}, {
+  SmallApplication.findByIdAndUpdate(new mongoose.Types.ObjectId(req.params.id), {notes: true}, {
     new: true,
     runValidators: true,
     context: "query",
@@ -431,8 +430,8 @@ exports.update_phil_supporting_info = (req, res) => {
   let { phil_other_information, phil_future_planning, further_info_completed } =
     req.body;
 
-  SmallApplication.findOneAndUpdate(
-    { owner: req.params.id },
+  SmallApplication.findByIdAndUpdate(
+    new mongoose.Types.ObjectId(req.params.id),
     { phil_other_information, phil_future_planning, further_info_completed },
     { new: true, runValidators: true, context: "query" }
   )
@@ -454,8 +453,8 @@ exports.update_phil_supporting_info = (req, res) => {
 exports.put_application_finished = (req, res) => {
   let date = new Date();
   // submission_date
-  SmallApplication.findOneAndUpdate(
-    { owner: req.params.id },
+  SmallApplication.findByIdAndUpdate(
+    new mongoose.Types.ObjectId(req.params.id),
     { finished: true },
     { new: true, runValidators: true, context: "query" }
   )
@@ -489,7 +488,7 @@ exports.get_application_document = function (req, res, next) {
     .catch((err) => console.log("Error: ", err));
 };
 
-exports.get_user_applications = async function (req, res,) {
+exports.get_user_applications = async function (req, res) {
 
   let isValidObjectString = mongoose.isValidObjectId(req.params.id)
 
@@ -520,7 +519,6 @@ exports.get_applications_data = async function (req, res) {
     if (!application) {
       return res.status(404).json({ message: 'Application not found' });
     }
-    console.log(application)
     return res.status(200).json(application);
   } catch (error) {
     throw new Error(error)

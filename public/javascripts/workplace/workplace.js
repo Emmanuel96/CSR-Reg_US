@@ -64,7 +64,7 @@ function updateWorkPlaceTraining(){
           title: "Successfully Saved Workplace",
           confirmButtonColor: '#00a19a'
         }).then(function(){
-          window.location.href = "/workplace_supporting_documents"
+          window.location.href = `/workplace_supporting_documents/${applicationID}`
         });
       }else{
         document.getElementById('submit_btn').innerText = "Submit"

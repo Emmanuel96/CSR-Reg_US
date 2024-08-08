@@ -66,7 +66,7 @@ function updateEnvironmentWaste() {
           title: "Successfully Saved Environment Waste",
           confirmButtonColor: "#00a19a",
         }).then(function () {
-          window.location.href = "/environment_supporting_documents";
+          window.location.href = `/environment_supporting_documents/${applicationID}`;
         });
       } else {
         document.getElementById("submit_btn").innerText = "Submit";

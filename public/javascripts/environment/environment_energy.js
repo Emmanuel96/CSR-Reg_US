@@ -67,7 +67,7 @@ function updateEnvironmentEnergy() {
           title: "Successfully Saved Environment Energy",
           confirmButtonColor: "#00a19a",
         }).then(function () {
-          window.location.href = "/environment_natural_resource";
+          window.location.href = `/environment_natural_resource/${applicationID}`;
         });
       } else {
         document.getElementById("submit_btn").innerText = "Submit";

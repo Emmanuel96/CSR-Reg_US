@@ -39,7 +39,7 @@ router.get('/philanthropy_supporting_documents/:id', checkAuthenticated, Dashboa
 
 router.get('/further_information/:id', checkAuthenticated, DashboardController.further_info);
 
-router.get('/submit/:id', checkAuthenticated, DashboardController.submit)
+router.get('/submit/', checkAuthenticated, DashboardController.submit)
 
 
 //PUT ROUTES

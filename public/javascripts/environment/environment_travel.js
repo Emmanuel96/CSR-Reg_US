@@ -42,7 +42,7 @@ function updateEnvironmentTravel(){
     env_travel_completed
   }
 
-  fetch(`/environment_travel/${ID}`, {
+  fetch(`/environment_travel/${applicationID}`, {
       method: "PUT", 
       headers: {
           'Content-Type': 'application/json'
@@ -63,7 +63,7 @@ function updateEnvironmentTravel(){
           title: "Successfully Saved Environment Travel",
           confirmButtonColor: '#00a19a'
         }).then(function(){
-          window.location.href = "/environment_supply_chain_management"
+          window.location.href = `/environment_supply_chain_management/${applicationID}`
         });
       }else{
         document.getElementById('submit_btn').innerText = "Submit"

@@ -65,7 +65,7 @@ function updatePhilCharitableInv(){
           title: "Successfully Saved Philanthropy",
           confirmButtonColor: '#00a19a'
         }).then(function(){
-          window.location.href = "/philanthropy_supporting_documents"
+          window.location.href = `/philanthropy_supporting_documents/${applicationID}`
         });
       }else{
         document.getElementById('submit_btn').innerText = "Submit"

@@ -63,7 +63,7 @@ function updateEnvironmentSupplyChain(){
           title: "Successfully Saved Environment Supply Chain Management",
           confirmButtonColor: '#00a19a'
         }).then(function(){
-          window.location.href = "/environment_waste"
+          window.location.href = `/environment_waste/${applicationID}`
         });
       }else{
         document.getElementById('submit_btn').innerText = "Submit"

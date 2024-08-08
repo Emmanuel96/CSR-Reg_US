@@ -157,6 +157,7 @@ function applicationStatus() {
   }
 
   let finished_text = document.getElementById('finish_tick_text')
+  let finish_tick = document.getElementById('finish_tick')
   //checks if all sections are true then adds tick to the finish button
   if(company_details_completed && introduction_completed && notes && environment_completed && workplace_completed && community_completed && philanthropy_completed){
     finish_tick.classList.remove("hidden");
@@ -212,7 +213,7 @@ confirmation.addEventListener("click", (e) => {
           title: "Thank You For completing Your Application!",
           confirmButtonColor: '#00a19a'
         });
-        axios.put(`/application_finished/${userID}`);
+        axios.put(`/application_finished/${applicationId}`);
         axios.post('/api/application/completed');
         window.location.href = "/submit";
       } else {

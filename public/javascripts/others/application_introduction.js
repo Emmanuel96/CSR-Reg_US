@@ -65,7 +65,7 @@ function updateApplicationIntroduction() {
           title: "Successfully submitted Introduction",
           confirmButtonColor: "#00a19a",
         }).then(() => {
-          window.location.href = "/environment_energy";
+          window.location.href = `/environment_energy/${applicationID}`;
         })
       } else {
         document.getElementById('submit_btn').innerText = "Submit"

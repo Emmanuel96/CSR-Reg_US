@@ -64,7 +64,7 @@ function updateEnvironmentNaturalResource(){
           title: "Successfully Saved Environment Natural Resources",
           confirmButtonColor: '#00a19a'
         }).then(function(){
-          window.location.href = "/environment_travel"
+          window.location.href = `/environment_travel/${applicationID}`
         });
       }else{
         document.getElementById('submit_btn').innerText = "Submit"

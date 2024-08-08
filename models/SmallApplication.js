@@ -41,7 +41,6 @@ const SmallApplicationSchema = new mongoose.Schema({
 
     email_address: {
         type: String,
-        unique: true
     },
 
     mobile_number: {

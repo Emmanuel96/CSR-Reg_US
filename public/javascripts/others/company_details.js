@@ -119,7 +119,7 @@ function updateCompanyDetails() {
             title: "Successfully submitted Organisation Details",
             confirmButtonColor: "#00a19a",
           }).then(function () {
-            window.location.href = "/notes";
+            window.location.href = `/notes/${applicationID}`;
           });
         } else {
           document.getElementById("submit_btn").innerText = "Submit";
