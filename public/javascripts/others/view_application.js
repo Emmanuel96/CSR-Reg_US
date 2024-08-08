@@ -61,6 +61,42 @@ function renderAssessedApplications(applications, section) {
     });
 }
 
+async function createApplication() {
+    const result = await Swal.fire({
+        title: "Create Small Business Application",
+        text: "Do you want to create one?",
+        icon: "question",
+        confirmButtonText: "Yes",
+        confirmButtonColor: "#00a19a",
+        cancelButtonText: "No",
+        cancelButtonColor: "black",
+        showCancelButton: true,
+    });
+
+    if (result.isConfirmed) {
+        const createAppResponse = await fetch(`/createApplication/?id=${ID}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+        });
+
+        const createAppResult = await createAppResponse.json();
+
+        if (createAppResult.created) {
+            Swal.fire({
+                title: "Successful",
+                icon: "success",
+                confirmButtonColor: "#00a19a",
+            }).then((res) => {
+                if (res.isConfirmed) {
+                    window.location.reload()
+                }
+            })
+        }
+    }
+}
 
 
 

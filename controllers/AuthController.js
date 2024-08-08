@@ -7,6 +7,7 @@ const { promisify } = require("util");
 const { sendMail } = require("../mail/mail");
 const sgMail = require("@sendgrid/mail");
 const { application } = require("express");
+const { default: mongoose } = require("mongoose");
 
 require("dotenv").config();
 
@@ -89,13 +90,14 @@ exports.findUserByEmail = async (req, res) => {
 }
 
 exports.createSmallBusinessApplication = async (req, res) => {
-  const email = req.query.email;
+  const id = req.query.id;
 
-  if (!email) {
-    return res.status(400).json({ error: "Email is required" });
+  if (!id) {
+    return res.status(400).json({ error: "User Id is required" });
   }
 
-  const user = await User.findOne({ email })
+  const user = await User.findById(new mongoose.Types.ObjectId(req.query.id))
+  console.log(user)
 
   let owner = user._id;
   let contact_person = null;
@@ -176,7 +178,7 @@ exports.createSmallBusinessApplication = async (req, res) => {
   })
 
   application.save().then(newApplication => {
-    user.smallBusinessApplication = newApplication._id
+    user.smallBusinessApplication.push(newApplication._id)
     user.save()
   })
 
@@ -489,7 +491,7 @@ exports.post_register = async function (req, res, next) {
             .then(async () => {
               let mailList = process.env.MAILIST.split(',')
               await sendMail(
-                `I'm excited to inform you that ${firstName} ${lastName} from ${orgName} has just registered on our application website.`,
+                `I'm excited to inform you that ${firstName} ${lastName} from ${orgName} has just signed up on our application website.`,
                 "CSRA New Registration",
                 mailList
               );

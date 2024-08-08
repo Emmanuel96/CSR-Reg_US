@@ -47,12 +47,11 @@ function updateFurtherInfo() {
     })
   }
 
-  axios.put(`/further_information/${applicationID}`, data).then(response => response.json()).then((res) => {
-console.log(res)
-    if (res.success) {
-      document.getElementById('submit_btn').innerText = "Submit"
+  axios.put(`/further_information/${applicationID}`, data).then(response => {
+    if (response.data.success) {
+      document.getElementById('finish_btn').innerText = "Saving"
 
-        document.getElementById('submit_btn').disabled = false
+        document.getElementById('finish_btn').disabled = false
       Swal.fire({
         title: "Successfully submitted Further Informations",
         confirmButtonColor: '#00a19a'

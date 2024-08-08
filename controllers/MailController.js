@@ -1,8 +1,9 @@
 const sgMail = require("@sendgrid/mail");
 const SmallApplication = require("../models/SmallApplication");
+const { default: mongoose } = require("mongoose");
 
 exports.notify_completion = (req, res, next) => {
-  SmallApplication.findOne({ owner: req.user._id.toString() })
+  SmallApplication.findById(new mongoose.Types.ObjectId(req.param.id))
     .then((doc) => {
       const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
 
