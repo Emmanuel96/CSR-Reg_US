@@ -47,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update all relevant links
     updateLink('companyDetailsLink');
-    updateLink("homeLink");
     updateLink('noteLink');
     updateLink('applicationIntroductionLink');
     updateLink('environmentEnergyLink');
