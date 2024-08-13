@@ -67,8 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-const userID = sessionStorage.getItem("csra_user");
-
 //holds the application object data
 let req_data = ""
 
@@ -235,17 +233,7 @@ confirmation.addEventListener("click", (e) => {
     }).then(result => {
       if (result.isConfirmed) {
         if (
-          req_data.company_details_completed &&
-          req_data.introduction_completed &&
-          req_data.notes &&
-          req_data.env_energy_completed &&
-          req_data.env_natural_resource_completed &&
-          req_data.env_supply_chain_management_completed &&
-          req_data.env_travel_completed &&
-          req_data.env_waste_completed &&
-          req_data.workplace_completed &&
-          req_data.community_completed &&
-          req_data.philanthropy_completed
+          req_data.finished
         ) {
           Swal.fire({
             title: "Thank You For completing Your Application!",

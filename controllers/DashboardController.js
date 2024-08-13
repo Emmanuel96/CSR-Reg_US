@@ -83,7 +83,6 @@ exports.submit = (req, res) => {
 
 exports.put_company_details = async function (req, res, next) {
   var body = req.body;
-  console.log(body)
 
   const company_details = {
     contact_person: body.contact_person,
@@ -501,7 +500,6 @@ exports.get_user_applications = async function (req, res) {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    console.log(user.smallBusinessApplication)
     return res.status(200).json(user.smallBusinessApplication);
   } catch (error) {
     throw new Error(error)

@@ -1,3 +1,4 @@
+let applicationID = window.location.pathname.split('/').pop()
 const fileTempl = document.getElementById("file-template"),
   imageTempl = document.getElementById("image-template"),
   empty = document.getElementById("empty");
@@ -156,7 +157,7 @@ document.getElementById("submit").onclick = () => {
       console.log(pair[0]+ ', ' + pair[1]); 
     }
 
-    axios.post("/api/media/upload/community", formData)
+    axios.post(`/api/media/upload/community/${applicationID}`, formData)
       .then((response) => {
         var progress = document.getElementById("progress");
         progress.classList.add("hidden");
@@ -198,7 +199,7 @@ document.getElementById("cancel").onclick = () => {
 
 let fileNames = []
 
-axios.get('/api/media/fetch').then((res) => {
+axios.get(`/api/media/fetch/${applicationID}`).then((res) => {
   fileNames = res.data
 
   let files = fileNames.map(fileName => (
@@ -218,7 +219,7 @@ axios.get('/api/media/fetch').then((res) => {
 }).catch(() => (null))
 
 function deleteFile(fileName){
-  axios.post('/api/media/delete', { fileName }).then((res) => {
+  axios.post(`/api/media/delete/${applicationID}`, { fileName }).then((res) => {
     Swal.fire({
       title: "Deleted successfully!",
       confirmButtonColor: "#00a19a",

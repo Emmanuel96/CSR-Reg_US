@@ -12,19 +12,21 @@ const s3 = new aws.S3({
 
 exports.media_upload_environment = async(request, response, next) => {
 
+    console.log(request.params.id)
+
     const upload = multer({
         storage: multerS3({
             s3: s3,
             acl: 'public-read',
             key: async function(request, file, cb) {
-                const fileName = `${request.user._id.toString()}-environment-${file.originalname}`
+                const fileName = `${request.params.id.toString()}-environment-${file.originalname}`
 
                 console.log(file);
 
                 cb(null, fileName)
 
             },
-            bucket: process.env.BUCKET + '/users/' + `${request.user._id.toString()}` + '/environment-docs',
+            bucket: process.env.BUCKET + '/users/' + `${request.user._id.toString()}/` + `${request.params.id.toString()}` + '/environment-docs',
         })
     }).array('upload', 6);
 
@@ -50,7 +52,7 @@ exports.media_upload_workplace = async(request, response, next) => {
             s3: s3,
             acl: 'public-read',
             key: async function(request, file, cb) {
-                const fileName = `${request.user._id.toString()}-workplace-${file.originalname}`
+                const fileName = `${request.params.id.toString()}-workplace-${file.originalname}`
 
                 console.log(file);
 
@@ -58,7 +60,7 @@ exports.media_upload_workplace = async(request, response, next) => {
 
                 console.log('csra' + '/users/' + `${request.user._id.toString()}` + '/workplace-docs')
             },
-            bucket: 'csra' + '/users/' + `${request.user._id.toString()}` + '/workplace-docs',
+            bucket: process.env.BUCKET + '/users/' + `${request.user._id.toString()}/` + `${request.params.id.toString()}` + '/workplace-docs',
         })
     }).array('upload', 6);
 
@@ -84,15 +86,14 @@ exports.media_upload_community = async(request, response, next) => {
             s3: s3,
             acl: 'public-read',
             key: async function(request, file, cb) {
-                const fileName = `${request.user._id.toString()}-community-${file.originalname}`
+                const fileName = `${request.params.id.toString()}-community-${file.originalname}`
 
                 console.log(file);
 
                 cb(null, fileName)
 
-                console.log('csra' + '/users/' + `${request.user._id.toString()}` + '/community-docs')
             },
-            bucket: 'csra' + '/users/' + `${request.user._id.toString()}` + '/community-docs',
+            bucket: process.env.BUCKET + '/users/' + `${request.user._id.toString()}/` + `${request.params.id.toString()}` + '/community-docs',
         })
     }).array('upload', 6);
 
@@ -118,7 +119,7 @@ exports.media_upload_philanthropy = async(request, response, next) => {
             s3: s3,
             acl: 'public-read',
             key: async function(request, file, cb) {
-                const fileName = `${request.user._id.toString()}-philanthropy-${file.originalname}`
+                const fileName = `${request.params.id.toString()}-philanthropy-${file.originalname}`
 
                 console.log(file);
 
@@ -126,7 +127,7 @@ exports.media_upload_philanthropy = async(request, response, next) => {
 
                 console.log('csra' + '/users/' + `${request.user._id.toString()}` + '/philanthropy-docs')
             },
-            bucket: 'csra' + '/users/' + `${request.user._id.toString()}` + '/philanthropy-docs',
+            bucket:  process.env.BUCKET + '/users/' + `${request.user._id.toString()}/` + `${request.params.id.toString()}` + '/philanthropy-docs',
         })
     }).array('upload', 6);
 
@@ -149,7 +150,7 @@ exports.media_upload_philanthropy = async(request, response, next) => {
 exports.fetch_media = async(request, response, next) => {
     const bucketParams = {
         Bucket: 'csra',
-        Prefix: 'users/' + `${request.user._id.toString()}`
+        Prefix: 'users/' + `${request.user._id.toString()}/` + `${request.params.id.toString()}`
     };
 
     try {
@@ -173,7 +174,7 @@ exports.delete_media = async(request, response, next) => {
 
     const bucketParams = {
         Bucket: "csra",
-        Key: 'users/' + `${request.user._id.toString()}` + `/${folderPath}` + `/${request.body.fileName}`
+        Key: 'users/' + `${request.user._id.toString()}/` + `${request.params.id.toString()}` + `/${folderPath}` + `/${request.body.fileName}`
     };
 
     console.log('users/' + `${request.user._id.toString()}` + `/${folderPath}` + `/${request.body.fileName}`)
