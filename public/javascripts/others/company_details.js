@@ -30,6 +30,10 @@ function getCompanyDetails() {
       document.getElementById('mobile_number').value = localStorage.getItem('mobile_number') ? localStorage.getItem('mobile_number') : docData.mobile_number
       document.getElementById('soleTraderMicro').value = localStorage.getItem('soleTraderMicro') ? localStorage.getItem('soleTraderMicro') : docData.soleTraderMicro
       document.getElementById('charity').value = localStorage.getItem('charity') ? localStorage.getItem('charity') : docData.charity
+
+      if (docData.scores.length >= 2) {
+        document.getElementById("submit_btn").disabled = true;
+      }
     });
 }
 getCompanyDetails();

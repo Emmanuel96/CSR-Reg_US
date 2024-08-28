@@ -19,6 +19,10 @@ function getEnvEnergy() {
     })
     .then(() => {
       document.getElementById('env_energy_textarea').value = localStorage.getItem('env_energy_textarea') ? localStorage.getItem('env_energy_textarea') : docData.env_energy
+
+      if (docData.scores.length >= 2) {
+        document.getElementById("submit_btn").disabled = true;
+      }
     });
 }
 getEnvEnergy();

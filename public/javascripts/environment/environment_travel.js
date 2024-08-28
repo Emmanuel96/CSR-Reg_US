@@ -16,6 +16,10 @@ function getEnvTravel(){
     docData = result.data
   }).then(() => {
     document.getElementById('env_travel').value = localStorage.getItem('env_travel') ? localStorage.getItem('env_travel') : docData.env_travel
+
+    if (docData.scores.length >= 2) {
+        document.getElementById("submit_btn").disabled = true;
+      }
   })
 }
 getEnvTravel()

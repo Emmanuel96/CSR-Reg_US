@@ -17,6 +17,10 @@ function getPhilCharitable(){
   }).then(() => {
     console.log(docData)
     document.getElementById('charitable_inv').value = localStorage.getItem('charitable_inv') ? localStorage.getItem('charitable_inv') : docData.philanthropy
+
+    if (docData.scores.length >= 2) {
+        document.getElementById("submit_btn").disabled = true;
+      }
   })
 }
 getPhilCharitable()

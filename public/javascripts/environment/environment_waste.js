@@ -19,6 +19,10 @@ function getEnvWaste() {
     })
     .then(() => {
       document.getElementById('env_waste').value = localStorage.getItem('env_waste') ? localStorage.getItem('env_waste') : docData.env_waste
+
+      if (docData.scores.length >= 2) {
+        document.getElementById("submit_btn").disabled = true;
+      }
     });
 }
 getEnvWaste();

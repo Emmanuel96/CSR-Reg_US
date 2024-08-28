@@ -16,6 +16,10 @@ function getAppIntro() {
     docData = result.data
   }).then(() => {
     document.getElementById('introduction_textarea').value = localStorage.getItem('introduction_textarea') ? localStorage.getItem('introduction_textarea') : docData.introduction
+
+    if (docData.scores.length >= 2) {
+        document.getElementById("submit_btn").disabled = true;
+      }
   })
 }
 getAppIntro()

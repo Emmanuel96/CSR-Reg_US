@@ -16,6 +16,10 @@ function getEnvNatural(){
     docData = result.data
   }).then(() => {
     document.getElementById('env_natural_resource').value = localStorage.getItem('env_natural_resource') ? localStorage.getItem('env_natural_resource') : docData.env_natural_resource
+
+    if (docData.scores.length >= 2) {
+        document.getElementById("submit_btn").disabled = true;
+      }
   })
 }
 getEnvNatural()

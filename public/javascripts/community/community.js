@@ -17,6 +17,10 @@ function getComEngagement(){
     docData = result.data
   }).then(() => {
     document.getElementById('com_engagement_textarea').value = localStorage.getItem('com_engagement_textarea') ? localStorage.getItem('com_engagement_textarea') : docData.community
+
+    if (docData.scores.length >= 2) {
+        document.getElementById("submit_btn").disabled = true;
+    }
   })
 }
 getComEngagement()

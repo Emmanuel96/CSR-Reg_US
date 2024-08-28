@@ -16,6 +16,10 @@ function getEnvSupplyChain(){
     docData = result.data
   }).then(() => {
     document.getElementById('env_supply_chain').value = localStorage.getItem('env_supply_chain') ? localStorage.getItem('env_supply_chain') : docData.env_supply_chain_management
+
+    if (docData.scores.length >= 2) {
+        document.getElementById("submit_btn").disabled = true;
+      }
   })
 }
 getEnvSupplyChain()

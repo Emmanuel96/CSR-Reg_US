@@ -21,6 +21,10 @@ function getFurtherInfo() {
     .then(() => {
       document.getElementById('phil_other_information').value = localStorage.getItem('phil_other_information') ? localStorage.getItem('phil_other_information') : docData.phil_other_information
       document.getElementById('phil_future_planning').value = localStorage.getItem('phil_future_planning') ? localStorage.getItem('phil_future_planning') : docData.phil_future_planning
+
+      if (docData.scores.length >= 2) {
+        document.getElementById("finish_btn").disabled = true;
+      }
     });
 }
 getFurtherInfo();

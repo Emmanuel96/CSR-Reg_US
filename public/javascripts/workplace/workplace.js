@@ -16,6 +16,10 @@ function getWrkTraining(){
     docData = result.data
   }).then(() => {
     document.getElementById('wrk_training').value = localStorage.getItem('wrk_training') ? localStorage.getItem('wrk_training') : docData.workplace
+
+    if (docData.scores.length >= 2) {
+        document.getElementById("submit_btn").disabled = true;
+      }
   })
 }
 getWrkTraining()
