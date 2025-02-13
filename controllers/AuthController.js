@@ -213,6 +213,7 @@ exports.post_register = async function (req, res, next) {
   var email = req.body.email.toLowerCase();
   var password = req.body.password;
   var orgName = req.body.orgName
+  var phoneNumber =  req.body.phoneNumber
 
   const newUser = new User({
     firstName,
@@ -220,6 +221,7 @@ exports.post_register = async function (req, res, next) {
     orgName,
     email,
     password,
+    phoneNumber
   });
 
   User.findOne({ email: email }).then((user) => {
@@ -240,7 +242,7 @@ exports.post_register = async function (req, res, next) {
               let telephone_number = null;
               let soleTraderMicro = null;
               let charity = null;
-              let mobile_number = null;
+              let mobile_number = req.body.phoneNumber;
               let postal_code = null;
               let email_address = req.body.email.toLowerCase();
               let country = req.body.country;
@@ -489,7 +491,7 @@ exports.post_register = async function (req, res, next) {
             .then(async () => {
               let mailList = process.env.MAILIST.split(',')
               await sendMail(
-                `I'm excited to inform you that ${firstName} ${lastName} from ${orgName} has just signed up on our application website.`,
+                `I'm excited to inform you that ${firstName} ${lastName} from ${orgName} with ${req.body.phoneNumber} has just signed up on our application website.`,
                 "CSRA New Registration",
                 mailList
               );

@@ -22,7 +22,9 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-
+  phoneNumber: {
+    type: String,
+  },
   smallBusinessApplication: {
     type: String,
     ref: 'Application'
