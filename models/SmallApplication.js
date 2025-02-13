@@ -138,6 +138,8 @@ const SmallApplicationSchema = new mongoose.Schema({
     }
 });
 
+SmallApplicationSchema.set('timestamps', true)
+
 SmallApplicationSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         delete returnedObject.__v
