@@ -18,7 +18,6 @@ function getCompanyDetails() {
     .get(`/api/application/${ID}`)
     .then((result) => {
       docData = result.data;
-      console.log(docData.mobile_number, docData.telephone_number)
     })
     .then(() => {
       document.getElementById('contact_person').value = localStorage.getItem('contact_person') ? localStorage.getItem('contact_person') : docData.contact_person
