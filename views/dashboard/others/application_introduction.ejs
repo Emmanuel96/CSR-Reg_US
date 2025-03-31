@@ -5,6 +5,7 @@
     <title>Dashboard</title>
     <%- include('../../partials/head.ejs') %>
         <link rel='stylesheet' href='/stylesheets/style.css' />
+        <script src="/javascripts/others/maxWordcount.js"></script>
 </head>
 
 <body class="bg-white">
@@ -33,7 +34,7 @@
                             </div>
 
                             <form class="pt-5">
-                                <textarea id="introduction_textarea" maxlength="500" placeholder="Text..."
+                                <textarea id="introduction_textarea" placeholder="Text..."
                                     class="p-8 max-h-96 text-justify resize-y h-40 w-full border border-[#464343]"></textarea>
                                 <div id="word_count" class="text-right text-gray-500 mt-2"></div>
                             </form>
