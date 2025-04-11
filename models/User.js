@@ -29,6 +29,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     ref: 'Application'
   },
+  application: {
+    type: String,
+    ref: 'Application'
+  },
   resetPasswordToken: {
     type: String
   },
