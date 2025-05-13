@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Share Read-Only Application</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .application { margin-bottom: 10px; }
+    .text-blue-600 { color: #2563eb; }
+  </style>
+</head>
+<body>
+  <h1>Share Read-Only Application</h1>
+  <% if (error) { %>
+    <p class="text-red-600"><%= error %></p>
+  <% } %>
+  <div>
+    <% applications.forEach(app => { %>
+      <h3><%= app.organisation_name %></h3>
+      <ul>
+        <% app.readOnlyLinks.forEach(link => { %>
+          <li><a href="<%= link.url %>" target="_blank"><%= link.name %></a></li>
+        <% }) %>
+      </ul>
+    <% }) %>
+  </div>
+  <script>
+    function copyLink(link) {
+      navigator.clipboard.writeText(link)
+        .then(() => alert('Link copied to clipboard!'))
+        .catch(err => alert('Failed to copy link: ' + err.message));
+    }
+  </script>
+</body>
+</html>
+

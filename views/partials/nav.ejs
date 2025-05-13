@@ -1,4 +1,4 @@
-<style>
+ <style>
   .disabled {
     opacity: 0.5;
   }
@@ -88,7 +88,7 @@
           </div>
         </div>
       </div>
-      <!-- Workplace pillar -->
+       <!-- Workplace pillar  -->
       <div @click.away="open = false" class="relative md:mb-4 hover:shadow-lg z-20" x-data="{ open: false }">
         <a @click="open = !open"
           class="clear-left flex flex-row items-center w-full text-[#302f2f] px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg md:block hover:text-gray-900 hover:bg-gray-200"
@@ -193,14 +193,27 @@
           <img class="w-3 pt-1" src="/assets/images/completed.png" alt="completed tick" />
         </span>
       </a>
-      <button id="finish_tick_text" style="cursor: pointer"
-        class="clear-left block md:mb-4 px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg">SUBMIT
+      <% if(!isReadOnly) { %> 
+        <button id="finish_tick_text" style="cursor: pointer"
+        class="clear-left block md:mb-4 px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg hover:bg-gray-200">SUBMIT
         APPLICATION
         <span id="finish_tick" class="hidden float-right">
           <img class="w-3 pt-1" src="/assets/images/star.png" alt="completed tick" />
         </span>
-      </button>
+       </button>
+      <% } %>
+       <!-- Invitation Link Button -->
+      <% if(!isReadOnly) { %> 
+          <button id="invitation-form" style="cursor: pointer" class="clear-left block md:mb-4 hover:shadow-lg px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg hover:text-gray-900 hover:bg-gray-200">GENERATE READ-ONLY FILE</button>
+          <div id="invitation-result" class="mt-2"></div>
+        
+      <% } %> 
     </nav>
   </div>
   <script src="/javascripts/global/global.js"></script>
-</div>
+      <script src="/javascripts/invitation-link.js"></script>
+
+</div>  
+
+
+

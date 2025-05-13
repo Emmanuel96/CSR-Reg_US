@@ -68,15 +68,22 @@
             </div>  
 
             <form class="pt-5">
-              <textarea id="env_travel" class="p-8 max-h-96 text-justify resize-y h-40 w-full border border-[#464343]" placeholder="Text..."></textarea>
+              <textarea id="env_travel" class="p-8 max-h-96 text-justify resize-y h-40 w-full border border-[#464343]" placeholder="Text..." readonly><%= application.env_travel || '' %>  ></textarea>
             </form>
           </div>
 
           <div class="text-right  text-sm mt-3 text-white pr-5 lg:pr-10">
-            <button id="submit_btn" onclick="updateEnvironmentTravel()" class="py-2 w-32 px-3 hover:bg-[#03857e] rounded-md shadow-lg bg-[#00A19A] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:animate-none animate-bounce duration-300">
-              Save
+            <% if (isReadOnly) { %>
+              <a href="/environment_supply_chain_management?readOnly=true&applicationId=<%= application._id %>" 
+                 class="inline-block text-center py-2 w-32 px-3 bg-[#00A19A] text-white rounded-md shadow-lg hover:bg-[#03857e] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 animate-bounce">
+                Next
+              </a>
+            <% } else { %>
+              <button id="submit_btn" onclick="updateEnvironmentTravel()"
+                class="py-2 px-3 hover:bg-[#03857e] w-32 rounded-md shadow-lg bg-[#00A19A] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:animate-none animate-bounce duration-300">
+                Save
             </button>
-          </div>
+            <% } %>
         </div>  
       </div>  
     </div>  
@@ -84,3 +91,4 @@
     <script src="/javascripts/environment/environment_travel.js"></script>
   </body>   
 </html> 
+

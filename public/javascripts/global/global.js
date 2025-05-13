@@ -1,3 +1,45 @@
+window.addEventListener("DOMContentLoaded", () => {
+  // If landing with URL params, save them
+  const params = new URLSearchParams(window.location.search);
+  const appId = params.get('applicationId');
+  const readOnly = params.get('readOnly');
+
+  if (appId && readOnly === 'true') {
+    sessionStorage.setItem('applicationId', appId);
+    sessionStorage.setItem('readOnly', 'true');
+    console.log('Session values set:', appId, readOnly);
+  }
+
+  // Retrieve and use session values
+  const storedAppId = sessionStorage.getItem('applicationId');
+  const storedReadOnly = sessionStorage.getItem('readOnly');
+
+  if (storedReadOnly === 'true') {
+    console.log("Read-only mode is active");
+
+    // Disable all form elements
+    document.querySelectorAll('input, select, textarea, button:not(.navigation)').forEach(el => {
+      el.disabled = true;
+      el.style.opacity = '0.6';
+      el.style.cursor = 'not-allowed';
+    });
+
+    // Hide specific buttons
+    document.querySelectorAll('.submit-button, .save-button').forEach(el => {
+      el.style.display = 'none';
+    });
+  }
+
+  // Update all sidebar links with the readOnly + appId
+  document.querySelectorAll('[data-url]').forEach(link => {
+    const baseUrl = link.getAttribute('data-url');
+    if (storedAppId && storedReadOnly) {
+      link.href = `${baseUrl}?applicationId=${storedAppId}&readOnly=${storedReadOnly}`;
+    }
+  });
+});
+
+
 const activePage = window.location.pathname;
 // const ID = sessionStorage.getItem("csra_user");
 if (localStorage.getItem("active")){

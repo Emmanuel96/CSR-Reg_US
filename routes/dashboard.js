@@ -1,11 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const checkAuthenticated = require('../passport/checkAuthenticated')
+const checkAuthenticated = require('../passport/checkAuthenticated');
 const DashboardController = require('../controllers/DashboardController');
+const { setReadOnly } = require('../middleware/auth');
+
 
 //GET PAGES ROUTES
 
 // router.get('/application/:id', DashboardController.get_application_document)
+ 
+
+  
+router.use(checkAuthenticated, setReadOnly);
 
 router.get('/company_details', checkAuthenticated, DashboardController.get_company_details);
 
@@ -75,5 +81,8 @@ router.put('/further_information/:id', DashboardController.update_phil_supportin
 // Get application document route
 
 router.get('/api/application/:id', DashboardController.get_application_document)
+
+// Invitation link route
+router.post('/create-read-only-link', DashboardController.create_read_only_link);
 
 module.exports = router;

@@ -51,10 +51,7 @@
                                 environmental and socially responsible activity that may not be included in the prompts in this form. We are very
                                 interested in any unique or innovative activity so please make sure you include it in this section.</p>
 
-                            <textarea id="phil_other_information" class="mt-4 p-8 max-h-96 text-justify resize-y h-40 w-full border border-[#464343]" placeholder="Text...">
-            </textarea>
-
-                            <p class="mt-5 font-bold">FUTURE PLANNING & CONTINUAL IMPROVEMENT</p>
+                            <textarea id="phil_other_information" class="mt-4 p-8 max-h-96 text-justify resize-y h-40 w-full border border-[#464343]" placeholder="Text..." readonly><%= application.phil_other_information || '' %>
 
                             <p class="pt-4">Please include any future initiatives and/or improvements to existing plans in regard to your
                                 environmental and social
@@ -65,9 +62,18 @@
                         </form>
 
                         <div class="text-right text-sm mt-14 text-white pr-5 lg:pr-10">
-                            <button id="finish_btn" onclick="updateFurtherInfo()" class="py-2 px-3 w-32 hover:bg-[#03857e] rounded-md shadow-lg bg-[#00A19A] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:animate-none animate-bounce duration-300">
-              Save
-            </button>
+                            <% if (isReadOnly) { %>
+                                
+                                <a href="/company_details?readOnly=true&applicationId=<%= application._id %>" 
+                                   class="inline-block text-center py-2 w-32 px-3 bg-[#00A19A] text-white rounded-md shadow-lg hover:bg-[#03857e] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 animate-bounce">
+                                  Click here to go back to the beginning
+                                </a>
+                              <% } else { %>
+                                
+                                <button id="finish_btn" onclick="updateFurtherInfo()" class="py-2 px-3 w-32 hover:bg-[#03857e] rounded-md shadow-lg bg-[#00A19A] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:animate-none animate-bounce duration-300">
+                                Save
+                                </button>
+                              <% } %>
                         </div>
                     </div>
                 </div>
@@ -77,3 +83,4 @@
             <script src="/javascripts/others/further_information.js"></script>
 
 </html>
+

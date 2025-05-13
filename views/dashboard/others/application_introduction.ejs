@@ -34,14 +34,24 @@
                             </div>
 
                             <form class="pt-5">
-                                <textarea id="introduction_textarea" placeholder="Text..."
-                                    class="p-8 max-h-96 text-justify resize-y h-40 w-full border border-[#464343]"></textarea>
+                                <textarea id="introduction_textarea" placeholder="Text..." 
+                                    class="p-8 max-h-96 text-justify resize-y h-40 w-full border border-[#464343]" readonly><%= application.introduction_textarea || '' %></textarea>
                                 <div id="word_count" class="text-right text-gray-500 mt-2"></div>
                             </form>
                         </div>
 
                         <div class="text-right text-sm mt-3 text-white pr-5 lg:pr-10">
-                            <button id="submit_btn" onclick="updateApplicationIntroduction()" class="py-2 px-3 hover:bg-[#03857e] w-32 rounded-md shadow-lg bg-[#00A19A] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:animate-none animate-bounce duration-300">Save</button>
+                            <% if (isReadOnly) { %>
+                                <a href="/environment_energy?readOnly=true&applicationId=<%= application._id %>" 
+                                   class="inline-block text-center py-2 w-32 px-3 bg-[#00A19A] text-white rounded-md shadow-lg hover:bg-[#03857e] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 animate-bounce">
+                                  Next
+                                </a>
+                              <% } else { %>
+                                <button id="submit_btn" onclick="updateApplicationIntroduction()"
+                                  class="py-2 px-3 hover:bg-[#03857e] w-32 rounded-md shadow-lg bg-[#00A19A] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:animate-none animate-bounce duration-300">
+                                  Save
+                              </button>
+                              <% } %>
                         </div>
                     <p class="mt-5 font-bold pl-5 text-red-700">
                         AS A MINIMUM REQUIREMENT, WE EXPECT ALL APPLICANTS TO FOLLOW STATUTORY REQUIREMENTS AND TO MEET ALL RELEVANT
@@ -57,3 +67,4 @@
 </body>
 
 </html>
+
