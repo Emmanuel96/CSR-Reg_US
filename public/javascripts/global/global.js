@@ -7,15 +7,20 @@ window.addEventListener("DOMContentLoaded", () => {
   if (appId && readOnly === 'true') {
     sessionStorage.setItem('applicationId', appId);
     sessionStorage.setItem('readOnly', 'true');
-    console.log('Session values set:', appId, readOnly);
   }
 
   // Retrieve and use session values
   const storedAppId = sessionStorage.getItem('applicationId');
   const storedReadOnly = sessionStorage.getItem('readOnly');
+  
+  // Clear on login or logout
+  sessionStorage.removeItem('applicationId');
+  sessionStorage.removeItem('readOnly');
+
+
+
 
   if (storedReadOnly === 'true') {
-    console.log("Read-only mode is active");
 
     // Disable all form elements
     document.querySelectorAll('input, select, textarea, button:not(.navigation)').forEach(el => {

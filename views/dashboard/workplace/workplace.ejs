@@ -84,7 +84,7 @@
               </div>
 <form class="pt-5">
   <textarea id="wrk_training" class="p-8 max-h-96 text-justify resize-y h-40 w-full border border-[#464343]"
-    placeholder="Text..." readonly><%= application.wrk_training || '' %>  ></textarea>
+    placeholder="Text..." <%= isReadOnly ? 'readonly' : '' %>><%= application.wrk_training || '' %>  ></textarea>
 </form>
           </div>
 

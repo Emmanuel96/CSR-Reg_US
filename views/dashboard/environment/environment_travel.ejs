@@ -68,7 +68,7 @@
             </div>  
 
             <form class="pt-5">
-              <textarea id="env_travel" class="p-8 max-h-96 text-justify resize-y h-40 w-full border border-[#464343]" placeholder="Text..." readonly><%= application.env_travel || '' %>  ></textarea>
+              <textarea id="env_travel" class="p-8 max-h-96 text-justify resize-y h-40 w-full border border-[#464343]" placeholder="Text..." <%= isReadOnly ? 'readonly' : '' %>><%= application.env_travel || '' %>  ></textarea>
             </form>
           </div>
 

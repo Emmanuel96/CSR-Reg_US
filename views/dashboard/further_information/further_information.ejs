@@ -51,14 +51,13 @@
                                 environmental and socially responsible activity that may not be included in the prompts in this form. We are very
                                 interested in any unique or innovative activity so please make sure you include it in this section.</p>
 
-                            <textarea id="phil_other_information" class="mt-4 p-8 max-h-96 text-justify resize-y h-40 w-full border border-[#464343]" placeholder="Text..." readonly><%= application.phil_other_information || '' %>
+                            <textarea id="phil_other_information" class="mt-4 p-8 max-h-96 text-justify resize-y h-40 w-full border border-[#464343]" placeholder="Text..." <%= isReadOnly ? 'readonly' : '' %>><%= application.phil_other_information || '' %>></textarea>
 
                             <p class="pt-4">Please include any future initiatives and/or improvements to existing plans in regard to your
                                 environmental and social
                                 responsibility strategies.</p>
 
-                            <textarea id="phil_future_planning" class="mt-4 p-8 max-h-96 text-justify resize-y h-40 w-full border border-[#464343]" placeholder="Text...">
-            </textarea>
+                            <textarea id="phil_future_planning" class="mt-4 p-8 max-h-96 text-justify resize-y h-40 w-full border border-[#464343]" placeholder="Text..." <%= isReadOnly ? 'readonly' : '' %>><%= application.phil_future_planning || '' %>></textarea>
                         </form>
 
                         <div class="text-right text-sm mt-14 text-white pr-5 lg:pr-10">

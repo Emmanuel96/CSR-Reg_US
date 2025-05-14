@@ -12,8 +12,12 @@ exports.create_read_only_link = async (req, res) => {
     if (!req.user?._id) {
       return res.status(401).json({ success: false, error: 'User not authenticated' });
     }
+    console.log('User ID from req.user._id:', req.user._id);
 
-    const userId = req.user._id.toString();
+
+    // const userId = req.user._id.toString();
+    const userId = new mongoose.Types.ObjectId(req.user._id);
+
     const application = await SmallApplication.findOne({ owner: userId })
       .sort({ createdAt: -1 })
       .select('_id');
@@ -69,7 +73,6 @@ exports.create_read_only_link = async (req, res) => {
   
       const applications = await SmallApplication.find({ owner: userId })
         .sort({ createdAt: -1 })
-        .limit(5)
         .select('organisation_name _id createdAt');
   
       console.log('Applications:', applications);
@@ -111,33 +114,39 @@ exports.create_read_only_link = async (req, res) => {
           readOnlyLinks
         };
       });
-  
-      res.render('dashboard/submit/submit_link', {
-        applications: applicationsWithLinks,
-        error: null,
-        isReadOnly: req.isReadOnly
-      });
+
     } catch (error) {
       console.error('Error in submit_link:', error);
       res.render('error', { error: { message: error.message || 'Failed to load submit page' } });
     }
   };
- 
-exports.get_company_details = async (req, res) => {
+
+
+  exports.get_company_details = async (req, res) => {
   const applicationId = req.query.applicationId;
-  const userId = req.user._id;
 
   let application;
 
-  if (req.isReadOnly && applicationId) {
-    application = await SmallApplication.findOne({ _id: applicationId, owner: userId });
-  } else {
-    application = await SmallApplication.findOne({ owner: userId }).sort({ createdAt: -1 });
-  }
+ // Check if the request is a read-only view and has an applicationId in the query string
+if (req.isReadOnly && applicationId) {
+  // Fetch the application directly by its ID (used for readonly links)
+  application = await SmallApplication.findOne({ _id: applicationId });
 
-  if (!application) {
-    return res.render('error', { error: { message: 'Application not found' } });
-  }
+// If the user has a reference to a small business application on their account
+} else if (req.user?.smallBusinessApplication) {
+  // Fetch that specific application using the reference ID
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+
+// If the user is logged in and we have their user ID
+} else if (req.user?._id) {
+  // Find the most recently created application owned by the user
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+
+// If none of the above conditions are met (no read-only link, no user, or no application ref)
+} else {
+  // Redirect the user to the login page (probably not authenticated)
+  return res.redirect('/login');
+}
 
   res.render("dashboard/others/company_details", {
     application,
@@ -145,22 +154,20 @@ exports.get_company_details = async (req, res) => {
   });
 };
 
-
 exports.get_application_introduction = async (req, res) => {
   const applicationId = req.query.applicationId;
-  const userId = req.user._id;
 
   let application;
 
-  if (req.isReadOnly && applicationId) {
-    application = await SmallApplication.findOne({ _id: applicationId, owner: userId });
-  } else {
-    application = await SmallApplication.findOne({ owner: userId }).sort({ createdAt: -1 });
-  }
-
-  if (!application) {
-    return res.render('error', { error: { message: 'Application not found' } });
-  }
+if (req.isReadOnly && applicationId) {
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
   res.render("dashboard/others/application_introduction", {
     application,
     isReadOnly: req.isReadOnly
@@ -169,19 +176,18 @@ exports.get_application_introduction = async (req, res) => {
 
 exports.get_environment_energy = async (req, res) => {
   const applicationId = req.query.applicationId;
-  const userId = req.user._id;
 
   let application;
 
-  if (req.isReadOnly && applicationId) {
-    application = await SmallApplication.findOne({ _id: applicationId, owner: userId });
-  } else {
-    application = await SmallApplication.findOne({ owner: userId }).sort({ createdAt: -1 });
-  }
-
-  if (!application) {
-    return res.render('error', { error: { message: 'Application not found' } });
-  }
+ if (req.isReadOnly && applicationId) {
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
   res.render("dashboard/environment/environment_energy",  {
     application,
     isReadOnly: req.isReadOnly
@@ -190,19 +196,18 @@ exports.get_environment_energy = async (req, res) => {
 
 exports.get_environment_natural_resource = async(req, res) => {
   const applicationId = req.query.applicationId;
-  const userId = req.user._id;
 
   let application;
 
   if (req.isReadOnly && applicationId) {
-    application = await SmallApplication.findOne({ _id: applicationId, owner: userId });
-  } else {
-    application = await SmallApplication.findOne({ owner: userId }).sort({ createdAt: -1 });
-  }
-
-  if (!application) {
-    return res.render('error', { error: { message: 'Application not found' } });
-  }
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
   res.render("dashboard/environment/environment_natural_resource",  {
     application,
     isReadOnly: req.isReadOnly
@@ -211,19 +216,18 @@ exports.get_environment_natural_resource = async(req, res) => {
 
 exports.get_environment_travel = async (req, res) => {
   const applicationId = req.query.applicationId;
-  const userId = req.user._id;
 
   let application;
 
   if (req.isReadOnly && applicationId) {
-    application = await SmallApplication.findOne({ _id: applicationId, owner: userId });
-  } else {
-    application = await SmallApplication.findOne({ owner: userId }).sort({ createdAt: -1 });
-  }
-
-  if (!application) {
-    return res.render('error', { error: { message: 'Application not found' } });
-  }
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
   res.render("dashboard/environment/environment_travel",  {
     application,
     isReadOnly: req.isReadOnly
@@ -232,19 +236,18 @@ exports.get_environment_travel = async (req, res) => {
 
 exports.get_environment_supply_chain_management = async (req, res) => {
   const applicationId = req.query.applicationId;
-  const userId = req.user._id;
 
   let application;
 
   if (req.isReadOnly && applicationId) {
-    application = await SmallApplication.findOne({ _id: applicationId, owner: userId });
-  } else {
-    application = await SmallApplication.findOne({ owner: userId }).sort({ createdAt: -1 });
-  }
-
-  if (!application) {
-    return res.render('error', { error: { message: 'Application not found' } });
-  }
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
   res.render("dashboard/environment/environment_supply_chain_management",  {
     application,
     isReadOnly: req.isReadOnly
@@ -253,19 +256,18 @@ exports.get_environment_supply_chain_management = async (req, res) => {
 
 exports.get_environment_waste = async (req, res) => {
   const applicationId = req.query.applicationId;
-  const userId = req.user._id;
 
   let application;
 
   if (req.isReadOnly && applicationId) {
-    application = await SmallApplication.findOne({ _id: applicationId, owner: userId });
-  } else {
-    application = await SmallApplication.findOne({ owner: userId }).sort({ createdAt: -1 });
-  }
-
-  if (!application) {
-    return res.render('error', { error: { message: 'Application not found' } });
-  }
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
   res.render("dashboard/environment/environment_waste",  {
     application,
     isReadOnly: req.isReadOnly
@@ -274,19 +276,18 @@ exports.get_environment_waste = async (req, res) => {
 
 exports.get_environment_supporting_documents = async (req, res) => {
   const applicationId = req.query.applicationId;
-  const userId = req.user._id;
 
   let application;
 
   if (req.isReadOnly && applicationId) {
-    application = await SmallApplication.findOne({ _id: applicationId, owner: userId });
-  } else {
-    application = await SmallApplication.findOne({ owner: userId }).sort({ createdAt: -1 });
-  }
-
-  if (!application) {
-    return res.render('error', { error: { message: 'Application not found' } });
-  }
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
   res.render("dashboard/environment/environment_supporting_documents",  {
     application,
     isReadOnly: req.isReadOnly
@@ -295,19 +296,18 @@ exports.get_environment_supporting_documents = async (req, res) => {
 
 exports.get_notes = async (req, res) => {
   const applicationId = req.query.applicationId;
-  const userId = req.user._id;
 
   let application;
 
   if (req.isReadOnly && applicationId) {
-    application = await SmallApplication.findOne({ _id: applicationId, owner: userId });
-  } else {
-    application = await SmallApplication.findOne({ owner: userId }).sort({ createdAt: -1 });
-  }
-
-  if (!application) {
-    return res.render('error', { error: { message: 'Application not found' } });
-  }
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
   res.render("dashboard/others/notes",  {
     application,
     isReadOnly: req.isReadOnly
@@ -316,19 +316,18 @@ exports.get_notes = async (req, res) => {
 
 exports.get_workplace = async (req, res) => {
   const applicationId = req.query.applicationId;
-  const userId = req.user._id;
 
   let application;
 
   if (req.isReadOnly && applicationId) {
-    application = await SmallApplication.findOne({ _id: applicationId, owner: userId });
-  } else {
-    application = await SmallApplication.findOne({ owner: userId }).sort({ createdAt: -1 });
-  }
-
-  if (!application) {
-    return res.render('error', { error: { message: 'Application not found' } });
-  }
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
   res.render("dashboard/workplace/workplace",  {
     application,
     isReadOnly: req.isReadOnly
@@ -337,19 +336,18 @@ exports.get_workplace = async (req, res) => {
 
 exports.get_workplace_supporting_documents = async (req, res) => {
   const applicationId = req.query.applicationId;
-  const userId = req.user._id;
 
   let application;
 
   if (req.isReadOnly && applicationId) {
-    application = await SmallApplication.findOne({ _id: applicationId, owner: userId });
-  } else {
-    application = await SmallApplication.findOne({ owner: userId }).sort({ createdAt: -1 });
-  }
-
-  if (!application) {
-    return res.render('error', { error: { message: 'Application not found' } });
-  }
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
   res.render("dashboard/workplace/workplace_supporting_documents",  {
     application,
     isReadOnly: req.isReadOnly
@@ -358,19 +356,18 @@ exports.get_workplace_supporting_documents = async (req, res) => {
 
 exports.get_community = async (req, res) => {
   const applicationId = req.query.applicationId;
-  const userId = req.user._id;
 
   let application;
 
   if (req.isReadOnly && applicationId) {
-    application = await SmallApplication.findOne({ _id: applicationId, owner: userId });
-  } else {
-    application = await SmallApplication.findOne({ owner: userId }).sort({ createdAt: -1 });
-  }
-
-  if (!application) {
-    return res.render('error', { error: { message: 'Application not found' } });
-  }
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
   res.render("dashboard/community/community",  {
     application,
     isReadOnly: req.isReadOnly
@@ -379,39 +376,38 @@ exports.get_community = async (req, res) => {
 
 exports.get_community_supporting_documents = async (req, res) => {
   const applicationId = req.query.applicationId;
-  const userId = req.user._id;
 
   let application;
 
-  if (req.isReadOnly && applicationId) {
-    application = await SmallApplication.findOne({ _id: applicationId, owner: userId });
-  } else {
-    application = await SmallApplication.findOne({ owner: userId }).sort({ createdAt: -1 });
-  }
-
-  if (!application) {
-    return res.render('error', { error: { message: 'Application not found' } });
-  }
+ if (req.isReadOnly && applicationId) {
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
   res.render("dashboard/community/community_supporting_documents",  {
     application,
     isReadOnly: req.isReadOnly
   });
 };
 
-exports.get_philanthropy = async (req, res) => {  const applicationId = req.query.applicationId;
-  const userId = req.user._id;
+exports.get_philanthropy = async (req, res) => {  
+  const applicationId = req.query.applicationId;
 
   let application;
 
   if (req.isReadOnly && applicationId) {
-    application = await SmallApplication.findOne({ _id: applicationId, owner: userId });
-  } else {
-    application = await SmallApplication.findOne({ owner: userId }).sort({ createdAt: -1 });
-  }
-
-  if (!application) {
-    return res.render('error', { error: { message: 'Application not found' } });
-  }
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
   res.render("dashboard/philanthropy/philanthropy",  {
     application,
     isReadOnly: req.isReadOnly
@@ -420,19 +416,18 @@ exports.get_philanthropy = async (req, res) => {  const applicationId = req.quer
 
 exports.get_philanthropy_supporting_documents = async (req, res) => {
   const applicationId = req.query.applicationId;
-  const userId = req.user._id;
 
   let application;
 
   if (req.isReadOnly && applicationId) {
-    application = await SmallApplication.findOne({ _id: applicationId, owner: userId });
-  } else {
-    application = await SmallApplication.findOne({ owner: userId }).sort({ createdAt: -1 });
-  }
-
-  if (!application) {
-    return res.render('error', { error: { message: 'Application not found' } });
-  }
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
   res.render("dashboard/philanthropy/philanthropy_supporting_documents",  {
     application,
     isReadOnly: req.isReadOnly
@@ -441,19 +436,18 @@ exports.get_philanthropy_supporting_documents = async (req, res) => {
 
 exports.further_info = async (req, res) => {
   const applicationId = req.query.applicationId;
-  const userId = req.user._id;
 
   let application;
 
   if (req.isReadOnly && applicationId) {
-    application = await SmallApplication.findOne({ _id: applicationId, owner: userId });
-  } else {
-    application = await SmallApplication.findOne({ owner: userId }).sort({ createdAt: -1 });
-  }
-
-  if (!application) {
-    return res.render('error', { error: { message: 'Application not found' } });
-  }
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
   res.render("dashboard/further_information/further_information",  {
     application,
     isReadOnly: req.isReadOnly
@@ -462,19 +456,18 @@ exports.further_info = async (req, res) => {
 
 exports.submit = async (req, res) => {
   const applicationId = req.query.applicationId;
-  const userId = req.user._id;
 
   let application;
 
   if (req.isReadOnly && applicationId) {
-    application = await SmallApplication.findOne({ _id: applicationId, owner: userId });
-  } else {
-    application = await SmallApplication.findOne({ owner: userId }).sort({ createdAt: -1 });
-  }
-
-  if (!application) {
-    return res.render('error', { error: { message: 'Application not found' } });
-  }
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
   res.render("dashboard/submit/submit",  {
     application,
     isReadOnly: req.isReadOnly

@@ -35,7 +35,7 @@
 
                             <form class="pt-5">
                                 <textarea id="introduction_textarea" placeholder="Text..." 
-                                    class="p-8 max-h-96 text-justify resize-y h-40 w-full border border-[#464343]" readonly><%= application.introduction_textarea || '' %></textarea>
+                                    class="p-8 max-h-96 text-justify resize-y h-40 w-full border border-[#464343]" <%= isReadOnly ? 'readonly' : '' %>><%= application.introduction_textarea || '' %></textarea>
                                 <div id="word_count" class="text-right text-gray-500 mt-2"></div>
                             </form>
                         </div>

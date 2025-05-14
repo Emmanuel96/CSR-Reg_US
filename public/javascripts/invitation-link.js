@@ -18,10 +18,10 @@
         const readOnlyLink = data.readOnlyLinks.company_details;
 
         resultDiv.innerHTML = `
-          <p class="invitation-link bg-yellow-100 text-red-600 px-4 py-3 rounded">
+          <p class="invitation-link px-4 py-3 rounded">
             <a href="${readOnlyLink}" target="_blank" class="break-words">${readOnlyLink}</a>
             <button 
-              class="copy-button px-2 py-1 font-semibold bg-gray-200 rounded mt-2"
+              class="copy-button px-2 py-1 font-semibold bg-gray-200 text-black rounded mt-2"
               onclick="copyLink('${readOnlyLink}')"
             >
               Copy Link

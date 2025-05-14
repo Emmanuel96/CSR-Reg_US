@@ -76,7 +76,7 @@
               <form class="pt-5">
                 <textarea id="com_engagement_textarea"
                   class="p-8 max-h-96 text-justify resize-y h-40 w-full border border-[#464343]"
-                  placeholder="Text..." readonly><%= application.com_engagement_textarea || '' %>  ></textarea>
+                  placeholder="Text..." <&= isReadOnly ? 'readonly' : '' %>><%= application.com_engagement_textarea || '' %>  ></textarea>
               </form>
             </div>
 
