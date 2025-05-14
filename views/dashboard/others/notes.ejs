@@ -168,10 +168,18 @@
                         </div>
 
                         <div class="text-right text-sm mt-3 text-white pr-5 lg:pr-10">
-                            <button id="nxt_btn" onclick="updateAssessments()"
-                                class="py-2 px-3 hover:bg-[#03857e] w-32 rounded-md shadow-lg bg-[#00A19A] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:animate-none animate-bounce duration-300">
-                                Next
-                            </button>
+                            <% if (isReadOnly) { %>
+                                <a href="/application_introduction?readOnly=true&applicationId=<%= application._id %>" 
+                                   class="inline-block text-center py-2 w-32 px-3 bg-[#00A19A] text-white rounded-md shadow-lg hover:bg-[#03857e] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 animate-bounce">
+                                  Next
+                                </a>
+                              <% } else { %>
+                                <button id="submit_btn" onclick="updateAssessments()"
+                                  class="py-2 px-3 hover:bg-[#03857e] w-32 rounded-md shadow-lg bg-[#00A19A] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:animate-none animate-bounce duration-300">
+                                  Save
+                              </button>
+                              <% } %>
+                            
                         </div>
                     </div>
                 </div>
@@ -182,3 +190,4 @@
 </body>
 
 </html>
+

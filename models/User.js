@@ -26,8 +26,8 @@ const UserSchema = new mongoose.Schema({
     type: String,
   },
   smallBusinessApplication: {
-    type: String,
-    ref: 'Application'
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'SmallApplication'
   },
   application: {
     type: String,

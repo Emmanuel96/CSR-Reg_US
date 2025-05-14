@@ -108,7 +108,7 @@
                     <br />
                     <input id="contact_person"
                       class="peer border invalid:border-2 invalid:border-[#ff0000] invalid:outline-[#ff0000] h-11 w-full lg:h-10 border-[#00A19A] rounded-md py-1 px-3 placeholder:text-xs"
-                      type="text" placeholder="Type your name" />
+                      type="text" placeholder="Type your name" value="<%= application.contact_person || '' %>" />
                     <p class="mt-2 invisible peer-invalid:visible text-[#ff0000] text-sm">
                       Please provide a valid text.
                     </p>
@@ -119,7 +119,7 @@
                     <br />
                     <input id="organisation_name"
                       class="peer border invalid:border-2 invalid:border-[#ff0000] invalid:outline-[#ff0000] h-11 w-full lg:h-10 border-[#00A19A] rounded-md py-1 px-3 placeholder:text-xs"
-                      type="text" placeholder="Type your organisation's name" />
+                      type="text" placeholder="Type your organisation's name" value="<%= application.organisation_name || '' %>" />
                     <p class="mt-2 invisible peer-invalid:visible text-[#ff0000] text-sm">
                       Please provide a valid text.
                     </p>
@@ -130,7 +130,7 @@
                     <br />
                     <input id="organisation_address"
                       class="peer border invalid:border-2 invalid:border-[#ff0000] invalid:outline-[#ff0000] h-11 w-full lg:h-10 border-[#00A19A] rounded-md py-1 px-3 placeholder:text-xs"
-                      type="text" placeholder="Type your organisation's address" />
+                      type="text" placeholder="Type your organisation's address" value="<%= application.organisation_address || '' %>" />
                     <p class="mt-2 invisible peer-invalid:visible text-[#ff0000] text-sm">
                       Please provide a valid address.
                     </p>
@@ -140,7 +140,7 @@
                     <br />
                     <input id="postal_code"
                       class="peer border invalid:border-2 invalid:border-[#ff0000] invalid:outline-[#ff0000] h-11 w-full lg:h-10 border-[#00A19A] rounded-md py-1 px-3 placeholder:text-xs"
-                      type="text" placeholder="Type your postal code" />
+                      type="text" placeholder="Type your postal code" value="<%= application.postal_code || '' %>"/>
                     <p class="mt-2 invisible peer-invalid:visible text-[#ff0000] text-sm">
                       Please provide a valid text.
                     </p>
@@ -153,7 +153,7 @@
                     <br />
                     <input id="telephone_number"
                       class="peer border invalid:border-2 invalid:border-[#ff0000] invalid:outline-[#ff0000] h-11 w-full lg:h-10 border-[#00A19A] rounded-md py-1 px-3 placeholder:text-xs"
-                      type="tel" placeholder="Type your contact number" />
+                      type="tel" placeholder="Type your contact number" value="<%= application.telephone_number || '' %>" />
                     <p class="mt-2 invisible peer-invalid:visible text-[#ff0000] text-sm">
                       Please provide your contact
                     </p>
@@ -164,7 +164,7 @@
                     <br />
                     <input disabled id="email_address"
                       class="peer border invalid:border-2 invalid:border-[#ff0000] invalid:outline-[#ff0000] h-11 w-full lg:h-10 border-[#00A19A] rounded-md py-1 px-3 placeholder:text-xs"
-                      type="email" placeholder="Type your email" />
+                      type="email" placeholder="Type your email" value="<%= application.email_address || '' %>"/>
                     <p class="mt-2 invisible peer-invalid:visible text-[#ff0000] text-sm">
                       Please provide a valid email address.
                     </p>
@@ -175,7 +175,7 @@
                     <br />
                     <input id="mobile_number"
                       class="peer border invalid:border-2 invalid:border-[#ff0000] invalid:outline-[#ff0000] h-11 w-full lg:h-10 border-[#00A19A] rounded-md py-1 px-3 placeholder:text-xs"
-                      type="tel" placeholder="Type your contact number" />
+                      type="tel" placeholder="Type your contact number" value="<%= application.mobile_number || '' %>" />
                     <p class="mt-2 invisible peer-invalid:visible text-[#ff0000] text-sm">
                       Please provide your contact
                     </p>
@@ -186,7 +186,7 @@
                     <br />
                     <input id="organisation_nationality"
                       class="peer border invalid:border-2 invalid:border-[#ff0000] invalid:outline-[#ff0000] h-11 w-full lg:h-10 border-[#00A19A] rounded-md py-1 px-3 placeholder:text-xs"
-                      type="text" placeholder="Type your organisation's nationality" />
+                      type="text" placeholder="Type your organisation's nationality" value="<%= application.organisation_nationality || '' %>" />
                     <p class="mt-2 invisible peer-invalid:visible text-[#ff0000] text-sm">
                       Please provide a valid text.
                     </p>
@@ -200,8 +200,8 @@
                   <div class="flex space-x-3">
                     <h1>Are You a Sole Trader/Micro (1 – 3 employees):</h1>
                     <select id="soleTraderMicro" class="border-2 px-2 rounded-lg border-[#464343]">
-                      <option value="YES">YES</option>
-                      <option value="NO">NO</option>
+                      <option value="YES" <%= application.soleTraderMicro === 'YES' ? 'selected' : '' %> >YES</option>
+                      <option value="NO" <%= application.soleTraderMicro === 'NO' ? 'selected' : '' %> >NO</option>
                     </select>
                   </div>
                 </div>
@@ -210,17 +210,24 @@
                     <h1>Or a Small Charity (up to £500,000 turnover):</h1>
 
                     <select id="charity" class="border-2 px-2 rounded-lg border-[#464343]">
-                      <option value="YES">YES</option>
-                      <option value="NO">NO</option>
+                      <option value="YES" <%= application.charity === 'YES' ? 'selected' : '' %> >YES</option>
+                      <option value="NO" <%= application.charity === 'NO' ? 'selected' : '' %> >NO</option>
                     </select>
                     </div>
                     </div>
                     </div>
-                    <div class="text-right text-sm mt-3 text-white pr-5 lg:pr-10">
-                <button id="submit_btn" onclick="updateCompanyDetails()"
-                  class="py-2 px-3 hover:bg-[#03857e] w-32 rounded-md shadow-lg bg-[#00A19A] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:animate-none animate-bounce duration-300">
-                  Save
-                </button>
+                  <div class="text-right text-sm mt-3 text-white pr-5 lg:pr-10">
+                    <% if (isReadOnly) { %>
+                      <a href="/notes?readOnly=true&applicationId=<%= application._id %>" 
+                         class="inline-block text-center py-2 w-32 px-3 bg-[#00A19A] text-white rounded-md shadow-lg hover:bg-[#03857e] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 animate-bounce">
+                        Next
+                      </a>
+                    <% } else { %>
+                      <button id="submit_btn" onclick="updateCompanyDetails()"
+                        class="py-2 px-3 hover:bg-[#03857e] w-32 rounded-md shadow-lg bg-[#00A19A] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:animate-none animate-bounce duration-300">
+                        Save
+                    </button>
+                    <% } %>
                 </div>
                 </form>
                 <p class="mt-5 font-bold pl-5 text-red-700">
@@ -244,3 +251,4 @@
 </body>
 
 </html>
+  

@@ -1,77 +1,477 @@
 const SmallApplication = require("../models/SmallApplication");
 const mongoose = require("mongoose");
 const generatePdf = require("../utils/generatepdf");
+const { error } = require("console");
+const path = require("path");
+const { application } = require("express");
 
 //GET PAGES CONTROLLERS
 
-exports.get_company_details = (req, res) => {
-  pathToAttachment = `../${__dirname}`;
-  console.log(pathToAttachment);
-  res.render("dashboard/others/company_details");
+exports.create_read_only_link = async (req, res) => {
+  try {
+    if (!req.user?._id) {
+      return res.status(401).json({ success: false, error: 'User not authenticated' });
+    }
+    console.log('User ID from req.user._id:', req.user._id);
+
+
+    // const userId = req.user._id.toString();
+    const userId = new mongoose.Types.ObjectId(req.user._id);
+
+    const application = await SmallApplication.findOne({ owner: userId })
+      .sort({ createdAt: -1 })
+      .select('_id');
+
+    if (!application) {
+      return res.status(404).json({ success: false, error: 'No applications found' });
+    }
+
+    const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+    const applicationId = application._id.toString();
+
+    const readOnlyLinks = {
+      company_details: `${baseUrl}/company_details?readOnly=true&applicationId=${applicationId}`,
+      notes: `${baseUrl}/notes?readOnly=true&applicationId=${applicationId}`,
+      application_introduction: `${baseUrl}/application_introduction?readOnly=true&applicationId=${applicationId}`,
+      environment_energy: `${baseUrl}/environment_energy?readOnly=true&applicationId=${applicationId}`,
+      environment_natural_resource: `${baseUrl}/environment_natural_resource?readOnly=true&applicationId=${applicationId}`,
+      environment_travel: `${baseUrl}/environment_travel?readOnly=true&applicationId=${applicationId}`,
+      environment_supply_chain_management: `${baseUrl}/environment_supply_chain_management?readOnly=true&applicationId=${applicationId}`,
+      environment_waste: `${baseUrl}/environment_waste?readOnly=true&applicationId=${applicationId}`,
+      environment_supporting_documents: `${baseUrl}/environment_supporting_documents?readOnly=true&applicationId=${applicationId}`,
+      workplace: `${baseUrl}/workplace?readOnly=true&applicationId=${applicationId}`,
+      workplace_supporting_documents: `${baseUrl}/workplace_supporting_documents?readOnly=true&applicationId=${applicationId}`,
+      community: `${baseUrl}/community?readOnly=true&applicationId=${applicationId}`,
+      community_supporting_documents: `${baseUrl}/community_supporting_documents?readOnly=true&applicationId=${applicationId}`,
+      philanthropy: `${baseUrl}/philanthropy?readOnly=true&applicationId=${applicationId}`,
+      philanthropy_supporting_documents: `${baseUrl}/philanthropy_supporting_documents?readOnly=true&applicationId=${applicationId}`,
+      further_information: `${baseUrl}/further_information?readOnly=true&applicationId=${applicationId}`,
+      submit: `${baseUrl}/submit?readOnly=true&applicationId=${applicationId}`
+    };
+
+    res.status(201).json({
+      success: true,
+      message: 'Read-only links generated',
+      readOnlyLinks
+    });
+
+  } catch (err) {
+    console.error('Error creating read-only links:', err);
+    res.status(500).json({ success: false, message: 'Failed to create read-only links', error: err.message });
+  }
 };
 
-exports.get_application_introduction = (req, res) => {
-  res.render("dashboard/others/application_introduction");
+  exports.submit_link = async (req, res) => {
+    try {
+      if (!req.user?._id) {
+        console.error('No user ID found in request');
+        return res.render('error', { error: { message: 'User not authenticated' } });
+      }
+  
+      const userId = req.user._id.toString();
+      console.log('Fetching applications for user ID:', userId);
+  
+      const applications = await SmallApplication.find({ owner: userId })
+        .sort({ createdAt: -1 })
+        .select('organisation_name _id createdAt');
+  
+      console.log('Applications:', applications);
+  
+      const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+  
+      const routes = [
+        
+        'dashboard/others/application_introduction',
+        'dashboard/others/company_details',
+        'dashboard/others/notes',
+        'dashboard/environment/environment_energy',
+        'dashboard/environment/environment_natural_resource',
+        'dashboard/environment/environment_supply_chain_management',
+        'dashboard/environment/environment_supporting_documents',
+        'dashboard/environment/environment_waste',
+        'dashboard/environment/environment_travel',
+        'dashboard/further_information/further_information',
+        'dashboard/workplace/workplace',
+        'dashboard/workplace/workplace_supporting_documents',
+        'dashboard/community/community',
+        'dashboard/community/community_supporting_documents',
+        'dashboard/philanthropy/philanthropy',
+        'dashboard/philanthropy/philanthropy_supporting_documents',
+        'dashboard/submit/submit'
+      ];
+  
+      const applicationsWithLinks = applications.map(app => {
+        const readOnlyLinks = routes.map(route => {
+          const name = route.split('/').slice(-1)[0].replace(/_/g, ' ');
+          return {
+            name,
+            url: `${baseUrl}/${route}/?readOnly=true&applicationId=${app._id}`
+          };
+        });
+  
+        return {
+          ...app._doc,
+          readOnlyLinks
+        };
+      });
+
+    } catch (error) {
+      console.error('Error in submit_link:', error);
+      res.render('error', { error: { message: error.message || 'Failed to load submit page' } });
+    }
+  };
+
+
+  exports.get_company_details = async (req, res) => {
+  const applicationId = req.query.applicationId;
+
+  let application;
+
+ // Check if the request is a read-only view and has an applicationId in the query string
+if (req.isReadOnly && applicationId) {
+  // Fetch the application directly by its ID (used for readonly links)
+  application = await SmallApplication.findOne({ _id: applicationId });
+
+// If the user has a reference to a small business application on their account
+} else if (req.user?.smallBusinessApplication) {
+  // Fetch that specific application using the reference ID
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+
+// If the user is logged in and we have their user ID
+} else if (req.user?._id) {
+  // Find the most recently created application owned by the user
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+
+// If none of the above conditions are met (no read-only link, no user, or no application ref)
+} else {
+  // Redirect the user to the login page (probably not authenticated)
+  return res.redirect('/login');
+}
+
+  res.render("dashboard/others/company_details", {
+    application,
+    isReadOnly: req.isReadOnly
+  });
 };
 
-exports.get_environment_energy = (req, res) => {
-  res.render("dashboard/environment/environment_energy");
+exports.get_application_introduction = async (req, res) => {
+  const applicationId = req.query.applicationId;
+
+  let application;
+
+if (req.isReadOnly && applicationId) {
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
+  res.render("dashboard/others/application_introduction", {
+    application,
+    isReadOnly: req.isReadOnly
+  });
 };
 
-exports.get_environment_natural_resource = (req, res) => {
-  res.render("dashboard/environment/environment_natural_resource");
+exports.get_environment_energy = async (req, res) => {
+  const applicationId = req.query.applicationId;
+
+  let application;
+
+ if (req.isReadOnly && applicationId) {
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
+  res.render("dashboard/environment/environment_energy",  {
+    application,
+    isReadOnly: req.isReadOnly
+  });
 };
 
-exports.get_environment_travel = (req, res) => {
-  res.render("dashboard/environment/environment_travel");
+exports.get_environment_natural_resource = async(req, res) => {
+  const applicationId = req.query.applicationId;
+
+  let application;
+
+  if (req.isReadOnly && applicationId) {
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
+  res.render("dashboard/environment/environment_natural_resource",  {
+    application,
+    isReadOnly: req.isReadOnly
+  });
 };
 
-exports.get_environment_supply_chain_management = (req, res) => {
-  res.render("dashboard/environment/environment_supply_chain_management");
+exports.get_environment_travel = async (req, res) => {
+  const applicationId = req.query.applicationId;
+
+  let application;
+
+  if (req.isReadOnly && applicationId) {
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
+  res.render("dashboard/environment/environment_travel",  {
+    application,
+    isReadOnly: req.isReadOnly
+  });
 };
 
-exports.get_environment_waste = (req, res) => {
-  res.render("dashboard/environment/environment_waste");
+exports.get_environment_supply_chain_management = async (req, res) => {
+  const applicationId = req.query.applicationId;
+
+  let application;
+
+  if (req.isReadOnly && applicationId) {
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
+  res.render("dashboard/environment/environment_supply_chain_management",  {
+    application,
+    isReadOnly: req.isReadOnly
+  });
 };
 
-exports.get_environment_supporting_documents = (req, res) => {
-  res.render("dashboard/environment/environment_supporting_documents");
+exports.get_environment_waste = async (req, res) => {
+  const applicationId = req.query.applicationId;
+
+  let application;
+
+  if (req.isReadOnly && applicationId) {
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
+  res.render("dashboard/environment/environment_waste",  {
+    application,
+    isReadOnly: req.isReadOnly
+  });
 };
 
-exports.get_notes = (req, res) => {
-  res.render("dashboard/others/notes");
+exports.get_environment_supporting_documents = async (req, res) => {
+  const applicationId = req.query.applicationId;
+
+  let application;
+
+  if (req.isReadOnly && applicationId) {
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
+  res.render("dashboard/environment/environment_supporting_documents",  {
+    application,
+    isReadOnly: req.isReadOnly
+  });
 };
 
-exports.get_workplace = (req, res) => {
-  res.render("dashboard/workplace/workplace");
+exports.get_notes = async (req, res) => {
+  const applicationId = req.query.applicationId;
+
+  let application;
+
+  if (req.isReadOnly && applicationId) {
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
+  res.render("dashboard/others/notes",  {
+    application,
+    isReadOnly: req.isReadOnly
+  });
 };
 
-exports.get_workplace_supporting_documents = (req, res) => {
-  res.render("dashboard/workplace/workplace_supporting_documents");
+exports.get_workplace = async (req, res) => {
+  const applicationId = req.query.applicationId;
+
+  let application;
+
+  if (req.isReadOnly && applicationId) {
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
+  res.render("dashboard/workplace/workplace",  {
+    application,
+    isReadOnly: req.isReadOnly
+  });
 };
 
-exports.get_community = (req, res) => {
-  res.render("dashboard/community/community");
+exports.get_workplace_supporting_documents = async (req, res) => {
+  const applicationId = req.query.applicationId;
+
+  let application;
+
+  if (req.isReadOnly && applicationId) {
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
+  res.render("dashboard/workplace/workplace_supporting_documents",  {
+    application,
+    isReadOnly: req.isReadOnly
+  });
 };
 
-exports.get_community_supporting_documents = (req, res) => {
-  res.render("dashboard/community/community_supporting_documents");
+exports.get_community = async (req, res) => {
+  const applicationId = req.query.applicationId;
+
+  let application;
+
+  if (req.isReadOnly && applicationId) {
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
+  res.render("dashboard/community/community",  {
+    application,
+    isReadOnly: req.isReadOnly
+  });
 };
 
-exports.get_philanthropy = (req, res) => {
-  res.render("dashboard/philanthropy/philanthropy");
+exports.get_community_supporting_documents = async (req, res) => {
+  const applicationId = req.query.applicationId;
+
+  let application;
+
+ if (req.isReadOnly && applicationId) {
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
+  res.render("dashboard/community/community_supporting_documents",  {
+    application,
+    isReadOnly: req.isReadOnly
+  });
 };
 
-exports.get_philanthropy_supporting_documents = (req, res) => {
-  res.render("dashboard/philanthropy/philanthropy_supporting_documents");
+exports.get_philanthropy = async (req, res) => {  
+  const applicationId = req.query.applicationId;
+
+  let application;
+
+  if (req.isReadOnly && applicationId) {
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
+  res.render("dashboard/philanthropy/philanthropy",  {
+    application,
+    isReadOnly: req.isReadOnly
+  });
 };
 
-exports.further_info = (req, res) => {
-  res.render("dashboard/further_information/further_information");
+exports.get_philanthropy_supporting_documents = async (req, res) => {
+  const applicationId = req.query.applicationId;
+
+  let application;
+
+  if (req.isReadOnly && applicationId) {
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
+  res.render("dashboard/philanthropy/philanthropy_supporting_documents",  {
+    application,
+    isReadOnly: req.isReadOnly
+  });
 };
 
-exports.submit = (req, res) => {
-  res.render("dashboard/submit/submit");
+exports.further_info = async (req, res) => {
+  const applicationId = req.query.applicationId;
+
+  let application;
+
+  if (req.isReadOnly && applicationId) {
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
+  res.render("dashboard/further_information/further_information",  {
+    application,
+    isReadOnly: req.isReadOnly
+  });
+};
+
+exports.submit = async (req, res) => {
+  const applicationId = req.query.applicationId;
+
+  let application;
+
+  if (req.isReadOnly && applicationId) {
+  application = await SmallApplication.findOne({ _id: applicationId });
+} else if (req.user?.smallBusinessApplication) {
+  application = await SmallApplication.findOne({ _id: req.user.smallBusinessApplication });
+} else if (req.user?._id) {
+  application = await SmallApplication.findOne({ owner: req.user._id }).sort({ createdAt: -1 });
+} else {
+  return res.redirect('/auth/login');
+} 
+  res.render("dashboard/submit/submit",  {
+    application,
+    isReadOnly: req.isReadOnly
+  });
 };
 
 //PUT CONTROLLERS
